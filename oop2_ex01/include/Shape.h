@@ -12,7 +12,6 @@ public:
 	virtual void print() const = 0;
 	virtual void draw() = 0;
 	virtual std::string getName() const;
-
-protected:
+private:
 	std::string m_name;
 };

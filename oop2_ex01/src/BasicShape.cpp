@@ -7,5 +7,5 @@ BasicShape::BasicShape(const std::string& name, double x)
 
 void BasicShape::print() const
 {
-	std::cout << m_name << std::endl;
+	std::cout << getName() << std::endl;
 }

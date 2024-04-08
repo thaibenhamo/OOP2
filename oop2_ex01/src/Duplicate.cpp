@@ -7,7 +7,7 @@ Duplicate::Duplicate(const std::shared_ptr<Shape>shape1, const int n)
 
 void Duplicate::print() const
 {
-	std::cout << m_name << std::endl;
+	std::cout << getName() << std::endl;
 }
 
 void Duplicate::draw() 

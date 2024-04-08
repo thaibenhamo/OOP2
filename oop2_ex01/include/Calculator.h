@@ -27,7 +27,6 @@ public:
 	void draw();
 	void duplicate();
 	bool shapeIsValid(const int num);
-
 private:
 	void printList();
 	std::vector<std::shared_ptr<Shape>> m_shapesList;

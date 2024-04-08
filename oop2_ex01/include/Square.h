@@ -7,7 +7,5 @@ public:
 	Square(double x);
 	virtual ~Square() = default;
 	virtual void draw() override;
-
 private:
-
 };
