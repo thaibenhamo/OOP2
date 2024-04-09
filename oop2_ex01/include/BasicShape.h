@@ -8,6 +8,7 @@ public:
 	BasicShape(const std::string& name, double x);
 	virtual ~BasicShape() = default;
 	virtual void print() const;
+	virtual void enlarge(int n) override;
 protected:
-	double m_x;
+	double m_sideLength;
 };

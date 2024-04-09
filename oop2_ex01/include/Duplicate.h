@@ -9,6 +9,7 @@ public:
 	virtual ~Duplicate() = default;
 	virtual void print() const override;
 	virtual void draw() override;
+	virtual void enlarge(int n) override;
 private:
 	int m_n;
 };

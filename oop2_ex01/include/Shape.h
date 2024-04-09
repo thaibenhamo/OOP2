@@ -12,6 +12,7 @@ public:
 	virtual void print() const = 0;
 	virtual void draw() = 0;
 	virtual std::string getName() const;
-private:
+	virtual void enlarge(int n) = 0;
+protected:
 	std::string m_name;
 };

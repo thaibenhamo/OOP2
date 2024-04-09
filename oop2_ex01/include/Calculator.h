@@ -24,6 +24,7 @@ public:
 	void run();
 	void getOperationInput(std::string operation);
 	void create();
+	void enlarge();
 	void draw();
 	void duplicate();
 	bool shapeIsValid(const int num);

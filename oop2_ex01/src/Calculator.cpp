@@ -66,6 +66,9 @@ void Calculator::getOperationInput(std::string operation)
 	case Operation::cre:
 		create();
 		break;
+	case Operation::en:
+		enlarge();
+		break;
 	case Operation::draw:
 		draw();
 		break;
@@ -84,7 +87,7 @@ void Calculator::create()
 {
 	char shape;
 	double x;
-	double y;
+	//double y;
 
 	std::cin >> shape >> x;
 
@@ -105,6 +108,18 @@ void Calculator::create()
 		std::cout << "invalid shape" << std::endl;
 		break;
 	}
+}
+
+void Calculator::enlarge()
+{
+	int num, n;
+	std::cin >> num >> n;
+
+	if (shapeIsValid(num) && (n > 0))
+		m_shapesList[num]->enlarge(n);
+	else
+		std::cout << "invalid n\n";
+
 }
 
 void Calculator::draw()

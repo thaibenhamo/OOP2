@@ -5,11 +5,11 @@ Square::Square(double x) : BasicShape("Square", x) {}
 
 void Square::draw() 
 {
-    for (int i = 0; i < m_x; ++i) 
+    for (int i = 0; i < m_sideLength; ++i) 
     {
-        for (int j = 0; j < m_x; ++j) 
+        for (int j = 0; j < m_sideLength; ++j)
         {
-            if (i == 0 || i == m_x - 1 || j == 0 || j == m_x - 1) 
+            if (i == 0 || i == m_sideLength - 1 || j == 0 || j == m_sideLength - 1)
                 std::cout << FILL << EMPTY;
             else 
                 std::cout << EMPTY << EMPTY;

@@ -18,3 +18,4 @@ void Duplicate::draw()
 	}
 	
 }
+void Duplicate::enlarge(int n) {}
