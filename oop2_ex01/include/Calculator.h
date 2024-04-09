@@ -29,6 +29,7 @@ public:
 	bool shapeIsValid(const int num);
 private:
 	void printList();
+	void help() const;
 	std::vector<std::shared_ptr<Shape>> m_shapesList;
 	std::unordered_map<std::string, Operation> m_functions;
 };
