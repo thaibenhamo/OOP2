@@ -1,7 +1,9 @@
 #include "Calculator.h"
 #include "Triangle.h"
 #include "Square.h"
+#include "Rectangle.h"
 #include "Duplicate.h"
+#include "Stack.h"
 #include <string>
 #include <iostream>
 
@@ -23,7 +25,6 @@ void Calculator::run()
 	std::string operation;
 
 	printList();
-
 	std::cin >> operation;
 
 	while (true)
@@ -36,28 +37,31 @@ void Calculator::run()
 
 void Calculator::printList()
 {
-	
-	if (m_shapesList.empty()) 
+	if(!m_shapesList.empty())
 	{
-		std::cout << "Shape list is empty\n\n";
-	}
-	else 
-	{
-		std::cout << "List of the available shapes:\n";
+		std::cout << "\nList of the available shapes:\n";
 
 		for (int i = 0; i < m_shapesList.size(); i++)
 		{
 			std::cout << i << ".\t";
-			m_shapesList[i]->print(1);
+			m_shapesList[i]->print(m_shapesList[i]->getFactor());
 			std::cout << "\n";
 		}
 	}
+	else
+		std::cout << "Shape list is empty\n\n";
 
 	std::cout << "\nEnter command('help' for the list of available commands): ";
 }
 
 void Calculator::performOperation(std::string operation)
 {
+	if (!m_functions.contains(operation))
+	{
+		std::cout << "Command not found\nPlease try again\n\n";
+		return;
+	}
+
 	switch (m_functions[operation])
 	{
 	case Operation::cre:
@@ -66,20 +70,23 @@ void Calculator::performOperation(std::string operation)
 	case Operation::en:
 		enlarge();
 		break;
+	case Operation::red:
+		reduce();
+		break;
 	case Operation::draw:
 		draw();
 		break;
 	case Operation::dup:
 		duplicate();
 		break;
+	case Operation::stack:
+		stack();
+		break;
 	case Operation::del:
 		deleteShape();
 		break;
 	case Operation::help:
 		help();
-		break;
-	default:
-		std::cout << "invalid command\n";
 		break;
 	}
 }
@@ -88,12 +95,11 @@ void Calculator::create()
 {
 	char shape;
 	double x;
-	//double y;
+	double y;
 
 	std::cin >> shape >> x;
 	if (x < 1)
 		std::cout << "invalid x\n";
-
 
 	switch (shape)
 	{
@@ -106,7 +112,8 @@ void Calculator::create()
 			m_shapesList.push_back(std::make_shared<Square>(x));
 		break;
 	case 'r':
-		std::cout << "rectangle" << std::endl;
+		std::cin >> y;
+		m_shapesList.push_back(std::make_shared<Rectangle>(x, y));
 		break;
 	default:
 		std::cout << "invalid shape" << std::endl;
@@ -120,10 +127,41 @@ void Calculator::enlarge()
 	std::cin >> num >> n;
 
 	if (shapeIsValid(num) && (n > 0))
-		m_shapesList[num]->enlarge(n);
+	{
+		if (m_shapesList[num].use_count() > 1)
+		{
+			for (int i = num; i < m_shapesList.size(); ++i)
+			{
+				m_shapesList[i]->enlarge(n);
+			}
+		}
+		else
+			m_shapesList[num]->enlarge(n);
+	}		
 	else
 		std::cout << "invalid n\n";
 
+}
+
+void Calculator::reduce()
+{
+	int num, n;
+	std::cin >> num >> n;
+
+	if (shapeIsValid(num) && (n > 0))
+	{
+		if (m_shapesList[num].use_count() > 1)
+		{
+			for (int i = num; i < m_shapesList.size(); ++i)
+			{
+				m_shapesList[i]->reduce(n);
+			}
+		}
+		else
+			m_shapesList[num]->reduce(n);
+	}
+	else
+		std::cout << "invalid n\n";
 }
 
 void Calculator::draw()
@@ -147,6 +185,18 @@ void Calculator::duplicate()
 		std::cout << "invalid n\n";
 }
 
+void Calculator::stack()
+{
+	int num1;
+	int num2;
+
+	std::cin >> num1 >> num2;
+
+	if (shapeIsValid(num1) && shapeIsValid(num2))
+		m_shapesList.push_back(std::make_shared<Stack>(m_shapesList[num1], (m_shapesList[num2])));
+
+
+}
 bool Calculator::shapeIsValid(const int num)
 {
 	if (num < 0 || num > m_shapesList.size())

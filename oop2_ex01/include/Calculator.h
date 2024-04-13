@@ -29,6 +29,9 @@ public:
 	void duplicate();
 	bool shapeIsValid(const int num);
 	void deleteShape();
+	void stack();
+
+	void reduce();
 private:
 	void printList();
 	void help() const;

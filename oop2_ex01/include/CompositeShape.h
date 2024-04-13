@@ -14,5 +14,5 @@ public:
 
 protected:
 	std::shared_ptr<Shape> m_shape1;
-	int m_factor;
+	//int m_factor;
 };
