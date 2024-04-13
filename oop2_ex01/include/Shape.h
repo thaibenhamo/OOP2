@@ -7,12 +7,10 @@ const char EMPTY = ' ';
 class Shape
 {
 public:
-	Shape(const std::string& name);
+	Shape();
 	virtual ~Shape() = default;
-	virtual void print() const = 0;
-	virtual void draw() = 0;
-	virtual std::string getName() const;
+	virtual void print(int factor) = 0;
+	virtual void draw(int factor) = 0;
 	virtual void enlarge(int n) = 0;
-protected:
-	std::string m_name;
+private:
 };

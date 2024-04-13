@@ -28,7 +28,7 @@ void Calculator::run()
 
 	while (true)
 	{
-		getOperationInput(operation);
+		performOperation(operation);
 		printList();
 		std::cin >> operation;
 	}
@@ -36,6 +36,7 @@ void Calculator::run()
 
 void Calculator::printList()
 {
+	
 	if (m_shapesList.empty()) 
 	{
 		std::cout << "Shape list is empty\n\n";
@@ -47,20 +48,16 @@ void Calculator::printList()
 		for (int i = 0; i < m_shapesList.size(); i++)
 		{
 			std::cout << i << ".\t";
-			m_shapesList[i]->print();
+			m_shapesList[i]->print(1);
+			std::cout << "\n";
 		}
 	}
 
-	std::cout << "Enter command('help' for the list of available commands): ";
+	std::cout << "\nEnter command('help' for the list of available commands): ";
 }
 
-void Calculator::getOperationInput(std::string operation)
+void Calculator::performOperation(std::string operation)
 {
-	if (operation == "en" || operation == "red" || operation == "draw" || operation == "dup" ||
-		operation == "stack" || operation == "del")
-	{
-		
-	}
 	switch (m_functions[operation])
 	{
 	case Operation::cre:
@@ -75,10 +72,14 @@ void Calculator::getOperationInput(std::string operation)
 	case Operation::dup:
 		duplicate();
 		break;
+	case Operation::del:
+		deleteShape();
+		break;
 	case Operation::help:
 		help();
 		break;
 	default:
+		std::cout << "invalid command\n";
 		break;
 	}
 }
@@ -90,15 +91,18 @@ void Calculator::create()
 	//double y;
 
 	std::cin >> shape >> x;
+	if (x < 1)
+		std::cout << "invalid x\n";
+
 
 	switch (shape)
 	{
 	case 't':
-		if (x > 1)
+		//if (x > 1)
 			m_shapesList.push_back(std::make_shared<Triangle>(x));
 		break;
 	case 's':
-		if (x > 1)
+		//if (x > 1)
 			m_shapesList.push_back(std::make_shared<Square>(x));
 		break;
 	case 'r':
@@ -128,7 +132,7 @@ void Calculator::draw()
 	std::cin >> num;
 	
 	if (shapeIsValid(num))
-		m_shapesList[num]->draw();
+		m_shapesList[num]->draw(1);
 }
 
 void Calculator::duplicate()
@@ -151,6 +155,14 @@ bool Calculator::shapeIsValid(const int num)
 		return false;
 	}
 	return true;
+}
+
+void Calculator::deleteShape()
+{
+	int num;
+	std::cin >> num;
+	if (shapeIsValid(num))
+		m_shapesList.erase(m_shapesList.begin() + num);
 }
 
 void Calculator::help() const

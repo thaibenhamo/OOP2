@@ -6,6 +6,6 @@ class Triangle : public BasicShape
 public:
 	Triangle(double x);
 	virtual ~Triangle() = default;
-	virtual void draw() override;
+	virtual void draw(int factor) override;
 private:
 };

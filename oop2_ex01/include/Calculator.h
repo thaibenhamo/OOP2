@@ -22,12 +22,13 @@ class Calculator
 public:
 	Calculator();
 	void run();
-	void getOperationInput(std::string operation);
+	void performOperation(std::string operation);
 	void create();
 	void enlarge();
 	void draw();
 	void duplicate();
 	bool shapeIsValid(const int num);
+	void deleteShape();
 private:
 	void printList();
 	void help() const;

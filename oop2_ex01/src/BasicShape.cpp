@@ -3,15 +3,16 @@
 #include <iostream>
 
 BasicShape::BasicShape(const std::string& name, double x)
-	: Shape(name + "(" + std::to_string(int(x)) + ")"), m_sideLength(x) {}
+	: Shape(),m_name(name), m_sideLength(x) {}
 
-void BasicShape::print() const
+void BasicShape::print(int factor) 
 {
-	std::cout << getName() << std::endl;
+	double size;
+	size = factor * m_sideLength;
+	std::cout << m_name << "(" << size << ")";
 }
 
 void BasicShape::enlarge(int n)
 {
 	m_sideLength *= n;
-
 }

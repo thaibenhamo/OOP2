@@ -6,8 +6,13 @@
 class CompositeShape : public Shape
 {
 public:
-	CompositeShape(const std::string& name, const std::shared_ptr<Shape>shape1);
+	CompositeShape(const std::shared_ptr<Shape>shape1);
 	virtual ~CompositeShape() = default;
+	//virtual void print(int factor) override;
+	virtual void enlarge(int n) override;
+	//void updateFactor(int factor);
+
 protected:
 	std::shared_ptr<Shape> m_shape1;
+	int m_factor;
 };

@@ -2,10 +2,6 @@
 #include <string>
 #include <iostream>
 
-Shape::Shape(const std::string& name) : m_name(name) {}
+Shape::Shape() {}
 
-std::string Shape::getName() const
-{
-	return m_name;
-}
 

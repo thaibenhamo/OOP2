@@ -1,11 +1,11 @@
 #pragma once
 #include "BasicShape.h"
 
-class Square : public BasicShape
+class Rectangle : public BasicShape
 {
 public:
-	Square(double x);
-	virtual ~Square() = default;
+	Rectangle(double x);
+	virtual ~Rectangle() = default;
 	virtual void draw(int factor) override;
 private:
 };

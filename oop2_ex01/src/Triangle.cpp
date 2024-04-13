@@ -4,15 +4,15 @@
 
 Triangle::Triangle(double x) : BasicShape("Triangle", x) {}
 
-void Triangle::draw()
+void Triangle::draw(int factor)
 {
-    for (int i = 1; i <= m_sideLength; ++i) 
+    for (int i = 1; i <= (m_sideLength * factor); ++i) 
     {
         // Print leading spaces
-        std::cout << std::string(m_sideLength - i, ' ');
+        std::cout << std::string((m_sideLength * factor) - i, ' ');
 
         // Print asterisks and spaces in the middle
-        if (i == 1 || i == m_sideLength) 
+        if (i == 1 || i == (m_sideLength * factor))
         {
             for (int j = 1; j <= i; ++j) 
                 std::cout << "* ";
@@ -26,3 +26,4 @@ void Triangle::draw()
         std::cout << std::endl;
     }
 }
+
