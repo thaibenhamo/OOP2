@@ -89,7 +89,7 @@ void Calculator::performOperation(const std::string& operation)
 		help();
 		break;
 	case Operation::exit:
-		std::cout << "Goodbye\n";
+		std::cout << "Goodbye!\n";
 		exit(EXIT_SUCCESS);
 	}
 }
@@ -100,10 +100,22 @@ void Calculator::create()
 	double sideLength;
 	double height;
 
-	std::cin >> shape >> sideLength;
-	if (sideLength < 1)
-		std::cout << "Invalid side length\n";
+	std::cin >> shape;
 
+	if (shape != 't' && shape != 's' && shape != 'r')
+	{
+		std::cout << "Invalid shape type\n\n";
+		return;
+	}
+		
+	std::cin >> sideLength;
+
+	if (sideLength <= 0)
+	{
+		std::cout << "Invalid side length\n";
+		return;
+	}
+		
 	switch (shape)
 	{
 	case 't':
@@ -114,13 +126,12 @@ void Calculator::create()
 		break;
 	case 'r':
 		std::cin >> height;
-		if(height < 1)
+		if(height <= 0)
 			std::cout << "Invalid height\n";
 		else
 			m_shapesList.push_back(std::make_shared<Rectangle>(sideLength, height));
 		break;
 	default:
-		std::cout << "Invalid shape type\n" << std::endl;
 		break;
 	}
 }
@@ -205,7 +216,7 @@ void Calculator::help() const
 
 bool Calculator::shapeIsValid(const int num)
 {
-	if (num < 0 || num > m_shapesList.size())
+	if (num < 0 || num > m_shapesList.size() - 1)
 	{
 		std::cout << "Invalid shape number\n" << std::endl;
 		return false;

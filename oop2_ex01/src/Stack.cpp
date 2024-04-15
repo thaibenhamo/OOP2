@@ -7,16 +7,15 @@ Stack::Stack(const std::shared_ptr<Shape>shape1, const std::shared_ptr<Shape>sha
 
 void Stack::print(double factor) const
 {
-	std::cout << "(";
-	m_shape1->print(factor*m_shape1->getFactor());
-	std::cout << ") / (";
+	CompositeShape::print(factor);
+	std::cout << " / (";
 	m_shape2->print(factor*m_shape2->getFactor());
 	std::cout << ")";
 }
 
-void Stack::draw(double factor)
+void Stack::draw(double factor) const
 {
-	m_shape1->draw(m_shape1->getFactor()*factor);
+	CompositeShape::draw(factor);
 	m_shape2->draw(m_shape2->getFactor()*factor);
 }
 

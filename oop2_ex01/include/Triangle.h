@@ -7,5 +7,5 @@ public:
 	Triangle(double x);
 	virtual ~Triangle() = default;
 private:
-	virtual void draw(double factor) override;
+	virtual void draw(double factor) const override;
 };

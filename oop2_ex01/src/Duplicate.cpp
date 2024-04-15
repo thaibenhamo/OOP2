@@ -7,16 +7,15 @@ Duplicate::Duplicate(const std::shared_ptr<Shape>shape1, const int n)
 
 void Duplicate::print(double factor) const
 {
-	std::cout << m_n << " * (";
-	m_shape1->print(m_shape1->getFactor()*factor);
-	std::cout << ")";
+	std::cout << m_n << " * ";
+	CompositeShape::print(factor);
 }
 
-void Duplicate::draw(double factor) 
+void Duplicate::draw(double factor) const
 {
 	for (int i = 0; i < m_n; i++)
 	{
-		m_shape1->draw(m_shape1->getFactor()*factor);
+		CompositeShape::draw(factor);
 	}	
 }
 

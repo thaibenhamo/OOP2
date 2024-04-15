@@ -4,24 +4,26 @@
 
 Triangle::Triangle(double x) : BasicShape("Triangle", x) {}
 
-void Triangle::draw(double factor)
+void Triangle::draw(double factor) const
 {
-    for (int i = 1; i <= (m_sideLength * factor); ++i) 
+    auto roundSideLength = std::round(m_sideLength * factor);
+
+    for (int i = 1; i <= roundSideLength; ++i)
     {
         // Print leading spaces
-        std::cout << std::string((m_sideLength * factor) - i, ' ');
+        std::cout << std::string(int(roundSideLength) - i, EMPTY);
 
         // Print asterisks and spaces in the middle
-        if (i == 1 || i == (m_sideLength * factor))
+        if (i == 1 || i == roundSideLength)
         {
             for (int j = 1; j <= i; ++j) 
-                std::cout << "* ";
+                std::cout << FILL << EMPTY;
         }
         else
         {
-            std::cout << "*";
-            std::cout << std::string(i * 2 - 3, ' ');
-            std::cout << "*";
+            std::cout << FILL;
+            std::cout << std::string(i * 2 - 3, EMPTY);
+            std::cout << FILL;
         }
         std::cout << std::endl;
     }

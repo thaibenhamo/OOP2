@@ -8,14 +8,16 @@ void Rectangle::print(double factor) const
 {
     std::cout << m_name << "(w: " << factor * m_sideLength << ", h: " << factor * m_height << ")";
 }
-void Rectangle::draw(double factor)
+void Rectangle::draw(double factor) const
 {
-    for (int i = 0; i < (m_height * factor); ++i)
+    auto roundHeight = std::round(m_height * factor);
+    auto roundSideLength = std::round(m_sideLength * factor);
+
+    for (int i = 0; i < roundHeight; ++i)
     {
-        for (int j = 0; j < (m_sideLength * factor); ++j)
+        for (int j = 0; j < roundSideLength; ++j)
         {
-            if (i == 0 || i == (m_height * factor) - 1 || 
-                j == 0 || j == (m_sideLength * factor) - 1)
+            if (i == 0 || i == roundHeight - 1 || j == 0 || j == roundSideLength - 1)
                 std::cout << FILL << EMPTY;
             else
                 std::cout << EMPTY << EMPTY;
