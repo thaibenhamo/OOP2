@@ -56,8 +56,6 @@ void Calculator::printList() const
 
 void Calculator::performOperation(const std::string& operation)
 {
-	int num, factor;
-
 	if (!m_functions.contains(operation))
 	{
 		std::cout << "\nCommand not found\n";
@@ -133,15 +131,7 @@ void Calculator::enlarge()
 	std::cin >> num >> factor;
 
 	if (shapeIsValid(num) && factorIsValid(factor))
-	{
-		if (m_shapesList[num].use_count() > 1)
-		{
-			for (int i = num; i < m_shapesList.size(); ++i)
-				m_shapesList[i]->enlarge(factor);
-		}
-		else
-			m_shapesList[num]->enlarge(factor);
-	}		
+		m_shapesList[num]->enlarge(factor);	
 }
 
 void Calculator::reduce()
@@ -150,15 +140,7 @@ void Calculator::reduce()
 	std::cin >> num >> factor;
 
 	if (shapeIsValid(num) && factorIsValid(factor))
-	{
-		if (m_shapesList[num].use_count() > 1)
-		{
-			for (int i = num; i < m_shapesList.size(); ++i)
-				m_shapesList[i]->reduce(factor);
-		}
-		else
-			m_shapesList[num]->reduce(factor);
-	}
+		m_shapesList[num]->reduce(factor);
 }
 
 void Calculator::draw()
@@ -167,7 +149,7 @@ void Calculator::draw()
 	std::cin >> num;
 	
 	if (shapeIsValid(num))
-		m_shapesList[num]->draw(1);
+		m_shapesList[num]->draw(m_shapesList[num]->getFactor());
 }
 
 void Calculator::duplicate()
@@ -225,7 +207,7 @@ bool Calculator::shapeIsValid(const int num)
 {
 	if (num < 0 || num > m_shapesList.size())
 	{
-		std::cout << "Invalid shape number" << std::endl;
+		std::cout << "Invalid shape number\n" << std::endl;
 		return false;
 	}
 	return true;
@@ -235,7 +217,7 @@ bool Calculator::factorIsValid(const int factor)
 {
 	if (factor < 2 || factor > 10)
 	{
-		std::cout << "Invalid scale factor" << std::endl;
+		std::cout << "Invalid scale factor\n" << std::endl;
 		return false;
 	}
 	return true;

@@ -6,12 +6,7 @@ Rectangle::Rectangle(double x, double y)
 
 void Rectangle::print(double factor) const
 {
-    double scaledLength;
-    double scaledHeight;
-
-    scaledLength = factor * m_sideLength;
-    scaledHeight = factor * m_height;
-    std::cout << m_name << "(w: " << scaledLength << ", h: " << scaledHeight << ")";
+    std::cout << m_name << "(w: " << factor * m_sideLength << ", h: " << factor * m_height << ")";
 }
 void Rectangle::draw(double factor)
 {
@@ -29,10 +24,3 @@ void Rectangle::draw(double factor)
     }
     std::cout << std::endl;
 }
-
-void Rectangle::enlarge(int n)
-{
-    m_sideLength *= n;
-    m_height *= n;
-}
-
