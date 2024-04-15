@@ -4,7 +4,7 @@
 
 Triangle::Triangle(double x) : BasicShape("Triangle", x) {}
 
-void Triangle::draw(int factor)
+void Triangle::draw(double factor)
 {
     for (int i = 1; i <= (m_sideLength * factor); ++i) 
     {

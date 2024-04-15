@@ -9,11 +9,11 @@ class Shape
 public:
 	Shape();
 	virtual ~Shape() = default;
-	virtual void print(int factor) = 0;
-	virtual void draw(int factor) = 0;
-	virtual void enlarge(int n) = 0;
+	virtual void print(double factor) const = 0;
+	virtual void draw(double factor) = 0;
+	virtual void enlarge(int n);
 	virtual void reduce(int n);
-	virtual int getFactor() const;
+	virtual double getFactor() const;
 protected:
-	int m_factor;
+	double m_factor;
 };

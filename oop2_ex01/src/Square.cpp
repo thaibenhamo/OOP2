@@ -3,7 +3,7 @@
 
 Square::Square(double x) : BasicShape("Square", x) {}
 
-void Square::draw(int factor) 
+void Square::draw(double factor) 
 {
     for (int i = 0; i < (m_sideLength * factor); ++i) 
     {

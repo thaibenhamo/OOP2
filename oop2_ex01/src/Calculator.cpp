@@ -35,7 +35,7 @@ void Calculator::run()
 	}
 }
 
-void Calculator::printList()
+void Calculator::printList() const
 {
 	if(!m_shapesList.empty())
 	{
@@ -54,11 +54,13 @@ void Calculator::printList()
 	std::cout << "\nEnter command('help' for the list of available commands): ";
 }
 
-void Calculator::performOperation(std::string operation)
+void Calculator::performOperation(const std::string& operation)
 {
+	int num, factor;
+
 	if (!m_functions.contains(operation))
 	{
-		std::cout << "Command not found\nPlease try again\n\n";
+		std::cout << "\nCommand not found\n";
 		return;
 	}
 
@@ -88,80 +90,75 @@ void Calculator::performOperation(std::string operation)
 	case Operation::help:
 		help();
 		break;
+	case Operation::exit:
+		std::cout << "Goodbye\n";
+		exit(EXIT_SUCCESS);
 	}
 }
 
 void Calculator::create()
 {
 	char shape;
-	double x;
-	double y;
+	double sideLength;
+	double height;
 
-	std::cin >> shape >> x;
-	if (x < 1)
-		std::cout << "invalid x\n";
+	std::cin >> shape >> sideLength;
+	if (sideLength < 1)
+		std::cout << "Invalid side length\n";
 
 	switch (shape)
 	{
 	case 't':
-		//if (x > 1)
-			m_shapesList.push_back(std::make_shared<Triangle>(x));
+			m_shapesList.push_back(std::make_shared<Triangle>(sideLength));
 		break;
 	case 's':
-		//if (x > 1)
-			m_shapesList.push_back(std::make_shared<Square>(x));
+			m_shapesList.push_back(std::make_shared<Square>(sideLength));
 		break;
 	case 'r':
-		std::cin >> y;
-		m_shapesList.push_back(std::make_shared<Rectangle>(x, y));
+		std::cin >> height;
+		if(height < 1)
+			std::cout << "Invalid height\n";
+		else
+			m_shapesList.push_back(std::make_shared<Rectangle>(sideLength, height));
 		break;
 	default:
-		std::cout << "invalid shape" << std::endl;
+		std::cout << "Invalid shape type\n" << std::endl;
 		break;
 	}
 }
 
 void Calculator::enlarge()
 {
-	int num, n;
-	std::cin >> num >> n;
+	int num, factor;
+	std::cin >> num >> factor;
 
-	if (shapeIsValid(num) && (n > 0))
+	if (shapeIsValid(num) && factorIsValid(factor))
 	{
 		if (m_shapesList[num].use_count() > 1)
 		{
 			for (int i = num; i < m_shapesList.size(); ++i)
-			{
-				m_shapesList[i]->enlarge(n);
-			}
+				m_shapesList[i]->enlarge(factor);
 		}
 		else
-			m_shapesList[num]->enlarge(n);
+			m_shapesList[num]->enlarge(factor);
 	}		
-	else
-		std::cout << "invalid n\n";
-
 }
 
 void Calculator::reduce()
 {
-	int num, n;
-	std::cin >> num >> n;
+	int num, factor ;
+	std::cin >> num >> factor;
 
-	if (shapeIsValid(num) && (n > 0))
+	if (shapeIsValid(num) && factorIsValid(factor))
 	{
 		if (m_shapesList[num].use_count() > 1)
 		{
 			for (int i = num; i < m_shapesList.size(); ++i)
-			{
-				m_shapesList[i]->reduce(n);
-			}
+				m_shapesList[i]->reduce(factor);
 		}
 		else
-			m_shapesList[num]->reduce(n);
+			m_shapesList[num]->reduce(factor);
 	}
-	else
-		std::cout << "invalid n\n";
 }
 
 void Calculator::draw()
@@ -194,17 +191,6 @@ void Calculator::stack()
 
 	if (shapeIsValid(num1) && shapeIsValid(num2))
 		m_shapesList.push_back(std::make_shared<Stack>(m_shapesList[num1], (m_shapesList[num2])));
-
-
-}
-bool Calculator::shapeIsValid(const int num)
-{
-	if (num < 0 || num > m_shapesList.size())
-	{
-		std::cout << "invalid shape number" << std::endl;
-		return false;
-	}
-	return true;
 }
 
 void Calculator::deleteShape()
@@ -233,4 +219,24 @@ void Calculator::help() const
 		"* del(ete) num - delete shape #num from the shape list\n"
 		"* help - print this command list\n"
 		"* exit - exit the program\n\n";
+}
+
+bool Calculator::shapeIsValid(const int num)
+{
+	if (num < 0 || num > m_shapesList.size())
+	{
+		std::cout << "Invalid shape number" << std::endl;
+		return false;
+	}
+	return true;
+}
+
+bool Calculator::factorIsValid(const int factor)
+{
+	if (factor < 2 || factor > 10)
+	{
+		std::cout << "Invalid scale factor" << std::endl;
+		return false;
+	}
+	return true;
 }

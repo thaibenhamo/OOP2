@@ -5,14 +5,14 @@
 Duplicate::Duplicate(const std::shared_ptr<Shape>shape1, const int n)
 	: CompositeShape(shape1), m_n(n) {}
 
-void Duplicate::print(int factor) 
+void Duplicate::print(double factor) const
 {
 	std::cout << m_n << " * (";
 	m_shape1->print(factor);
 	std::cout << ")";
 }
 
-void Duplicate::draw(int factor) 
+void Duplicate::draw(double factor) 
 {
 	for (int i = 0; i < m_n; i++)
 	{

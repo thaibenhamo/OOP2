@@ -22,19 +22,19 @@ class Calculator
 public:
 	Calculator();
 	void run();
-	void performOperation(std::string operation);
+private:
+	void performOperation(const std::string& operation);
 	void create();
 	void enlarge();
+	void reduce();
 	void draw();
 	void duplicate();
-	bool shapeIsValid(const int num);
 	void deleteShape();
 	void stack();
-
-	void reduce();
-private:
-	void printList();
+	void printList() const;
 	void help() const;
+	bool factorIsValid(const int factor);
+	bool shapeIsValid(const int num);
 	std::vector<std::shared_ptr<Shape>> m_shapesList;
 	std::unordered_map<std::string, Operation> m_functions;
 };

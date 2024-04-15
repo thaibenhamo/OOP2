@@ -4,7 +4,7 @@
 Rectangle::Rectangle(double x, double y)
     : BasicShape("Rectangle", x), m_height(y) {}
 
-void Rectangle::print(int factor)
+void Rectangle::print(double factor) const
 {
     double scaledLength;
     double scaledHeight;
@@ -13,7 +13,7 @@ void Rectangle::print(int factor)
     scaledHeight = factor * m_height;
     std::cout << m_name << "(w: " << scaledLength << ", h: " << scaledHeight << ")";
 }
-void Rectangle::draw(int factor)
+void Rectangle::draw(double factor)
 {
     for (int i = 0; i < (m_height * factor); ++i)
     {
