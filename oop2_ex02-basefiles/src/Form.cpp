@@ -9,14 +9,15 @@ void Form::addField(BaseField* f)
 
 bool Form::validateForm()
 {
+	bool formIsValid = true;
 	for (int i = 0; i < m_fields.size(); i++)
 	{
 		if (!m_fields[i]->isValid())
 		{
-			return false;
+			formIsValid = false;
 		}
 	}
-	return true;
+	return formIsValid;
 }
 
 void Form::fillForm()

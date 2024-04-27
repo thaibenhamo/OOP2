@@ -1,3 +1,4 @@
+#pragma once
 #include <regex>
 
 class NamePattern 
@@ -5,7 +6,8 @@ class NamePattern
 public:
     static const std::regex& getPattern() 
     {
-        static const std::regex pattern(R"(\b[A-Za-z\s'-]+\b)");
+        static const std::regex pattern(R"([^0-9]+)");
         return pattern;
     }
+private:
 };

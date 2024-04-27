@@ -99,9 +99,9 @@ int main()
 	// Creating the form fields
 	auto nameField = std::make_unique<Field<std::string>>("What is your name?");
 	auto idField = std::make_unique<Field<uint32_t>>("What is your ID?");
-	/*auto mailField = std::make_unique<Field<std::string>>("What is your mail?");
+	auto mailField = std::make_unique<Field<std::string>>("What is your mail?");
 	auto addressField = std::make_unique<Field<std::string>>("What is your address?");
-	auto dateOfBirthField = std::make_unique<Field<Date>>("What is your date of birth? (YYYY-MM-DD)");
+	/*auto dateOfBirthField = std::make_unique<Field<Date>>("What is your date of birth? (YYYY-MM-DD)");
 	auto startDateTaxYearField = std::make_unique<Field<Date>>("Date of beginning work in the tax year? (YYYY-MM-DD)");
 	auto incomeOptions = ValuesToNames<IncomeOptions>();
 	auto incomeField = std::make_unique<Field<ValuesToNames<IncomeOptions>>>("Details of my income from this employer: I receive:\n" + incomeOptions.valuesAndNames());
@@ -113,8 +113,8 @@ int main()
 	// Creating the field validators
 	auto nameValidator = std::make_unique<RegexValidator>(NamePattern::getPattern());
 	auto idValidator = std::make_unique<IdValidator>();
-	/*auto mailValidator = std::make_unique<RegexValidator>(MailPattern::getPattern());
-	auto addressValidator = std::make_unique<RegexValidator>(AddressPattern::getPattern());
+	auto mailValidator = std::make_unique<RegexValidator>(MailPattern::getPattern());
+	/*auto addressValidator = std::make_unique<RegexValidator>(AddressPattern::getPattern());
 	auto ageValidator = std::make_unique<RangeValidator<Date>>(currentDate() - MAX_AGE, currentDate() - MIN_AGE);
 	auto startDateTaxYearValidator = std::make_unique<RangeValidator<Date >>(currentYear(), currentDate());
 	auto incomeValidator = std::make_unique<RangeValidator<ValuesToNames<IncomeOptions>>>(1, 4);
@@ -124,8 +124,8 @@ int main()
 	// Adding the validators to the fields
 	nameField->addValidator(nameValidator.get());
 	idField->addValidator(idValidator.get());
-	/*mailField->addValidator(mailValidator.get());
-	addressField->addValidator(addressValidator.get());
+	mailField->addValidator(mailValidator.get());
+	/*addressField->addValidator(addressValidator.get());
 	dateOfBirthField->addValidator(ageValidator.get());
 	startDateTaxYearField->addValidator(startDateTaxYearValidator.get());
 	incomeField->addValidator(incomeValidator.get());	
@@ -142,8 +142,8 @@ int main()
 	auto myForm = Form();
 	myForm.addField(nameField.get());
 	myForm.addField(idField.get());
-	/*myForm.addField(mailField.get());
-	myForm.addField(addressField.get());
+	myForm.addField(mailField.get());
+	/*myForm.addField(addressField.get());
 	myForm.addField(dateOfBirthField.get());	
 	myForm.addField(startDateTaxYearField.get());
 	myForm.addField(incomeField.get());
@@ -182,7 +182,7 @@ std::string getWelcomeMessage()
 {
 	return "+----------------------------------------------------------+\n"
 		"|                  Hello and welcome!                      |\n"
-		"|			Please fill the following 101 form			    |\n"
+		"|         Please fill the following 101 form               |\n"
 		"+----------------------------------------------------------+\n";
 }
 

@@ -24,5 +24,5 @@ bool IdValidator::validate(const uint32_t& input) const
 }
 std::string IdValidator::getErrorMessage() const
 {
-    return("Wrong control digit\n");
+    return("Wrong control digit.\n");
 }

@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 #include "BaseField.h"
 #include "Validator.h"
@@ -22,7 +23,7 @@ protected:
 
 template<typename T>
 Field<T>::Field(std::string str) 
-	: m_prompt(str){}
+	: m_prompt(str), m_errorMessage(), m_validator(), m_data(){}
 
 template<typename T>
 void Field<T>::addValidator(Validator<T>* v)
@@ -51,7 +52,9 @@ bool Field<T>::isValid()
 template<typename T>
 void Field<T>::print(std::ostream& os)
 {
-	os << m_prompt << " = " << m_data << std::endl;
+	os << m_prompt << " = " << m_data;
 	if (!m_valid)
 		os << "			" << m_errorMessage;
+	else
+		os << '\n';
 }
