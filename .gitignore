@@ -1,3 +1,7 @@
 # Ignore ex_1 directories
 oop2_ex01/.vs
 oop2_ex01/out
+
+# Ignore ex_2 directories
+oop2_ex02-basefiles/.vs
+oop2_ex02-basefiles/out

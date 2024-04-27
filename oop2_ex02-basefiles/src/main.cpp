@@ -34,7 +34,7 @@
 // The class must override the << and >> operators.
 // >> operator reads an int and << operator prints destination name if the value is
 // valid and if not - the number.
-#include "ValuesToNames.h"
+//#include "ValuesToNames.h"
 
 // A class that defines Date
 #include "Date.h"
@@ -99,60 +99,60 @@ int main()
 	// Creating the form fields
 	auto nameField = std::make_unique<Field<std::string>>("What is your name?");
 	auto idField = std::make_unique<Field<uint32_t>>("What is your ID?");
-	auto mailField = std::make_unique<Field<std::string>>("What is your mail?");
+	/*auto mailField = std::make_unique<Field<std::string>>("What is your mail?");
 	auto addressField = std::make_unique<Field<std::string>>("What is your address?");
 	auto dateOfBirthField = std::make_unique<Field<Date>>("What is your date of birth? (YYYY-MM-DD)");
 	auto startDateTaxYearField = std::make_unique<Field<Date>>("Date of beginning work in the tax year? (YYYY-MM-DD)");
 	auto incomeOptions = ValuesToNames<IncomeOptions>();
-	auto incomeField = std::make_unique<Field<ValuesToNames<IncomeOptions>>> ("Details of my income from this employer: I receive:\n" + incomeOptions.valuesAndNames());
+	auto incomeField = std::make_unique<Field<ValuesToNames<IncomeOptions>>>("Details of my income from this employer: I receive:\n" + incomeOptions.valuesAndNames());
 	auto otherIncomes = ValuesToNames<OtherIncomes>();
 	auto otherIncomesField = std::make_unique<Field<ValuesToNames<OtherIncomes>>>("Details of other incomes:\n" + otherIncomes.valuesAndNames());
 	auto taxCredits = ValuesToNames<TaxCredits>();
-	auto taxCreditsField = std::make_unique<Field<ValuesToNames<TaxCredits>>>("Receives tax credits at other income:\n" + taxCredits.valuesAndNames());
+	auto taxCreditsField = std::make_unique<Field<ValuesToNames<TaxCredits>>>("Receives tax credits at other income:\n" + taxCredits.valuesAndNames());*/
 
 	// Creating the field validators
 	auto nameValidator = std::make_unique<RegexValidator>(NamePattern::getPattern());
 	auto idValidator = std::make_unique<IdValidator>();
-	auto mailValidator = std::make_unique<RegexValidator>(MailPattern::getPattern());
+	/*auto mailValidator = std::make_unique<RegexValidator>(MailPattern::getPattern());
 	auto addressValidator = std::make_unique<RegexValidator>(AddressPattern::getPattern());
 	auto ageValidator = std::make_unique<RangeValidator<Date>>(currentDate() - MAX_AGE, currentDate() - MIN_AGE);
 	auto startDateTaxYearValidator = std::make_unique<RangeValidator<Date >>(currentYear(), currentDate());
 	auto incomeValidator = std::make_unique<RangeValidator<ValuesToNames<IncomeOptions>>>(1, 4);
 	auto otherIncomeValidator = std::make_unique<RangeValidator<ValuesToNames<OtherIncomes>>>(1, 6);
-	auto taxCreditsValidator = std::make_unique<RangeValidator<ValuesToNames<TaxCredits>>>(1, 3);
+	auto taxCreditsValidator = std::make_unique<RangeValidator<ValuesToNames<TaxCredits>>>(1, 3);*/
 	
 	// Adding the validators to the fields
 	nameField->addValidator(nameValidator.get());
 	idField->addValidator(idValidator.get());
-	mailField->addValidator(mailValidator.get());
+	/*mailField->addValidator(mailValidator.get());
 	addressField->addValidator(addressValidator.get());
 	dateOfBirthField->addValidator(ageValidator.get());
 	startDateTaxYearField->addValidator(startDateTaxYearValidator.get());
 	incomeField->addValidator(incomeValidator.get());	
 	otherIncomesField->addValidator(otherIncomeValidator.get());
-	taxCreditsField->addValidator(taxCreditsValidator.get());
+	taxCreditsField->addValidator(taxCreditsValidator.get());*/
 
 	// Creating form validators
-	auto incomesAndOtherIncomesValidator
+	/*auto incomesAndOtherIncomesValidator
 		= std::make_unique<IncomesAndOtherIncomesValidator>(incomeField.get(), otherIncomesField.get());
 	auto otherIncomesAndTaxCreditsValidator
-		= std::make_unique<OtherIncomesAndTaxCreditsValidator>(otherIncomesField.get(), taxCreditsField.get());
+		= std::make_unique<OtherIncomesAndTaxCreditsValidator>(otherIncomesField.get(), taxCreditsField.get());*/
 
 	// Creating the form and adding the fields to it
 	auto myForm = Form();
 	myForm.addField(nameField.get());
 	myForm.addField(idField.get());
-	myForm.addField(mailField.get());
+	/*myForm.addField(mailField.get());
 	myForm.addField(addressField.get());
 	myForm.addField(dateOfBirthField.get());	
 	myForm.addField(startDateTaxYearField.get());
 	myForm.addField(incomeField.get());
 	myForm.addField(otherIncomesField.get());
-	myForm.addField(taxCreditsField.get());
+	myForm.addField(taxCreditsField.get());*/
 
 	// Adding form validators
-	myForm.addValidator(incomesAndOtherIncomesValidator.get());
-	myForm.addValidator(otherIncomesAndTaxCreditsValidator.get());
+	/*myForm.addValidator(incomesAndOtherIncomesValidator.get());
+	myForm.addValidator(otherIncomesAndTaxCreditsValidator.get());*/
 
 	// Getting the information from the user
 	clearScreen();
@@ -207,12 +207,12 @@ void clearScreen()
 	system("cls");
 }
 
-Date currentDate()
-{
-	namespace ch = std::chrono;
-	auto ymd = ch::year_month_day(ch::floor<ch::days>(ch::system_clock::now()));
-	return Date(static_cast<unsigned>(static_cast<int>(ymd.year())), static_cast<unsigned>(ymd.month()), static_cast<unsigned>(ymd.day()));
-}
+//Date currentDate()
+//{
+//	namespace ch = std::chrono;
+//	auto ymd = ch::year_month_day(ch::floor<ch::days>(ch::system_clock::now()));
+//	return Date(static_cast<unsigned>(static_cast<int>(ymd.year())), static_cast<unsigned>(ymd.month()), static_cast<unsigned>(ymd.day()));
+//}
 int currentYear()
 {
 	namespace ch = std::chrono;
