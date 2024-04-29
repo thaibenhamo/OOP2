@@ -101,8 +101,8 @@ int main()
 	auto idField = std::make_unique<Field<uint32_t>>("What is your ID?");
 	auto mailField = std::make_unique<Field<std::string>>("What is your mail?");
 	auto addressField = std::make_unique<Field<std::string>>("What is your address?");
-	/*auto dateOfBirthField = std::make_unique<Field<Date>>("What is your date of birth? (YYYY-MM-DD)");
-	auto startDateTaxYearField = std::make_unique<Field<Date>>("Date of beginning work in the tax year? (YYYY-MM-DD)");
+	auto dateOfBirthField = std::make_unique<Field<Date>>("What is your date of birth? (YYYY-MM-DD)");
+	/*auto startDateTaxYearField = std::make_unique<Field<Date>>("Date of beginning work in the tax year? (YYYY-MM-DD)");
 	auto incomeOptions = ValuesToNames<IncomeOptions>();
 	auto incomeField = std::make_unique<Field<ValuesToNames<IncomeOptions>>>("Details of my income from this employer: I receive:\n" + incomeOptions.valuesAndNames());
 	auto otherIncomes = ValuesToNames<OtherIncomes>();
@@ -114,9 +114,9 @@ int main()
 	auto nameValidator = std::make_unique<RegexValidator>(NamePattern::getPattern());
 	auto idValidator = std::make_unique<IdValidator>();
 	auto mailValidator = std::make_unique<RegexValidator>(MailPattern::getPattern());
-	/*auto addressValidator = std::make_unique<RegexValidator>(AddressPattern::getPattern());
+	//auto addressValidator = std::make_unique<RegexValidator>(AddressPattern::getPattern());
 	auto ageValidator = std::make_unique<RangeValidator<Date>>(currentDate() - MAX_AGE, currentDate() - MIN_AGE);
-	auto startDateTaxYearValidator = std::make_unique<RangeValidator<Date >>(currentYear(), currentDate());
+	/*auto startDateTaxYearValidator = std::make_unique<RangeValidator<Date >>(currentYear(), currentDate());
 	auto incomeValidator = std::make_unique<RangeValidator<ValuesToNames<IncomeOptions>>>(1, 4);
 	auto otherIncomeValidator = std::make_unique<RangeValidator<ValuesToNames<OtherIncomes>>>(1, 6);
 	auto taxCreditsValidator = std::make_unique<RangeValidator<ValuesToNames<TaxCredits>>>(1, 3);*/
@@ -125,9 +125,9 @@ int main()
 	nameField->addValidator(nameValidator.get());
 	idField->addValidator(idValidator.get());
 	mailField->addValidator(mailValidator.get());
-	/*addressField->addValidator(addressValidator.get());
+	//addressField->addValidator(addressValidator.get());
 	dateOfBirthField->addValidator(ageValidator.get());
-	startDateTaxYearField->addValidator(startDateTaxYearValidator.get());
+	/*startDateTaxYearField->addValidator(startDateTaxYearValidator.get());
 	incomeField->addValidator(incomeValidator.get());	
 	otherIncomesField->addValidator(otherIncomeValidator.get());
 	taxCreditsField->addValidator(taxCreditsValidator.get());*/
@@ -143,9 +143,9 @@ int main()
 	myForm.addField(nameField.get());
 	myForm.addField(idField.get());
 	myForm.addField(mailField.get());
-	/*myForm.addField(addressField.get());
+	//myForm.addField(addressField.get());
 	myForm.addField(dateOfBirthField.get());	
-	myForm.addField(startDateTaxYearField.get());
+	/*myForm.addField(startDateTaxYearField.get());
 	myForm.addField(incomeField.get());
 	myForm.addField(otherIncomesField.get());
 	myForm.addField(taxCreditsField.get());*/
@@ -207,12 +207,12 @@ void clearScreen()
 	system("cls");
 }
 
-//Date currentDate()
-//{
-//	namespace ch = std::chrono;
-//	auto ymd = ch::year_month_day(ch::floor<ch::days>(ch::system_clock::now()));
-//	return Date(static_cast<unsigned>(static_cast<int>(ymd.year())), static_cast<unsigned>(ymd.month()), static_cast<unsigned>(ymd.day()));
-//}
+Date currentDate()
+{
+	namespace ch = std::chrono;
+	auto ymd = ch::year_month_day(ch::floor<ch::days>(ch::system_clock::now()));
+	return Date(static_cast<unsigned>(static_cast<int>(ymd.year())), static_cast<unsigned>(ymd.month()), static_cast<unsigned>(ymd.day()));
+}
 int currentYear()
 {
 	namespace ch = std::chrono;

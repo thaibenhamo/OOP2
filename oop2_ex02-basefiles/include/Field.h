@@ -14,7 +14,7 @@ public:
 	bool isValid();
 	
 protected:
-	void print(std::ostream& os);
+	void print(std::ostream& os) const override;
 	std::string m_prompt;
 	std::string m_errorMessage;
 	Validator<T>* m_validator;
@@ -50,7 +50,7 @@ bool Field<T>::isValid()
 }
 
 template<typename T>
-void Field<T>::print(std::ostream& os)
+void Field<T>::print(std::ostream& os) const
 {
 	os << m_prompt << " = " << m_data;
 	if (!m_valid)
