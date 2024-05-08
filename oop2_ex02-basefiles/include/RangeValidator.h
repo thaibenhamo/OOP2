@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Validator.h"
-#include "Date.h"
 #include <string>
 
 template<typename T>
@@ -27,7 +26,7 @@ RangeValidator<T>::RangeValidator(const T& min, const T& max)
 template<typename T>
 bool RangeValidator<T>::validate(const T& input) const
 {
-	return(input >= m_min && input <= m_max);
+	return(input >= m_min && m_max >= input /* && input >= 1*/);
 }
 
 template<typename T>

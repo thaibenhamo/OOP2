@@ -34,7 +34,7 @@
 // The class must override the << and >> operators.
 // >> operator reads an int and << operator prints destination name if the value is
 // valid and if not - the number.
-//#include "ValuesToNames.h"
+#include "ValuesToNames.h"
 
 // A class that defines Date
 #include "Date.h"
@@ -55,17 +55,17 @@
 #include "OtherIncomes.h"
 
 // A class that keeps the names of the tax credits options
-#include "TaxCredits.h"
+//#include "TaxCredits.h"
 
 // A class that represents a incomes-vs.-other incomes validator.
 // It checks if reports matches each other.
 // The types used as template parameter must be Field.
-#include "IncomesAndOtherIncomesValidator.h"
+//#include "IncomesAndOtherIncomesValidator.h"
 
 // A class that represents a other incomes-vs.-tax credits validator.
 // It checks if the reports matches each other.
 // The types used as template parameter must be Field.
-#include "OtherIncomesAndTaxCreditsValidator.h"
+//#include "OtherIncomesAndTaxCreditsValidator.h"
 
 //------------------- Function declarations ----------------------------
 
@@ -102,10 +102,10 @@ int main()
 	auto mailField = std::make_unique<Field<std::string>>("What is your mail?");
 	auto addressField = std::make_unique<Field<std::string>>("What is your address?");
 	auto dateOfBirthField = std::make_unique<Field<Date>>("What is your date of birth? (YYYY-MM-DD)");
-	/*auto startDateTaxYearField = std::make_unique<Field<Date>>("Date of beginning work in the tax year? (YYYY-MM-DD)");
+	auto startDateTaxYearField = std::make_unique<Field<Date>>("Date of beginning work in the tax year? (YYYY-MM-DD)");
 	auto incomeOptions = ValuesToNames<IncomeOptions>();
 	auto incomeField = std::make_unique<Field<ValuesToNames<IncomeOptions>>>("Details of my income from this employer: I receive:\n" + incomeOptions.valuesAndNames());
-	auto otherIncomes = ValuesToNames<OtherIncomes>();
+	/*auto otherIncomes = ValuesToNames<OtherIncomes>();
 	auto otherIncomesField = std::make_unique<Field<ValuesToNames<OtherIncomes>>>("Details of other incomes:\n" + otherIncomes.valuesAndNames());
 	auto taxCredits = ValuesToNames<TaxCredits>();
 	auto taxCreditsField = std::make_unique<Field<ValuesToNames<TaxCredits>>>("Receives tax credits at other income:\n" + taxCredits.valuesAndNames());*/
@@ -114,22 +114,22 @@ int main()
 	auto nameValidator = std::make_unique<RegexValidator>(NamePattern::getPattern());
 	auto idValidator = std::make_unique<IdValidator>();
 	auto mailValidator = std::make_unique<RegexValidator>(MailPattern::getPattern());
-	//auto addressValidator = std::make_unique<RegexValidator>(AddressPattern::getPattern());
+	auto addressValidator = std::make_unique<RegexValidator>(AddressPattern::getPattern());
 	auto ageValidator = std::make_unique<RangeValidator<Date>>(currentDate() - MAX_AGE, currentDate() - MIN_AGE);
-	/*auto startDateTaxYearValidator = std::make_unique<RangeValidator<Date >>(currentYear(), currentDate());
+	auto startDateTaxYearValidator = std::make_unique<RangeValidator<Date >>(currentYear(), currentDate());
 	auto incomeValidator = std::make_unique<RangeValidator<ValuesToNames<IncomeOptions>>>(1, 4);
-	auto otherIncomeValidator = std::make_unique<RangeValidator<ValuesToNames<OtherIncomes>>>(1, 6);
+	/*auto otherIncomeValidator = std::make_unique<RangeValidator<ValuesToNames<OtherIncomes>>>(1, 6);
 	auto taxCreditsValidator = std::make_unique<RangeValidator<ValuesToNames<TaxCredits>>>(1, 3);*/
 	
 	// Adding the validators to the fields
 	nameField->addValidator(nameValidator.get());
 	idField->addValidator(idValidator.get());
 	mailField->addValidator(mailValidator.get());
-	//addressField->addValidator(addressValidator.get());
+	addressField->addValidator(addressValidator.get());
 	dateOfBirthField->addValidator(ageValidator.get());
-	/*startDateTaxYearField->addValidator(startDateTaxYearValidator.get());
-	incomeField->addValidator(incomeValidator.get());	
-	otherIncomesField->addValidator(otherIncomeValidator.get());
+	startDateTaxYearField->addValidator(startDateTaxYearValidator.get());
+	incomeField->addValidator(incomeValidator.get());
+	/*otherIncomesField->addValidator(otherIncomeValidator.get());
 	taxCreditsField->addValidator(taxCreditsValidator.get());*/
 
 	// Creating form validators
@@ -143,11 +143,11 @@ int main()
 	myForm.addField(nameField.get());
 	myForm.addField(idField.get());
 	myForm.addField(mailField.get());
-	//myForm.addField(addressField.get());
+	myForm.addField(addressField.get());
 	myForm.addField(dateOfBirthField.get());	
-	/*myForm.addField(startDateTaxYearField.get());
+	myForm.addField(startDateTaxYearField.get());
 	myForm.addField(incomeField.get());
-	myForm.addField(otherIncomesField.get());
+	/*myForm.addField(otherIncomesField.get());
 	myForm.addField(taxCreditsField.get());*/
 
 	// Adding form validators

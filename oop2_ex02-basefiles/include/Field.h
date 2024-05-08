@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 #include "BaseField.h"
 #include "Validator.h"
 
@@ -54,7 +55,7 @@ void Field<T>::print(std::ostream& os) const
 {
 	os << m_prompt << " = " << m_data;
 	if (!m_valid)
-		os << "			" << m_errorMessage;
+		os << "		" << m_errorMessage;
 	else
 		os << '\n';
-}
+}	

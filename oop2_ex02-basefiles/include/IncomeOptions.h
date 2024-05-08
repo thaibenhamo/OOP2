@@ -1,9 +1,14 @@
 #pragma once
+#include "BaseOptions.h"
+#include<string>
 
-class IncomeOptions
+
+class IncomeOptions : public BaseOptions
 {
 public:
-	IncomeOptions();
-	virtual ~IncomeOptions() = default;
-private:
+    IncomeOptions();
+    virtual std::string getName(const int value) const override;
+protected:
 };
+
+
