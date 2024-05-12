@@ -1,9 +1,10 @@
 #pragma once
+#include "BaseOptions.h"
+#include<string>
 
-class TaxCredits
+class TaxCredits : public BaseOptions
 {
 public:
 	TaxCredits();
-	virtual ~TaxCredits() = default;
 private:
 };

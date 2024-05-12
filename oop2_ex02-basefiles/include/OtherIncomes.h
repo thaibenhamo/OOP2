@@ -1,9 +1,11 @@
 #pragma once
+#include "BaseOptions.h"
+#include<string>
 
-class OtherIncomes
+
+class OtherIncomes : public BaseOptions
 {
 public:
 	OtherIncomes();
-	virtual ~OtherIncomes() = default;
 private:
 };

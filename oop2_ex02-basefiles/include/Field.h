@@ -13,8 +13,9 @@ public:
 	void addValidator(Validator<T>* v);	
 	void readField();
 	bool isValid();
-	
+	T getAnswer() const;
 protected:
+	
 	void print(std::ostream& os) const override;
 	std::string m_prompt;
 	std::string m_errorMessage;
@@ -48,6 +49,11 @@ bool Field<T>::isValid()
 		m_valid = true;
 	}
 	return m_valid;
+}
+template<typename T>
+T Field<T>::getAnswer() const
+{
+	return m_data;
 }
 
 template<typename T>

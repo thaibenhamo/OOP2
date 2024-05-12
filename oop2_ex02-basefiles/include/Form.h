@@ -8,7 +8,8 @@ class Form
 {
 public:
 	Form();
-	void addField(BaseField* f);
+	void addField(BaseField* field);
+	void addValidator(FormValidator *formValidator);
 	void printFields(std::ostream& os) const;
 	void fillForm();
 	bool validateForm();

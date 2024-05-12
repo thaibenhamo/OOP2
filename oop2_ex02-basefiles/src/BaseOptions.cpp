@@ -15,3 +15,8 @@ std::string BaseOptions::optionsToString() const
     return result;
 }
 
+std::string BaseOptions::getName(const int value) const
+{
+    return (!m_options.contains(value) ? "0" : m_options.at(value));
+}
+

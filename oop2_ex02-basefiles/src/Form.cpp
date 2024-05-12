@@ -2,10 +2,16 @@
 
 Form::Form() {}
 
-void Form::addField(BaseField* f)
+void Form::addField(BaseField* field)
 {
-	m_fields.push_back(f);
+	m_fields.push_back(field);
 }
+
+void Form::addValidator(FormValidator* formValidator)
+{
+	m_formValidators.push_back(formValidator);
+}
+
 
 bool Form::validateForm()
 {
