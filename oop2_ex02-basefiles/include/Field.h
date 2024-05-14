@@ -15,12 +15,12 @@ public:
 	bool isValid();
 	T getAnswer() const;
 protected:
-	
 	void print(std::ostream& os) const override;
 	std::string m_prompt;
 	std::string m_errorMessage;
 	Validator<T>* m_validator;
 	T m_data;
+	
 };
 
 template<typename T>
@@ -59,9 +59,10 @@ T Field<T>::getAnswer() const
 template<typename T>
 void Field<T>::print(std::ostream& os) const
 {
-	os << m_prompt << " = " << m_data;
+	os << "-------------------------------------------------------------------------\n"
+		<< m_prompt << " = " << m_data;
+		
 	if (!m_valid)
-		os << "		" << m_errorMessage;
-	else
-		os << '\n';
+		os << "\t\t" << m_errorMessage;
+	os << "\n-------------------------------------------------------------------------\n";
 }	

@@ -1,16 +1,13 @@
 #pragma once
-//#include <string>
 #include "BaseField.h"
-
 
 class FormValidator
 {
 public:
 	FormValidator() = default;
 	virtual ~FormValidator() = default;
-	virtual bool isValid() const = 0;
+	virtual bool isValid() = 0;
+	virtual void printErrorMessage(std::ostream& os) const = 0;
 protected:
-	virtual void printErrorMessage() const = 0;
-	
-	
+	bool m_valid = true;
 };

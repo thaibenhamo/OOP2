@@ -10,8 +10,8 @@ class OtherIncomesAndTaxCreditsValidator : public FormValidator
 public:
     OtherIncomesAndTaxCreditsValidator(Field<ValuesToNames<OtherIncomes>>* otherIncomes, 
                                        Field<ValuesToNames<TaxCredits>>* taxCredits);
-    virtual void printErrorMessage() const override;
-    virtual bool isValid() const override;
+    virtual void printErrorMessage(std::ostream& os) const override;
+    virtual bool isValid() override;
 private:
     Field<ValuesToNames<OtherIncomes>>* m_otherIncomes;
     Field<ValuesToNames<TaxCredits>>* m_taxCredits;

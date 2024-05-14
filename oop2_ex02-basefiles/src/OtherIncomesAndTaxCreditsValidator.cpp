@@ -4,22 +4,25 @@ OtherIncomesAndTaxCreditsValidator::OtherIncomesAndTaxCreditsValidator(Field<Val
     Field<ValuesToNames<TaxCredits>>* taxCredits)
     : m_otherIncomes(otherIncomes), m_taxCredits(taxCredits) {}
 
-void OtherIncomesAndTaxCreditsValidator::printErrorMessage() const
+void OtherIncomesAndTaxCreditsValidator::printErrorMessage(std::ostream& os) const
 {
-    std::cout << "Incomes report and Other incomes report don't match.\n";
+    if(!m_valid)
+        os << "Other incomes report and tax credits report don't match.\n";
 }
 
-bool OtherIncomesAndTaxCreditsValidator::isValid() const
+bool OtherIncomesAndTaxCreditsValidator::isValid() 
 {
+    m_valid = true;
     int otherIncomesAnswer = m_otherIncomes->getAnswer().getOption();
     int taxCreditsAnswer = m_taxCredits->getAnswer().getOption();
 
     if (taxCreditsAnswer == 1 && otherIncomesAnswer != 1)
-        return false;
+        m_valid = false;
     if (taxCreditsAnswer == 2 && (otherIncomesAnswer == 1 || otherIncomesAnswer > 4))
-        return false;
-    //m_otherIncomes
-    //m_taxCredits.setReadAgain(false);
+        m_valid = false;
+
+    m_otherIncomes->setReadAgain(!m_valid);
+    m_taxCredits->setReadAgain(!m_valid);
  
-    return true;
+    return m_valid;
 }

@@ -11,6 +11,7 @@ public:
 	void addField(BaseField* field);
 	void addValidator(FormValidator *formValidator);
 	void printFields(std::ostream& os) const;
+	void printFormErrors(std::ostream& os) const;
 	void fillForm();
 	bool validateForm();
 private:

@@ -38,7 +38,7 @@ void Form::fillForm()
 {
 	for (int i = 0; i < m_fields.size(); i++)
 	{
-		if (!m_fields[i]->isValid())
+		if (!m_fields[i]->isValid() || m_fields[i]->needToReadAgain())
 		{
 			m_fields[i]->readField();
 		}
@@ -51,9 +51,16 @@ void Form::printFields(std::ostream& os) const
 		m_fields[i]->print(os);
 }
 
+void Form::printFormErrors(std::ostream& os) const
+{
+	for (int i = 0; i < m_formValidators.size(); i++)
+		m_formValidators[i]->printErrorMessage(os);
+}
+
 std::ostream& operator <<(std::ostream& os, const Form& form)
 {
 	form.printFields(os);
+	form.printFormErrors(os);
 	return os;
 }
 

@@ -7,5 +7,6 @@ class OtherIncomes : public BaseOptions
 {
 public:
 	OtherIncomes();
+	virtual std::string optionsToString() const override;
 private:
 };
