@@ -10,5 +10,5 @@ bool RegexValidator::validate(const std::string& input) const
 
 std::string RegexValidator::getErrorMessage() const
 {
-	return("The input does not adhere to the expected format.\n");
+	return("The input does not adhere to the\nexpected format.\n");
 }

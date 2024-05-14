@@ -11,4 +11,5 @@ public:
 	virtual void print(std::ostream& os) const = 0;
 protected:
 	bool m_valid = false;
+	bool m_readAgain = true;
 };

@@ -1,5 +1,5 @@
 #pragma once
-#include <string>
+//#include <string>
 #include "BaseField.h"
 
 
@@ -8,8 +8,9 @@ class FormValidator
 public:
 	FormValidator() = default;
 	virtual ~FormValidator() = default;
+	virtual bool isValid() const = 0;
 protected:
-	virtual std::string getErrorMessage() const = 0;
-	virtual bool validate() const = 0;
+	virtual void printErrorMessage() const = 0;
+	
 	
 };

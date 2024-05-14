@@ -23,6 +23,14 @@ bool Form::validateForm()
 			formIsValid = false;
 		}
 	}
+
+	for (int i = 0; i < m_formValidators.size(); i++)
+	{
+		if (!m_formValidators[i]->isValid())
+		{
+			formIsValid = false;
+		}
+	}
 	return formIsValid;
 }
 

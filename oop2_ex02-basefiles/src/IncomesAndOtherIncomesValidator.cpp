@@ -4,12 +4,12 @@ IncomesAndOtherIncomesValidator::IncomesAndOtherIncomesValidator(Field<ValuesToN
     Field<ValuesToNames<OtherIncomes>>* otherIncomes)
     : m_incomes(incomes), m_otherIncomes(otherIncomes) {}
 
-std::string IncomesAndOtherIncomesValidator::getErrorMessage() const
+void IncomesAndOtherIncomesValidator::printErrorMessage() const
 {
-    return("Incomes report and Other incomes report don't match.\n");
+    std::cout << "Incomes report and Other incomes report don't match.\n";
 }
 
-bool IncomesAndOtherIncomesValidator::validate() const
+bool IncomesAndOtherIncomesValidator::isValid() const
 {
     int incomesAnswer = m_incomes->getAnswer().getOption();
     int otherIncomesAnswer = m_otherIncomes->getAnswer().getOption();

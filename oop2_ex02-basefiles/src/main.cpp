@@ -65,7 +65,7 @@
 // A class that represents a other incomes-vs.-tax credits validator.
 // It checks if the reports matches each other.
 // The types used as template parameter must be Field.
-//#include "OtherIncomesAndTaxCreditsValidator.h"
+#include "OtherIncomesAndTaxCreditsValidator.h"
 
 //------------------- Function declarations ----------------------------
 
@@ -135,8 +135,8 @@ int main()
 	// Creating form validators
 	auto incomesAndOtherIncomesValidator
 		= std::make_unique<IncomesAndOtherIncomesValidator>(incomeField.get(), otherIncomesField.get());
-	/*auto otherIncomesAndTaxCreditsValidator
-		= std::make_unique<OtherIncomesAndTaxCreditsValidator>(otherIncomesField.get(), taxCreditsField.get());*/
+	auto otherIncomesAndTaxCreditsValidator
+		= std::make_unique<OtherIncomesAndTaxCreditsValidator>(otherIncomesField.get(), taxCreditsField.get());
 
 	// Creating the form and adding the fields to it
 	auto myForm = Form();
@@ -152,7 +152,7 @@ int main()
 
 	// Adding form validators
 	myForm.addValidator(incomesAndOtherIncomesValidator.get());
-	/*myForm.addValidator(otherIncomesAndTaxCreditsValidator.get());*/
+	myForm.addValidator(otherIncomesAndTaxCreditsValidator.get());
 
 	// Getting the information from the user
 	clearScreen();
