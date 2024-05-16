@@ -28,10 +28,10 @@ template<typename T>
 std::ostream& operator<<(std::ostream& os, const ValuesToNames<T>& value);
 
 template<typename T>
-ValuesToNames<T>::ValuesToNames() : m_option(0) {}
+ValuesToNames<T>::ValuesToNames() : m_option(-1) {}
 
 template<typename T>
-ValuesToNames<T>::ValuesToNames(int option) : m_option(option) {}
+ValuesToNames<T>::ValuesToNames(int option) : m_option(option-1) {}
 
 template<typename T>
 int ValuesToNames<T>::getOption() const
@@ -44,6 +44,7 @@ std::string ValuesToNames<T>::valuesAndNames() const
 {
     return m_options.optionsToString();
 }
+
 template<typename T>
  std::istream& operator>>(std::istream& is, ValuesToNames<T>& value)
 {

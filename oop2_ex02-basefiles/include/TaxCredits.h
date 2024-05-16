@@ -1,6 +1,7 @@
 #pragma once
-#include "BaseOptions.h"
+
 #include<string>
+#include "BaseOptions.h"
 
 class TaxCredits : public BaseOptions
 {

@@ -13,7 +13,7 @@ void Form::addValidator(FormValidator* formValidator)
 }
 
 
-bool Form::validateForm()
+bool Form::validateForm() const
 {
 	bool formIsValid = true;
 	for (int i = 0; i < m_fields.size(); i++)
@@ -34,7 +34,7 @@ bool Form::validateForm()
 	return formIsValid;
 }
 
-void Form::fillForm()
+void Form::fillForm() const
 {
 	for (int i = 0; i < m_fields.size(); i++)
 	{

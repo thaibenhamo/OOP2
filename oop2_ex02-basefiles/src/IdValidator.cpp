@@ -10,18 +10,21 @@ bool IdValidator::validate(const uint32_t& input) const
 
     std::string idAsStr = std::to_string(input);
 
-    if (idAsStr.length() != 9)
-    {  
+    if (idAsStr.length() != 9) 
         return false;
-    }
 
     for (int i = 0; i < idAsStr.length(); i++)
     {
         incNum = (idAsStr[i] - '0') * ((i % 2) + 1);  
-        sum += (incNum > 9) ? incNum - 9 : incNum;
+
+        if (incNum > 9)
+            sum += incNum - 9;
+        else
+            sum += incNum;
     }
     return(sum % 10 == 0);
 }
+
 std::string IdValidator::getErrorMessage() const
 {
     return("Wrong control digit.");

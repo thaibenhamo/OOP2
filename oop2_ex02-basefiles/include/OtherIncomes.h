@@ -1,7 +1,7 @@
 #pragma once
-#include "BaseOptions.h"
-#include<string>
 
+#include<string>
+#include "BaseOptions.h"
 
 class OtherIncomes : public BaseOptions
 {

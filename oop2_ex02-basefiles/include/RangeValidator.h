@@ -1,17 +1,18 @@
 #pragma once
 
-#include "Validator.h"
 #include <string>
+#include "Validator.h"
 
 template<typename T>
 class RangeValidator : public Validator<T>
 {
 public:
 	RangeValidator(const T& min, const T& max);
-	virtual ~RangeValidator() = default;
+	virtual ~RangeValidator() = default;	
+protected:
 	bool validate(const T& input) const override;
 	std::string getErrorMessage() const override;
-protected:
+
 	T m_min;
 	T m_max;
 };
@@ -32,5 +33,5 @@ bool RangeValidator<T>::validate(const T& input) const
 template<typename T>
 std::string RangeValidator<T>::getErrorMessage() const
 {
-	return ("Out of range.");
+	return ("Out of range");
 }

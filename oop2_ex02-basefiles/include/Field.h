@@ -10,17 +10,16 @@ class Field : public BaseField
 {
 public:
 	Field(std::string str);
-	void addValidator(Validator<T>* v);	
-	void readField();
-	bool isValid();
+	void addValidator(Validator<T>* v);
 	T getAnswer() const;
 protected:
-	void print(std::ostream& os) const override;
+	virtual void readField() override;
+	virtual void print(std::ostream& os) const override;
+	virtual bool isValid() override;
 	std::string m_prompt;
 	std::string m_errorMessage;
 	Validator<T>* m_validator;
 	T m_data;
-	
 };
 
 template<typename T>

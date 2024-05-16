@@ -7,8 +7,8 @@
 class IdValidator : public Validator<uint32_t>
 {
 public:
-    IdValidator();
+    IdValidator();   
+private:
     bool validate(const uint32_t& input) const;
     std::string getErrorMessage() const;
-private:
 };

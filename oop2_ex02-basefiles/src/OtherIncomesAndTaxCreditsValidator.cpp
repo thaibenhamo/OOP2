@@ -21,8 +21,11 @@ bool OtherIncomesAndTaxCreditsValidator::isValid()
     if (taxCreditsAnswer == 2 && (otherIncomesAnswer == 1 || otherIncomesAnswer > 4))
         m_valid = false;
 
-    m_otherIncomes->setReadAgain(!m_valid);
+    if(!m_otherIncomes->needToReadAgain())
+        m_otherIncomes->setReadAgain(!m_valid);
+
     m_taxCredits->setReadAgain(!m_valid);
+    
  
     return m_valid;
 }

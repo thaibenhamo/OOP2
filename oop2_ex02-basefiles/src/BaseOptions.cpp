@@ -1,12 +1,12 @@
 #include "BaseOptions.h"
 
-BaseOptions::BaseOptions(const std::unordered_map<int, std::string>& options)
-{
-	m_options = options;
-}
+BaseOptions::BaseOptions(const std::vector<std::string>& options)
+    : m_options(options) {}
 
-std::string BaseOptions::getName(const int value) const
+std::string BaseOptions::getName(int value) const 
 {
-    return (!m_options.contains(value) ? "0" : m_options.at(value));
-}
+    if (value >= 0 && value < m_options.size()) 
+        return m_options[value-1];
 
+    return std::to_string(value);
+}

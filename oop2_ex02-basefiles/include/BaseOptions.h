@@ -1,15 +1,14 @@
 #pragma once
 
-#include<string>
-#include <unordered_map>
+#include <string>
+#include <vector>
 
-class BaseOptions
-{
+class BaseOptions {
 public:
-    BaseOptions(const std::unordered_map<int, std::string>& options);
+    BaseOptions(const std::vector<std::string>& options);
     virtual ~BaseOptions() = default;
-    virtual std::string getName(const int value) const;
+    virtual std::string getName(int value) const;
     virtual std::string optionsToString() const = 0;
 protected:
-    std::unordered_map<int, std::string> m_options;
+    std::vector<std::string> m_options;
 };

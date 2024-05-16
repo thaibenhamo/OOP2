@@ -9,8 +9,9 @@ class RegexValidator : public Validator<std::string>
 {
 public:
     RegexValidator(const std::regex& pattern);
+private:
     bool validate(const std::string& input) const;
     std::string getErrorMessage() const;
-private:
+
     std::regex m_pattern;
 };

@@ -22,7 +22,7 @@ bool IncomesAndOtherIncomesValidator::isValid()
         m_valid =  false;
     if (!(incomesAnswer == 1 || incomesAnswer == 2) && otherIncomesAnswer == 3)
         m_valid =  false;
-   
+  
     m_incomes->setReadAgain(!m_valid);
     m_otherIncomes->setReadAgain(!m_valid);
 

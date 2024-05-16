@@ -1,4 +1,5 @@
 #pragma once
+
 #include <regex>
 
 class AddressPattern
@@ -11,10 +12,3 @@ public:
     }
 private:
 };
-
-
-
-
-
-
-
