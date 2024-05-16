@@ -104,11 +104,11 @@ int main()
 	auto dateOfBirthField = std::make_unique<Field<Date>>("What is your date of birth? (YYYY-MM-DD)");
 	auto startDateTaxYearField = std::make_unique<Field<Date>>("Date of beginning work in the tax year? (YYYY-MM-DD)");
 	auto incomeOptions = ValuesToNames<IncomeOptions>();
-	auto incomeField = std::make_unique<Field<ValuesToNames<IncomeOptions>>>("Details of my income from this employer: I receive:\n" + incomeOptions.valuesAndNames());
+	auto incomeField = std::make_unique<Field<ValuesToNames<IncomeOptions>>> ("Details of my income from this employer: I receive:\n" + incomeOptions.valuesAndNames());
 	auto otherIncomes = ValuesToNames<OtherIncomes>();
 	auto otherIncomesField = std::make_unique<Field<ValuesToNames<OtherIncomes>>>("Details of other incomes:\n" + otherIncomes.valuesAndNames());
 	auto taxCredits = ValuesToNames<TaxCredits>();
-	auto taxCreditsField = std::make_unique<Field<ValuesToNames<TaxCredits>>>("Receives tax credits at other income:\n" + taxCredits.valuesAndNames()); 
+	auto taxCreditsField = std::make_unique<Field<ValuesToNames<TaxCredits>>>("Receives tax credits at other income:\n" + taxCredits.valuesAndNames());
 
 	// Creating the field validators
 	auto nameValidator = std::make_unique<RegexValidator>(NamePattern::getPattern());
@@ -128,7 +128,7 @@ int main()
 	addressField->addValidator(addressValidator.get());
 	dateOfBirthField->addValidator(ageValidator.get());
 	startDateTaxYearField->addValidator(startDateTaxYearValidator.get());
-	incomeField->addValidator(incomeValidator.get());
+	incomeField->addValidator(incomeValidator.get());	
 	otherIncomesField->addValidator(otherIncomeValidator.get());
 	taxCreditsField->addValidator(taxCreditsValidator.get());
 
@@ -182,7 +182,7 @@ std::string getWelcomeMessage()
 {
 	return "+----------------------------------------------------------+\n"
 		"|                  Hello and welcome!                      |\n"
-		"|         Please fill the following 101 form               |\n"
+		"|			Please fill the following 101 form			    |\n"
 		"+----------------------------------------------------------+\n";
 }
 

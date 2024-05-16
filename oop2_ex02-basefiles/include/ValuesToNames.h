@@ -31,7 +31,7 @@ template<typename T>
 ValuesToNames<T>::ValuesToNames() : m_option(-1) {}
 
 template<typename T>
-ValuesToNames<T>::ValuesToNames(int option) : m_option(option-1) {}
+ValuesToNames<T>::ValuesToNames(int option) : m_option(option) {}
 
 template<typename T>
 int ValuesToNames<T>::getOption() const

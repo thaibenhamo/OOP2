@@ -36,6 +36,7 @@ void Field<T>::addValidator(Validator<T>* v)
 template<typename T>
 void Field<T>::readField()
 {
+	m_valid = false;
 	std::cout << m_prompt << std::endl;
 	std::cin >> m_data;
 }
