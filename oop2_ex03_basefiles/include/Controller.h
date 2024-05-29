@@ -1,5 +1,7 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
+#include "ToolBar.h"
 #include "Board.h"
 
 class Controller 
@@ -12,6 +14,10 @@ public:
 
 private:
     sf::RenderWindow m_window;
+    sf::Clock m_clock;
     Board m_board;
+    ToolBar m_toolBar;
+    float m_timeLeft;
+    
  
 };

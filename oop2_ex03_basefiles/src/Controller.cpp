@@ -1,11 +1,11 @@
 #include "Controller.h"
 #include <iostream>
-
-Controller::Controller()
+#include <random> 
+Controller::Controller() : m_timeLeft(60)
 {
-	//unsigned seed = static_cast<unsigned>(std::time(nullptr));
-	//std::srand(seed);
-	//std::cout << "Seed: " << seed << std::endl;
+	std::random_device rd;
+	//unsigned int seed = rd();
+	srand(m_timeLeft);
 	m_window.setFramerateLimit(60);
 	m_window.create(sf::VideoMode(1200, 800), "Pick up sticks");
 }
@@ -13,6 +13,8 @@ void Controller::startGame()
 {
 	while (m_window.isOpen()) 
 	{
+		sf::Time elapsed = m_clock.restart();
+		m_timeLeft -= elapsed.asSeconds();
 
 		for (auto event = sf::Event{}; m_window.pollEvent(event);)
 		{
@@ -25,17 +27,18 @@ void Controller::startGame()
 				break;
 			}
 			case sf::Event::MouseButtonReleased:
-				handleClick(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
+				handleClick(m_window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y }));
 				break;
 			default:
 				break;
 			}
 		}
-
-
+		m_board.update();
+		m_toolBar.update(m_timeLeft, m_board.getSticksLeft(), m_board.getSticksRaised(), m_board.getPickableSticks());
 		// display updated window
 		m_window.clear(sf::Color::White);
 		m_board.draw(m_window);
+		m_toolBar.draw(m_window);
 		m_window.display();
 	}
 }

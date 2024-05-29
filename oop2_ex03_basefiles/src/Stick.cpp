@@ -1,52 +1,65 @@
 #include <iostream> 
-#include <random>
+//#include <random>
 #include <chrono>
 #include <thread>
 #include "Stick.h"
+#include <cmath>
 
-Stick::Stick()
+
+const double PI = 3.14159265358979323846;
+
+Stick::Stick() : m_highlight(false)
 {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-
-    // Set texture, scale, and origin
-    m_stick.setTexture(*(ResourcesManager::instance().getTexture("stick1")));
+    //std::random_device rd;
+    //std::mt19937 gen(rd());
+    
+    m_stick.setTexture(ResourcesManager::instance().getTexture("stick1"));
   
-    m_stick.setScale(sf::Vector2f(0.4f, 0.4f));
- 
+    //m_stick.setSize(sf::Vector2f(343.5f, 6.5f));
 
-    // Set rotation
-    m_stick.setRotation(float(gen() % 360));
+    // Generate random length for each stick
+    //std::uniform_real_distribution<float> disLength(100.0f, 292.0f);
+    //m_length = disLength(gen);
+    m_length = (rand() % 192) + 100;
+    m_stick.setSize(sf::Vector2f(m_length, 9.0f));
+    m_angle = rand() % 360;
+ 
+    m_stick.setRotation(m_angle);
 
     // Generate random position for each stick
-    std::uniform_real_distribution<float> disX(276.0f, 924.0f);
-    std::uniform_real_distribution<float> disY(276.0f, 524.0f);
-    float randomX = disX(gen);
-    float randomY = disY(gen);
+    //std::uniform_real_distribution<float> disX(293.0f, 907.0f);
+    //std::uniform_real_distribution<float> disY(293.0f, 507.0f);
+
+    int randomX = (rand() % 614) + 293;
+    int randomY = (rand() % 214) + 293;
+
     m_stick.setPosition(randomX, randomY);
 
+    m_startPoint = sf::Vector2f(randomX, randomY);
+    m_stick.setFillColor(sf::Color::White);
+   
     // Assign random color and score to the stick
-    int colorIndex = gen() % 5; // Generate a random index for color selection
+    int colorIndex = rand() % 5; // Generate a random index for color selection
     switch (colorIndex) 
     {
     case 0:
-        m_stick.setColor(sf::Color::Black);
+        m_stick.setFillColor(sf::Color::Black);
         m_score = 25;
         break;
     case 1:
-        m_stick.setColor(sf::Color(128, 0, 128)); // Purple color
+        m_stick.setFillColor(sf::Color(150, 134, 255)); // Purple color
         m_score = 15;
         break;
     case 2:
-        m_stick.setColor(sf::Color::Yellow);
+        m_stick.setFillColor(sf::Color::Yellow);
         m_score = 6;
         break;
     case 3:
-        m_stick.setColor(sf::Color::Green);
+        m_stick.setFillColor(sf::Color::Green);
         m_score = 5;
         break;
     case 4:
-        m_stick.setColor(sf::Color::Red);
+        m_stick.setFillColor(sf::Color(255, 102, 130));
         m_score = 4;
         break;
     default:
@@ -57,8 +70,17 @@ Stick::Stick()
     std::cout << "Stick position: " << randomX << ", " << randomY << " Score: " << m_score << std::endl;
 }
 
-void Stick::draw(sf::RenderWindow& window) const 
+void Stick::draw(sf::RenderWindow& window)
 {
+    if (m_highlight && m_flickerClock.getElapsedTime().asMilliseconds() < 500) 
+    {
+        m_stick.setOutlineColor(sf::Color::Yellow);
+        m_stick.setOutlineThickness(-2);
+    }
+    else 
+    {
+        m_stick.setOutlineThickness(0);
+    }
     window.draw(m_stick);
 }
 
@@ -71,15 +93,15 @@ bool Stick::intersects(const Stick& other) const
 
     auto onSegment = [](sf::Vector2f p, sf::Vector2f q, sf::Vector2f r) 
         {
-        return (q.x <= std::max(p.x, r.x) && q.x >= std::min(p.x, r.x) &&
-                q.y <= std::max(p.y, r.y) && q.y >= std::min(p.y, r.y));
+            return (q.x <= std::max(p.x, r.x) && q.x >= std::min(p.x, r.x) &&
+                    q.y <= std::max(p.y, r.y) && q.y >= std::min(p.y, r.y));
         };
 
     auto orientation = [](sf::Vector2f p, sf::Vector2f q, sf::Vector2f r) 
         {
-        float val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
-        if (val == 0) return 0;  // collinear
-        return (val > 0) ? 1 : 2; // clock or counterclock wise
+            float val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
+            if (val == 0) return 0;  // collinear
+            return (val > 0) ? 1 : 2; // clock or counterclock wise
         };
 
     int o1 = orientation(p1, q1, p2);
@@ -97,25 +119,42 @@ bool Stick::intersects(const Stick& other) const
     return false;
 }
 
-sf::Vector2f Stick::getStartPoint() const 
-{
-    return m_stick.getPosition();
+sf::Vector2f Stick::getStartPoint() const
+{  
+    // Get the initial start point of the stick
+    /*sf::Vector2f startPoint = m_startPoint;
+
+    // Calculate the rotation angle in radians
+    float rotation = m_angle * PI / 180.0;
+
+    // Apply rotation transformation
+    int rotatedX = startPoint.x * cos(rotation) - startPoint.y * sin(rotation);
+    float rotatedY = startPoint.x * sin(rotation) + startPoint.y * cos(rotation);
+   
+    // Return the transformed start point
+    return sf::Vector2f(rotatedX, rotatedY); */
+    return m_startPoint;
 }
 
-sf::Vector2f Stick::getEndPoint() const 
+sf::Vector2f Stick::getEndPoint() const
 {
-    sf::FloatRect bounds = m_stick.getGlobalBounds();
-    return sf::Vector2f(bounds.left + bounds.width, bounds.top + bounds.height);
+    float rotation = (90 + m_angle) * PI / 180.0;
+    int endPointX = m_startPoint.x + m_length * cos(rotation);
+    int endPointy = m_startPoint.y + m_length * sin(rotation);
+
+    return(sf::Vector2f(endPointX, endPointy));
 }
+
 
 bool Stick::canBePicked() const 
 {
-    return m_sticksAbove.empty();
+    return (m_sticksAbove.size() == 0);
 }
 
 bool Stick::contains(const sf::Vector2f& point) const 
 {
-    return m_stick.getGlobalBounds().contains(point);
+    sf::Vector2f position = m_stick.getTransform().getInverse().transformPoint(point);
+    return m_stick.getLocalBounds().contains(position);
 }
 
 void Stick::checkAndFlickerAboveSticks() 
@@ -131,22 +170,27 @@ void Stick::checkAndFlickerAboveSticks()
     }
 }
 
-void Stick::flicker() 
+void Stick::update() 
 {
-    // Save the original color of the stick
-    sf::Color originalColor = m_stick.getColor();
-
-    // Change the color of the stick to indicate flickering (e.g., change to black)
-    m_stick.setColor(sf::Color::Black);
-
-    // Wait for a short duration to create flicker effect (you may need to include <thread> and <chrono> headers)
-    std::this_thread::sleep_for(std::chrono::milliseconds(200)); // Adjust the duration as needed
-
-    // Restore the original color of the stick
-    m_stick.setColor(originalColor);
+    if (m_highlight && m_flickerClock.getElapsedTime().asMilliseconds() >= 500) 
+    {
+        m_highlight = false;
+    }
 }
 
-void Stick::removeStickAbove(Stick* stick) 
+void Stick::flicker() 
 {
-    m_sticksAbove.remove(stick);
+    m_highlight = true;
+    m_flickerClock.restart();
+}
+
+
+void Stick::removeStickAbove(Stick* stickAbove)
+{
+    m_sticksAbove.erase(std::remove(m_sticksAbove.begin(), m_sticksAbove.end(), stickAbove), m_sticksAbove.end());
+}
+
+void Stick::addStickAbove(Stick* stick)
+{
+    m_sticksAbove.push_back(stick);
 }

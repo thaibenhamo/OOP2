@@ -1,1 +1,3 @@
 ﻿configure_file ("stick1.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("FONT.ttf" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("background.png" ${CMAKE_BINARY_DIR} COPYONLY)

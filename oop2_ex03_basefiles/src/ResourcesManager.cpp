@@ -7,6 +7,7 @@ ResourcesManager::ResourcesManager()
     try
     {
         loadTexture("stick1", "stick1.png");
+        loadTexture("background", "background.png");
     }
     catch (const TextureLoadException& e)
     {

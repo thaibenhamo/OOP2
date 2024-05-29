@@ -6,7 +6,7 @@ class Stick
 {
 public:
 	Stick();
-	void draw(sf::RenderWindow& window) const;
+	void draw(sf::RenderWindow& window);
 	bool contains(const sf::Vector2f& point) const;
 	void tryRemoveStick(const sf::Vector2f& mousePosition);
 	bool intersects(const Stick& other) const;
@@ -16,9 +16,15 @@ public:
 	bool canBePicked() const;
 	void flicker();
 	void checkAndFlickerAboveSticks();
-	void removeStickAbove(Stick* stick);
+	void removeStickAbove(Stick* stickAbove);
+	void update();
 private:
-	sf::Sprite m_stick;
+	sf::RectangleShape m_stick;
+	sf::Clock m_flickerClock;
 	int m_score;
+	int m_length;
+	int m_angle;
+	bool m_highlight;
+	sf::Vector2f m_startPoint;
 	std::list<Stick*> m_sticksAbove;
 };
