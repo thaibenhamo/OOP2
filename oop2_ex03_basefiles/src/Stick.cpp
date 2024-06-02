@@ -1,45 +1,31 @@
 #include <iostream> 
-//#include <random>
-#include <chrono>
-#include <thread>
-#include "Stick.h"
+#include <fstream>
+#include <sstream> 
 #include <cmath>
+#include "Stick.h"
+#include "Macros.h"
+#include "IncorrectFileException.h"
+#include "InvalidGameStateException.h"
 
-
-const double PI = 3.14159265358979323846;
-
-Stick::Stick() : m_highlight(false)
+Stick::Stick(int id) : m_id(id), m_highlight(false)
 {
-    //std::random_device rd;
-    //std::mt19937 gen(rd());
-    
-    m_stick.setTexture(ResourcesManager::instance().getTexture("stick1"));
-  
-    //m_stick.setSize(sf::Vector2f(343.5f, 6.5f));
-
-    // Generate random length for each stick
-    //std::uniform_real_distribution<float> disLength(100.0f, 292.0f);
-    //m_length = disLength(gen);
-    m_length = (rand() % 192) + 100;
-    m_stick.setSize(sf::Vector2f(m_length, 9.0f));
-    m_angle = rand() % 360;
- 
+    m_length = (rand() % (280 - 50 + 1)) + 50;
+    m_startPoint = { float((rand() % (910 - 520 + 1) + 520)),
+                     float((rand() % (520 - 280 + 1) + 280)) };
+    m_angle = float(rand() % 360);
+    m_stick.setSize(sf::Vector2f(float(m_length), 9.0f));
+    m_stick.setPosition(m_startPoint);
     m_stick.setRotation(m_angle);
+    m_color = rand() % 5;
 
-    // Generate random position for each stick
-    //std::uniform_real_distribution<float> disX(293.0f, 907.0f);
-    //std::uniform_real_distribution<float> disY(293.0f, 507.0f);
+    setStickScoreByColorIndex(m_color);
+}
 
-    int randomX = (rand() % 614) + 293;
-    int randomY = (rand() % 214) + 293;
+Stick::Stick() : m_id(0), m_score(0), m_length(0), m_highlight(false), m_color(0), m_angle(0){}
 
-    m_stick.setPosition(randomX, randomY);
 
-    m_startPoint = sf::Vector2f(randomX, randomY);
-    m_stick.setFillColor(sf::Color::White);
-   
-    // Assign random color and score to the stick
-    int colorIndex = rand() % 5; // Generate a random index for color selection
+void Stick::setStickScoreByColorIndex(int colorIndex)
+{  
     switch (colorIndex) 
     {
     case 0:
@@ -47,36 +33,35 @@ Stick::Stick() : m_highlight(false)
         m_score = 25;
         break;
     case 1:
-        m_stick.setFillColor(sf::Color(150, 134, 255)); // Purple color
+        m_stick.setFillColor(sf::Color(105, 138, 255)); // Purple color
         m_score = 15;
         break;
     case 2:
-        m_stick.setFillColor(sf::Color::Yellow);
+        m_stick.setFillColor(sf::Color(255, 234, 97));
         m_score = 6;
         break;
     case 3:
-        m_stick.setFillColor(sf::Color::Green);
+        m_stick.setFillColor(sf::Color(205, 243, 152)); // Green
         m_score = 5;
         break;
     case 4:
-        m_stick.setFillColor(sf::Color(255, 102, 130));
+        m_stick.setFillColor(sf::Color(194, 59, 34));
         m_score = 4;
         break;
     default:
         break;
     }
-
-    // Debug output
-    std::cout << "Stick position: " << randomX << ", " << randomY << " Score: " << m_score << std::endl;
 }
 
 void Stick::draw(sf::RenderWindow& window)
 {
-    if (m_highlight && m_flickerClock.getElapsedTime().asMilliseconds() < 500) 
+    if (m_highlight &&
+        m_highlightClock.getElapsedTime().asMilliseconds() < 500) 
     {
         m_stick.setOutlineColor(sf::Color::Yellow);
-        m_stick.setOutlineThickness(-2);
+        m_stick.setOutlineThickness(2);
     }
+
     else 
     {
         m_stick.setOutlineThickness(0);
@@ -121,34 +106,20 @@ bool Stick::intersects(const Stick& other) const
 
 sf::Vector2f Stick::getStartPoint() const
 {  
-    // Get the initial start point of the stick
-    /*sf::Vector2f startPoint = m_startPoint;
-
-    // Calculate the rotation angle in radians
-    float rotation = m_angle * PI / 180.0;
-
-    // Apply rotation transformation
-    int rotatedX = startPoint.x * cos(rotation) - startPoint.y * sin(rotation);
-    float rotatedY = startPoint.x * sin(rotation) + startPoint.y * cos(rotation);
-   
-    // Return the transformed start point
-    return sf::Vector2f(rotatedX, rotatedY); */
     return m_startPoint;
 }
 
 sf::Vector2f Stick::getEndPoint() const
 {
-    float rotation = (90 + m_angle) * PI / 180.0;
-    int endPointX = m_startPoint.x + m_length * cos(rotation);
-    int endPointy = m_startPoint.y + m_length * sin(rotation);
+    float rotation = float(m_angle * PI / 180.0f);
 
-    return(sf::Vector2f(endPointX, endPointy));
+    return {m_startPoint.x + m_length * cos(rotation),
+            m_startPoint.y + m_length * sin(rotation)};
 }
-
 
 bool Stick::canBePicked() const 
 {
-    return (m_sticksAbove.size() == 0);
+    return m_sticksAbove.size() == 0;
 }
 
 bool Stick::contains(const sf::Vector2f& point) const 
@@ -157,40 +128,96 @@ bool Stick::contains(const sf::Vector2f& point) const
     return m_stick.getLocalBounds().contains(position);
 }
 
-void Stick::checkAndFlickerAboveSticks() 
+void Stick::highlightSticksAbove() 
 {
-    // Check if there are sticks above
-    if (!m_sticksAbove.empty()) 
+    for (auto& aboveStick : m_sticksAbove) 
     {
-        // Flicker each stick above
-        for (auto& aboveStick : m_sticksAbove) 
-        {
-            aboveStick->flicker();
-        }
+        aboveStick->highlightStick();
     }
 }
 
 void Stick::update() 
 {
-    if (m_highlight && m_flickerClock.getElapsedTime().asMilliseconds() >= 500) 
+    if (m_highlight &&
+        m_highlightClock.getElapsedTime().asMilliseconds() >= 500) 
     {
         m_highlight = false;
     }
 }
 
-void Stick::flicker() 
+void Stick::highlightStick() 
 {
     m_highlight = true;
-    m_flickerClock.restart();
+    m_highlightClock.restart();
 }
 
 
 void Stick::removeStickAbove(Stick* stickAbove)
 {
-    m_sticksAbove.erase(std::remove(m_sticksAbove.begin(), m_sticksAbove.end(), stickAbove), m_sticksAbove.end());
+    m_sticksAbove.erase(std::remove(m_sticksAbove.begin(),
+                        m_sticksAbove.end(), stickAbove), 
+                        m_sticksAbove.end());
 }
 
 void Stick::addStickAbove(Stick* stick)
 {
     m_sticksAbove.push_back(stick);
+}
+
+int Stick::getScore() const
+{
+    return m_score;
+}
+int Stick::getId() const
+{
+    return m_id;
+}
+
+bool Stick::getHighlightStatus() const
+{
+    return m_highlight;
+}
+
+void Stick::save(std::ofstream& outFile) const
+{
+    outFile << m_id << ' ' << m_length << ' ' << m_startPoint.x << ' ' 
+            << m_startPoint.y << ' ' << m_color << ' ' << m_angle << ' '
+            << '\n';
+}
+
+void Stick::load(std::ifstream& inFile, int numOfSticks) 
+{
+    std::string line;
+
+    if (std::getline(inFile, line))
+    {
+        std::istringstream iss(line);
+
+        if (!(iss >> m_id >> m_length >> m_startPoint.x >> m_startPoint.y >>
+              m_color >> m_angle))
+        {
+            throw IncorrectFileException("Failed to read stick data.");
+        }
+
+        if (m_id < 0 || m_id > numOfSticks ||
+            m_length < MIN_STICK_LENGTH || m_length > MAX_STICK_LENGTH ||
+            m_startPoint.x < MIN_START_X || m_startPoint.x > MAX_START_X ||
+            m_startPoint.y < MIN_START_Y || m_startPoint.y > MAX_START_Y ||
+            m_color < 0 || m_color > MAX_COLOR_INDEX ||
+            m_angle < 0 || m_angle > MAX_ANGLE)
+        {
+            throw InvalidGameStateException("Stick data is not valid.");
+        }
+
+        m_stick.setSize(sf::Vector2f(float(m_length), 9.0f));
+        m_stick.setPosition(m_startPoint);
+        m_stick.setRotation(m_angle);
+        m_highlight = false;
+        setStickScoreByColorIndex(m_color);
+    }
+    else
+    {
+        throw IncorrectFileException("Failed to read stick data.");
+    }
+
 }

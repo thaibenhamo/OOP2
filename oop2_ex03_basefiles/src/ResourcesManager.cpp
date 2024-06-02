@@ -1,18 +1,14 @@
 #include <iostream>
 #include "ResourcesManager.h"
-#include "TextureLoadException.h"
 
 ResourcesManager::ResourcesManager()
 {
-    try
-    {
-        loadTexture("stick1", "stick1.png");
-        loadTexture("background", "background.png");
-    }
-    catch (const TextureLoadException& e)
-    {
-        throw; // Rethrow exception to propagate it to the caller
-    }
+    if (!m_font.loadFromFile("FONT.ttf"))
+        exit(EXIT_FAILURE);
+
+    loadTexture("background", "background.png");
+    loadTexture("menu", "menu.png");
+    loadTexture("button1", "button1.png");
 };
 
 ResourcesManager& ResourcesManager::instance()
@@ -21,21 +17,23 @@ ResourcesManager& ResourcesManager::instance()
     return inst;
 }
 
-void ResourcesManager::loadTexture(const std::string & name, const std::string & filename)
+void ResourcesManager::loadTexture(const std::string& name, const std::string& filename)
 {
     sf::Texture texture;
 
     if (!texture.loadFromFile(filename)) 
     {
-        throw TextureLoadException(filename);
-        std::cerr << "Failed to load textures. Exiting program." << std::endl;
+        exit(EXIT_FAILURE);
     }
-    texture.setSmooth(true);
     m_SticksTextures[name] = texture;
-    //std::cout << "Loaded texture: " << filename << std::endl;
 }
 
 const sf::Texture* ResourcesManager::getTexture(const std::string& name) const
 {
-    return &m_SticksTextures.at(name); // Throws std::out_of_range if texture not found
+    return &m_SticksTextures.at(name); 
+}
+
+const sf::Font* ResourcesManager::getFont() const
+{
+    return &m_font; 
 }
