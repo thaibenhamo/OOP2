@@ -21,7 +21,8 @@ Stick::Stick(int id) : m_id(id), m_highlight(false)
     setStickScoreByColorIndex(m_color);
 }
 
-Stick::Stick() : m_id(0), m_score(0), m_length(0), m_highlight(false), m_color(0), m_angle(0){}
+Stick::Stick() : m_id(0), m_score(0), m_length(0), m_highlight(false),
+                 m_color(0), m_angle(0){}
 
 
 void Stick::setStickScoreByColorIndex(int colorIndex)
@@ -33,11 +34,11 @@ void Stick::setStickScoreByColorIndex(int colorIndex)
         m_score = 25;
         break;
     case 1:
-        m_stick.setFillColor(sf::Color(105, 138, 255)); // Purple color
+        m_stick.setFillColor(sf::Color(105, 138, 255)); // Purple 
         m_score = 15;
         break;
     case 2:
-        m_stick.setFillColor(sf::Color(255, 234, 97));
+        m_stick.setFillColor(sf::Color(255, 234, 97)); // Yellow
         m_score = 6;
         break;
     case 3:
@@ -45,7 +46,7 @@ void Stick::setStickScoreByColorIndex(int colorIndex)
         m_score = 5;
         break;
     case 4:
-        m_stick.setFillColor(sf::Color(194, 59, 34));
+        m_stick.setFillColor(sf::Color(194, 59, 34)); // Red
         m_score = 4;
         break;
     default:

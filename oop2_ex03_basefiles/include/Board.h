@@ -11,19 +11,19 @@ public:
 	Board();
 	void draw(sf::RenderWindow& window);
 	void load(const std::string& filename);
-	void updateSticksAbove(Stick& newStick);
 	void saveBoard(float TimeLeft);
-	void updatePickableSticks();
+	void update();
+	void showHint();
 	int handleMouseClick(const sf::Vector2f& mousePosition);
 	int getSticksLeft() const;
 	int getScore() const;
 	int getSticksRaised() const;
 	int getPickableSticks() const;
 	float getTimeLeftForLoad() const;
-	void update();
-	void showHint();
-
+	
 private:
+	void updatePickableSticks();
+	void updateSticksAbove(Stick& newStick);
 	void addStick(const Stick& stick);
 	void loadBoardButtons();
 

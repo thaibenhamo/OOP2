@@ -2,10 +2,10 @@
 
 #include <SFML/Graphics.hpp>
 
-class ToolBar
+class InfoBar
 {
 public:
-    ToolBar();
+    InfoBar();
     void update(float timeLeft, int score, int sticksLeft, int sticksRaised, int pickableSticks);
     void draw(sf::RenderWindow& window) const;
 

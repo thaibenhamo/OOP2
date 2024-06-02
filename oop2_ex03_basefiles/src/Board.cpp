@@ -1,9 +1,9 @@
-#include <iostream>
 #include <fstream>
 #include "Board.h"
 #include "IncorrectFileException.h"
 #include "InvalidGameStateException.h"
 #include "Macros.h"
+
 
 Board::Board() : m_sticksRaised(0), m_pickableSticks(0), m_score(0),
                  m_hint(false), m_gameOver(false), m_loadTime(0)
@@ -12,7 +12,7 @@ Board::Board() : m_sticksRaised(0), m_pickableSticks(0), m_score(0),
     m_background.setTexture(ResourcesManager::instance().getTexture("background"));
 
     m_sticksLeft = (rand() % (60 - 40 + 1)) + 40;
-
+   
     for (int i = 0; i < m_sticksLeft; i++)
     {
         addStick(Stick(i));
@@ -22,7 +22,7 @@ Board::Board() : m_sticksRaised(0), m_pickableSticks(0), m_score(0),
     m_hintIterator = m_canBePicked.begin();
 }
 
-void Board::draw(sf::RenderWindow& window)
+void Board::draw(sf::RenderWindow& window) 
 {
     window.draw(m_background);
    

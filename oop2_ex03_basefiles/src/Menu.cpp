@@ -2,10 +2,9 @@
 #include "Controller.h"
 #include "Macros.h"
 
-
 Menu::Menu() : m_background(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT))
 {
-	m_background.setTexture(ResourcesManager::instance().getTexture("menu"));
+	m_background.setTexture(ResourcesManager::instance().getTexture("menuBackground"));
 	loadMenuButtons();
 }
 

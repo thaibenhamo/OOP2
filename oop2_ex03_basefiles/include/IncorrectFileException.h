@@ -6,8 +6,8 @@
 class IncorrectFileException : public std::exception
 {
 public:
-    IncorrectFileException(const std::string& message) 
-    {
+    IncorrectFileException(const std::string& message)
+    { 
         m_message = "Error loading game: " + message;
     }
  
@@ -15,6 +15,7 @@ public:
     {
         return m_message.c_str();
     }
+
 private:
     std::string m_message;
 };

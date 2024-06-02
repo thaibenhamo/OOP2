@@ -4,8 +4,7 @@
 #include "IncorrectFileException.h"
 #include "InvalidGameStateException.h"
 
-
-Controller::Controller() : m_timeLeft(10)
+Controller::Controller() : m_timeLeft(90)
 {
 	srand((unsigned int)time(0));
 	m_window.setFramerateLimit(60);
@@ -48,17 +47,17 @@ void Controller::startGame()
 		}
 
 		m_board.update();
-		m_toolBar.update(m_timeLeft, m_board.getScore(), m_board.getSticksLeft(),
+		m_infoBar.update(m_timeLeft, m_board.getScore(), m_board.getSticksLeft(),
 						 m_board.getSticksRaised(), m_board.getPickableSticks());
 
-		if (m_timeLeft <= 0)
+		if (m_timeLeft <= 0 || m_board.getSticksLeft() == 0)
 		{
 			endScreen();
 		}
 			
 		m_window.clear();
 		m_board.draw(m_window);
-		m_toolBar.draw(m_window);
+		m_infoBar.draw(m_window);
 		m_window.display();
 	}
 }
@@ -113,7 +112,6 @@ void Controller::handleBoardClick(const sf::Vector2f& mousePosition)
 	case BoardOption::Quit:
 	{
 		m_board = Board();
-		m_clock.restart();
 		startMenu();
 		break;
 	}
@@ -130,7 +128,7 @@ void Controller::handleMenuClick(const sf::Vector2f& mousePosition)
 	{
 	case MenuOption::startGame:
 	{
-		m_timeLeft = 10;
+		m_timeLeft = 90;
 		startGame();
 		break;
 	}
@@ -145,10 +143,15 @@ void Controller::handleMenuClick(const sf::Vector2f& mousePosition)
 		catch (const IncorrectFileException& e)
 		{
 			std::cout << e.what() << '\n';
+			m_board = Board();
+			startMenu();
+
 		}
 		catch (const InvalidGameStateException& e)
 		{
 			std::cout << e.what() << '\n';
+			m_board = Board();
+			startMenu();
 		}
 	}
 	case MenuOption::Exit:
@@ -166,14 +169,14 @@ void Controller::endScreen()
 {	
 	sf::RectangleShape endScreen;
 	endScreen.setSize(sf::Vector2f(WINDOW_WIDTH,WINDOW_HEIGHT));
-	endScreen.setTexture(ResourcesManager::instance().getTexture("background"));
+	endScreen.setTexture(ResourcesManager::instance().getTexture("endScreen"));
 
 	sf::Text text;
 	const sf::Font* font = ResourcesManager::instance().getFont();
 	text.setFont(*font);
 	text.setString("your score: " + std::to_string(m_board.getScore()));
 	text.setCharacterSize(65);
-	text.setFillColor(sf::Color::Black);
+	text.setFillColor(sf::Color(61, 45, 48));
 
 	float xPos = (m_window.getSize().x - text.getLocalBounds().width) / 2.0f;
 	text.setPosition(xPos, 290);
@@ -190,13 +193,13 @@ void Controller::endScreen()
 				exit(EXIT_SUCCESS);
 			}
 
-			case sf::Event::MouseButtonPressed:
+			case sf::Event::MouseButtonReleased:
 			{
 				m_timeLeft = 90;
 				m_clock.restart();
 				m_board = Board();
 				startMenu();
-				return;
+				break;
 			}
 			default:
 				break;

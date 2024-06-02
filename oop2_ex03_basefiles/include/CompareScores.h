@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Stick.h"
 
 class CompareScores 

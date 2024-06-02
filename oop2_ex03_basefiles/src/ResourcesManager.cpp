@@ -6,9 +6,10 @@ ResourcesManager::ResourcesManager()
     if (!m_font.loadFromFile("FONT.ttf"))
         exit(EXIT_FAILURE);
 
+    loadTexture("menuBackground", "menuBackground.png");
     loadTexture("background", "background.png");
-    loadTexture("menu", "menu.png");
-    loadTexture("button1", "button1.png");
+    loadTexture("endScreen", "endScreen.png");
+    loadTexture("button", "button.png");
 };
 
 ResourcesManager& ResourcesManager::instance()
