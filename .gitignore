@@ -9,3 +9,7 @@ oop2_ex02-basefiles/out
 # Ignore ex_3 directories
 oop2_ex03_basefiles/.vs
 oop2_ex03_basefiles/out
+
+# Ignore project directories
+oop2_project/.vs
+oop2_project/out
