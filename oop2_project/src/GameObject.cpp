@@ -5,9 +5,6 @@ GameObject::GameObject(sf::Vector2f location, Resources::Object object)
 {
 	m_sprite.setTexture(Resources::instance().get(object));
 	m_sprite.setPosition(location);
-	
-	m_sprite.setScale(2, 2);
-	
 }
 //=========================================================
 void GameObject::draw(sf::RenderTarget& target)

@@ -8,6 +8,11 @@ int main() try {
 
     return EXIT_SUCCESS;
 }
+catch (FileError& e)
+{
+    std::cerr << e.what() << "\n";
+    return EXIT_FAILURE;
+}
 catch (std::exception& e) {
     std::cerr << "Exception: " << e.what() << '\n';
     return EXIT_FAILURE;

@@ -42,7 +42,7 @@ void Controller::runGame() {
 void Controller::runLevel() {
 
 	//add init view
-	while (!m_board.getWinLevel())
+	while (true/*!m_board.getWinLevel()*/)
 	{
 		
 		//updateView(myView);
@@ -84,7 +84,7 @@ void Controller::handleEvents(/*sf::View& myView*/) {
 void Controller::draw(/*sf::View myView*/) {
 
 	m_window.clear();
-	//m_window.draw(getBackgroundSprite());
+	m_window.draw(sf::Sprite(Resources::instance().get(BackgroundType::Background1)));
 	m_board.drawObjects(m_window);
 
 	//add draw InfoBar

@@ -1,5 +1,4 @@
 #include "Resources.h"
-#include "Macros.h"
 
 Resources::Resources() {
 
@@ -22,10 +21,28 @@ Resources::Resources() {
 
 sf::Texture& Resources::get(const Object object)
 {
-	switch (object)
-	{
-	case Object::Player:
-		return m_textures[0];
+	return m_textures[object];
+}
+
+Resources::Object Resources::getResourceType(ObjectType type) 
+{
+	switch (type) {
+	case ObjectType::PlayerChar:
+		return Player;
+	case ObjectType::WallChar:
+		return Wall; 
+	case ObjectType::RandomEnemyChar:
+		return RandomEnemy;
+	case ObjectType::SpaceChar:
+		return Space;
+		// Add cases for other ObjectType values
+	default:
+		throw std::runtime_error("Unknown ObjectType");
 	}
-	throw std::runtime_error("No Texture of that type");
+}
+
+//=========================================================
+sf::Texture& Resources::get(const BackgroundType backgroundtype)
+{
+	return m_textures[backgroundtype];
 }

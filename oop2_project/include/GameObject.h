@@ -1,5 +1,6 @@
 #pragma once
 #include "Resources.h"
+#include "Factory.h"
 
 class GameObject {
 

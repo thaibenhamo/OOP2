@@ -14,34 +14,19 @@
 #include <ctime>   
 #include <list>
 #include <stdexcept>
+#include "Macros.h"
+#include "FileError.h"
 
-//move all enum to another h file
-enum class ObjectType
-{
-	PlayerChar = 'P',
-};
-
-enum BackgroundType
-{
-
-};
-
-enum MusicType
-{
-
-};
-
-enum class SoundType
-{
-
-};
 
 class Resources {
 
 public:
 	enum Object
 	{
-		Player,
+		Player = BackgroundType::Count,
+		Wall,
+		RandomEnemy,
+		Space
 	};
 
 	//Singleton, provides a centralized access point to these resources.
@@ -56,7 +41,8 @@ public:
 
 	//sf::Font& get();
 	sf::Texture& get(const Object object);
-	//sf::Texture& get(const BackgroundType type);
+	sf::Texture& get(const BackgroundType type);
+	Resources::Object getResourceType(ObjectType type);	// Mapping from ObjectType to Resources::Object
 	
 private:
 	Resources();

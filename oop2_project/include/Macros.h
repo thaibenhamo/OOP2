@@ -1,7 +1,32 @@
 #pragma once 
 #include <string>
 
-const int NUM_OF_TEXTURES = 1;
+
+enum class ObjectType
+{
+	PlayerChar = 'P',
+	WallChar = '#',
+	RandomEnemyChar = '&',
+	SpaceChar = ' '
+};
+
+enum BackgroundType
+{
+	Background1 = 0,
+	Count
+};
+
+enum MusicType
+{
+
+};
+
+enum class SoundType
+{
+
+};
+
+const int NUM_OF_TEXTURES = 4;
 const std::string LEVEL_NAME = "Board", FILE_EXTENSION = ".txt";
 const int DEFAULT_ROWS = 12;
 const int DEFAULT_COLS = 24;

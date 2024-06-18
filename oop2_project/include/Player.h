@@ -12,7 +12,7 @@ public:
 	Player(Player&&) = default;
 	Player& operator=(Player&&) = default;
 
-	const bool getEnterExit() const;
+	//const bool getEnterExit() const;
 private:
 	sf::Vector2f m_startPos;
 	bool m_enterExit = false;
