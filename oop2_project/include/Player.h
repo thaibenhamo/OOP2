@@ -5,6 +5,7 @@ class Player : public MovingObject {
 
 public:
 	Player(sf::Vector2f location, Resources::Object object);
+	Player();
 	virtual ~Player() = default;
 
 	Player(const Player&) = default;

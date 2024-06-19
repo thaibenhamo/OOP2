@@ -7,9 +7,9 @@ GameObject::GameObject(sf::Vector2f location, Resources::Object object)
 	m_sprite.setPosition(location);
 }
 //=========================================================
-void GameObject::draw(sf::RenderTarget& target)
+void GameObject::draw(sf::RenderTarget& window) const
 {
-	target.draw(m_sprite);
+	window.draw(m_sprite);
 }
 //=========================================================
 void GameObject::setCurrPos(sf::Vector2f loc) {

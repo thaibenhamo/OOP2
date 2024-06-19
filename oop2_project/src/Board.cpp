@@ -1,7 +1,7 @@
 #pragma once
 #include "Board.h"
 
-Board::Board()
+Board::Board() : m_player(Player({ 0,0 }, Resources::Player))
 {}
 //=========================================================
 void Board::initObjects() {
@@ -64,7 +64,7 @@ void Board::readLevelFile(std::ifstream& file) {
 			}
 
 			if (resourceType == Resources::Player) {
-				m_player = std::make_unique<Player>(pos, Resources::Player);
+				m_player = Player(pos, Resources::Player);
 			}
 
 		}
@@ -84,7 +84,7 @@ void Board::drawObjects(sf::RenderWindow& window) const {
 	for (auto& movingObject : m_movingObjects)
 		movingObject->draw(window);
 
-	m_player->draw(window);
+	m_player.draw(window);
 }
 
 //=========================================================

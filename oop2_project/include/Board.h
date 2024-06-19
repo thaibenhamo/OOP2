@@ -21,7 +21,7 @@ private:
 	void initObjects();
 	void readLevelFile(std::ifstream& file);
 
-	std::unique_ptr<Player> m_player;
+	Player m_player;
 	std::vector<std::unique_ptr<StaticObjects>> m_staticObjects; //store static objects
 	std::vector<std::unique_ptr<MovingObject>> m_movingObjects; //store moving objects
 

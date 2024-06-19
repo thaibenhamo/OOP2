@@ -13,7 +13,7 @@ public:
 	GameObject(GameObject&&) = default;
 	GameObject& operator=(GameObject&&) = default;
 
-	void draw(sf::RenderTarget& target);
+	void draw(sf::RenderTarget& window) const;
 	void setCurrPos(sf::Vector2f loc);
 	sf::Sprite getSprite() const;
 	//void state(sf::Keyboard::Key key);
