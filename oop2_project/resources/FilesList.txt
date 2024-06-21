@@ -1,4 +1,4 @@
 background1.png
-player.png
+texture.png
 wall.png
 randomEnemy.png

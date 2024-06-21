@@ -10,8 +10,5 @@ static auto registerIt = Factory<MovingObject>::instance().registerType(
     }
 );
 
-RandomEnemy::RandomEnemy(sf::Vector2f location, Resources::Object object) : Enemy(location, object) {
-
-    //m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f, m_sprite.getGlobalBounds().height / 2.f);
-}
-//=========================================================
+RandomEnemy::RandomEnemy(sf::Vector2f location, Resources::Object object) 
+    : Enemy(location, object) {}

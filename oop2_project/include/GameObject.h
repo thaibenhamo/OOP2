@@ -1,6 +1,8 @@
 #pragma once
 #include "Resources.h"
 #include "Factory.h"
+#include "Direction.h"
+#include "Animation.h"
 
 class GameObject {
 
@@ -8,22 +10,13 @@ public:
 	GameObject(sf::Vector2f location, Resources::Object object);
 	virtual ~GameObject() = default;
 
-	GameObject(const GameObject&) = default;
-	GameObject& operator=(const GameObject&) = default;
-	GameObject(GameObject&&) = default;
-	GameObject& operator=(GameObject&&) = default;
-
 	void draw(sf::RenderTarget& window) const;
 	void setCurrPos(sf::Vector2f loc);
+	void direction(sf::Keyboard::Key key);
 	sf::Sprite getSprite() const;
-	//void state(sf::Keyboard::Key key);
-	//const bool getIsDead() const;
-	//void setIsDead(bool status);
-
+	
 protected:
 	sf::Sprite m_sprite;
-	//State m_dir = State::Stay;
-	//Animation m_animation;
-	//bool m_isDead = false;
-
+	Direction m_dir = Direction::Stay;
+	Animation m_animation;
 };

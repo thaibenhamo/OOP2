@@ -11,16 +11,17 @@ public:
 	Board();
 	virtual ~Board() = default;
 
-	//void moveObjects(sf::Time dt);
 	void setBoard(const int LevelNum);
 	void drawObjects(sf::RenderWindow& window) const;
 	const bool getWinGame() const;
-	//const bool getWinLevel() const;
+	void updateObjects(sf::Time dt);
+
 private:
+	void updateAnimation(sf::Time dt);
 	const sf::Vector2f findLocation(const int row, const int col) const;
 	void initObjects();
 	void readLevelFile(std::ifstream& file);
-
+	
 	Player m_player;
 	std::vector<std::unique_ptr<StaticObjects>> m_staticObjects; //store static objects
 	std::vector<std::unique_ptr<MovingObject>> m_movingObjects; //store moving objects

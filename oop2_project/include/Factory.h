@@ -1,7 +1,6 @@
 #pragma once
 
 #include "GameObject.h"
-
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <unordered_map>
@@ -18,6 +17,7 @@ public:
     }
 
     using FuncType = std::unique_ptr<T>(*)(sf::Vector2f position, Resources::Object resourceType);
+
     bool registerType(ObjectType t, FuncType f)
     {
         m_map.emplace(t, f);

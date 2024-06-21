@@ -16,7 +16,8 @@
 #include <stdexcept>
 #include "Macros.h"
 #include "FileError.h"
-
+#include "AnimationData.h"
+#include "Direction.h"
 
 class Resources {
 
@@ -26,7 +27,8 @@ public:
 		Player = BackgroundType::Count,
 		Wall,
 		RandomEnemy,
-		Space
+		Space,
+		Max
 	};
 
 	//Singleton, provides a centralized access point to these resources.
@@ -39,16 +41,15 @@ public:
 	Resources(const Resources&) = delete;
 	void operator=(const Resources&) = delete;
 
-	//sf::Font& get();
 	sf::Texture& get(const Object object);
 	sf::Texture& get(const BackgroundType type);
+
+	const sf::Texture& texture() const { return m_textures[1]; } // temporary
 	Resources::Object getResourceType(ObjectType type);	// Mapping from ObjectType to Resources::Object
-	
+	AnimationData& animationData(Object object) { return m_data[object]; } // temporary
+
 private:
 	Resources();
 	std::vector<sf::Texture> m_textures;	//to store all game textures
-	//std::vector<sf::SoundBuffer> m_buffers;	//to store game sounds
-	//sf::Music m_musics[NUM_OF_MUSICS];		// sf::Music can not be used by std::vector
-	//sf::Font m_font;						//to store game font
-	//sf::Sound m_sound;
+	std::vector<AnimationData> m_data;
 };

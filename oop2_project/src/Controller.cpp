@@ -8,7 +8,7 @@ Controller::Controller()
 {
 	m_window.setFramerateLimit(FPS);
 }
-//=========================================================
+
 void Controller::run() {
 
 	srand(static_cast<unsigned>(time(nullptr)));
@@ -22,25 +22,18 @@ void Controller::run() {
 	}
 }
 
-//=========================================================
 //run level
 void Controller::runGame() {
-
-	//Resources::instance().playMusic(MusicType::GameMusic);
 
 	while (!m_board.getWinGame()) 
 	{
 		runLevel();
-		m_board.setBoard(m_infobar.getLevelNum());
 	}
-
-	//m_infobar.setLevelNum(FIRST_LEVEL);
-	//m_board.setWinGame(false);
 }
 
-//=========================================================
 void Controller::runLevel() {
 
+	auto delta = m_deltaTime.restart();
 	//add init view
 	while (true/*!m_board.getWinLevel()*/)
 	{
@@ -49,14 +42,13 @@ void Controller::runLevel() {
 		draw(/*myView*/);
 
 		handleEvents(/*myView*/);
-		//delta = m_deltaTime.restart();
-		//m_board.moveObjects(delta);
+		delta = m_deltaTime.restart();
+		m_board.updateObjects(delta);
 	}
 
 	//add restart view
 }
 
-//=========================================================
 void Controller::handleEvents(/*sf::View& myView*/) {
 
 	for (auto event = sf::Event{}; m_window.pollEvent(event);)
@@ -73,14 +65,11 @@ void Controller::handleEvents(/*sf::View& myView*/) {
 			break;
 		case sf::Event::MouseButtonReleased:
 			auto location = m_window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
-			//m_infoBar.handleSoundStatus(location);
 			break;
 		}
-		//updatePlayerDir();
 	}
 }
 
-//=========================================================
 void Controller::draw(/*sf::View myView*/) {
 
 	m_window.clear();
@@ -88,7 +77,6 @@ void Controller::draw(/*sf::View myView*/) {
 	m_board.drawObjects(m_window);
 
 	//add draw InfoBar
-
 	m_window.display();
 }
 

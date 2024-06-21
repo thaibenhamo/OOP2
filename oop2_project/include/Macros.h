@@ -1,6 +1,6 @@
 #pragma once 
 #include <string>
-
+#include <SFML/Graphics.hpp>
 
 enum class ObjectType
 {
@@ -33,3 +33,6 @@ const int DEFAULT_COLS = 24;
 const float SCREEN_X_SIZE = 1920.f, SCREEN_Y_SIZE = 1050.f;
 const int FPS = 60;
 const float OBJECTSIZE_X = 75.f, OBJECTSIZE_Y = 75.f;
+const int PLAYER_STAY_PICS = 4, PLAYER_OFFSET = 75;
+const sf::Vector2i PLAYER_SIZE = { 75, 75 }, PLAYER_INIT_SPACE = { 0, 0 }, PLAYER_MIDDLE_SPACE = { 0, 0 };
+const auto AnimationTime = sf::seconds(0.2f);

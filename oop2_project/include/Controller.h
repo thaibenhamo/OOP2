@@ -17,8 +17,7 @@ private:
 	void runGame();
 	void runLevel();
 
-	Board m_board;
-	//Menu m_menu;									//for menu
+	Board m_board;									//for menu
 	Infobar m_infobar;								//for level information data
 
 	sf::RenderWindow m_window;						//game render window

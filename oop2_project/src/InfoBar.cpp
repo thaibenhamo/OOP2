@@ -1,11 +1,8 @@
 #pragma once
 #include "Infobar.h"
 
-Infobar::Infobar() {
+Infobar::Infobar() {}
 
-}
-
-//=========================================================
 const int Infobar::getLevelNum() const {
 
 	return m_levelNum;

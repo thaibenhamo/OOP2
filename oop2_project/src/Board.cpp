@@ -1,15 +1,15 @@
 #pragma once
 #include "Board.h"
 
-Board::Board() : m_player(Player({ 0,0 }, Resources::Player))
-{}
-//=========================================================
+Board::Board() 
+	: m_player(Player({ 0,0 }, Resources::Player)) {}
+
 void Board::initObjects() {
 
 	m_staticObjects.clear();
 	m_movingObjects.clear();
 }
-//=========================================================
+
 //to fix so it will be with  exceptions!!!!
 void Board::setBoard(const int levelNum) {
 
@@ -29,7 +29,6 @@ void Board::setBoard(const int levelNum) {
 	m_winLevel = false;		//for next level/game
 }
 
-//=========================================================
 void Board::readLevelFile(std::ifstream& file) {
 
 	auto line = std::string();			// to reads lines from the file
@@ -53,7 +52,7 @@ void Board::readLevelFile(std::ifstream& file) {
 			ObjectType objectType = static_cast<ObjectType>(line[j]);
 			Resources::Object resourceType = Resources::instance().getResourceType(objectType);
 
-			auto movingPtr = Factory<MovingObject>::instance().create(objectType, pos, resourceType);
+			/*auto movingPtr = Factory<MovingObject>::instance().create(objectType, pos, resourceType);
 			if (movingPtr) {
 				m_movingObjects.push_back(std::move(movingPtr));
 			}
@@ -61,23 +60,30 @@ void Board::readLevelFile(std::ifstream& file) {
 			auto staticPtr = Factory<StaticObjects>::instance().create(objectType, pos, resourceType);
 			if (staticPtr) {
 				m_staticObjects.push_back(std::move(staticPtr));
-			}
+			}*/
 
 			if (resourceType == Resources::Player) {
-				m_player = Player(pos, Resources::Player);
+				m_player.setPlayer(pos);
 			}
-
 		}
 	}
 }
 
+void Board::updateObjects(sf::Time dt) {
 
+	// move 
+    // handle collisions
+	updateAnimation(dt);
+}
 
-//=========================================================
+void Board::updateAnimation(sf::Time dt) {
+
+	m_player.updateAnimation(dt);
+}
+
 void Board::drawObjects(sf::RenderWindow& window) const {
 
 	// draw all objects
-
 	for (auto& staticObject : m_staticObjects)
 		staticObject->draw(window);
 
@@ -87,21 +93,12 @@ void Board::drawObjects(sf::RenderWindow& window) const {
 	m_player.draw(window);
 }
 
-//=========================================================
 const sf::Vector2f Board::findLocation(const int row, const int col) const {
 
 	return sf::Vector2f(OBJECTSIZE_X * col, OBJECTSIZE_Y * row);
 }
 
-//=========================================================
 const bool Board::getWinGame() const {
 
 	return m_winGame;
 }
-
-////=========================================================
-//const bool Board::getWinLevel() const {
-//
-//	return m_player->getEnterExit();
-//}
-
