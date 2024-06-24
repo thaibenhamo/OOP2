@@ -71,7 +71,9 @@ void Board::readLevelFile(std::ifstream& file) {
 
 void Board::updateObjects(sf::Time dt) {
 
-	// move 
+	m_player.update(dt);
+	
+	// movePlayer(delta);
     // handle collisions
 	updateAnimation(dt);
 }
@@ -101,4 +103,14 @@ const sf::Vector2f Board::findLocation(const int row, const int col) const {
 const bool Board::getWinGame() const {
 
 	return m_winGame;
+}
+
+void Board::playerDir(const sf::Keyboard::Key key) 
+{
+	if (key == sf::Keyboard::Left)
+		m_player.handleInput(PRESS_LEFT);
+	else if (key == sf::Keyboard::Right)
+		m_player.handleInput(PRESS_RIGHT);
+
+	//m_player->state(key);
 }

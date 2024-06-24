@@ -34,6 +34,8 @@ namespace
 		// stay
 		readData(player, currentStart, initSpace, middleSpace, Direction::Stay, size, PLAYER_STAY_PICS,
 				 PLAYER_OFFSET, 0);
+		readData(player, currentStart, initSpace, middleSpace, Direction::Left, size, PLAYER_STAY_PICS,
+			PLAYER_OFFSET, 0);
 
 		return player;
 	}

@@ -34,4 +34,7 @@ void Animation::update(const sf::Time delta) {
 void Animation::update()
 {
     m_sprite.setTextureRect(m_data.m_data.find(m_dir)->second[m_index]);
+    if (m_dir == Direction::Left)
+        m_sprite.setScale(SCALE_TO_THE_LEFT);
+
 }

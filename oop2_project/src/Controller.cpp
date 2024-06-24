@@ -44,6 +44,7 @@ void Controller::runLevel() {
 		handleEvents(/*myView*/);
 		delta = m_deltaTime.restart();
 		m_board.updateObjects(delta);
+		handleInput();
 	}
 
 	//add restart view
@@ -68,6 +69,16 @@ void Controller::handleEvents(/*sf::View& myView*/) {
 			break;
 		}
 	}
+	
+}
+
+void Controller::handleInput()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		m_board.playerDir(sf::Keyboard::Right);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		m_board.playerDir(sf::Keyboard::Left);
+
 }
 
 void Controller::draw(/*sf::View myView*/) {

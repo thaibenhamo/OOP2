@@ -36,3 +36,4 @@ const float OBJECTSIZE_X = 75.f, OBJECTSIZE_Y = 75.f;
 const int PLAYER_STAY_PICS = 4, PLAYER_OFFSET = 75;
 const sf::Vector2i PLAYER_SIZE = { 75, 75 }, PLAYER_INIT_SPACE = { 0, 0 }, PLAYER_MIDDLE_SPACE = { 0, 0 };
 const auto AnimationTime = sf::seconds(0.2f);
+const sf::Vector2f SCALE_TO_THE_LEFT = { -1, 1 }, SCALE_TO_THE_RIGHT = { 1, 1 };

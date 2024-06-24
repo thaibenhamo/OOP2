@@ -18,6 +18,8 @@ sf::Vector2f toVector(Direction dir)
     {
         case Direction::Stay:
             return { 0, 0 };
+        case Direction::Left:
+            return { -1,0 };
     }
     throw std::runtime_error("Unknown direction");
 }

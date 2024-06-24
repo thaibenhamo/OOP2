@@ -15,9 +15,10 @@ public:
 	void drawObjects(sf::RenderWindow& window) const;
 	const bool getWinGame() const;
 	void updateObjects(sf::Time dt);
-
+	void playerDir(const sf::Keyboard::Key key);
 private:
 	void updateAnimation(sf::Time dt);
+	void updatePlayer(sf::Time dt);
 	const sf::Vector2f findLocation(const int row, const int col) const;
 	void initObjects();
 	void readLevelFile(std::ifstream& file);

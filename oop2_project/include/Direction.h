@@ -4,6 +4,7 @@
 enum class Direction
 {
     Stay,
+    Left,
     Max,
 };
 

@@ -8,8 +8,8 @@ namespace
 	{
 		switch (key)
 		{
-		case sf::Keyboard::Space:
-			return Direction::Stay;
+		case sf::Keyboard::Left:
+			return Direction::Left;
 
 		default:
 			return {};
