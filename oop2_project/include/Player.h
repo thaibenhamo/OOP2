@@ -2,6 +2,7 @@
 #include "MovingObject.h"
 #include "PlayerState.h"
 
+
 class Player : public MovingObject {
 
 public:
@@ -13,8 +14,11 @@ public:
 	virtual void handleInput(Input input);
 	void setStateAnimation(Direction dir);
 	void update(sf::Time delta);
+
 private:
 	sf::Vector2f m_startPos;
 	bool m_enterExit = false;
 	std::unique_ptr<PlayerState> m_state;
+
+	void movePlayer(sf::Time delta);
 };

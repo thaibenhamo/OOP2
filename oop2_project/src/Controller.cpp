@@ -44,41 +44,51 @@ void Controller::runLevel() {
 		handleEvents(/*myView*/);
 		delta = m_deltaTime.restart();
 		m_board.updateObjects(delta);
-		handleInput();
+		//handleInput();
 	}
 
 	//add restart view
 }
 
 void Controller::handleEvents(/*sf::View& myView*/) {
-
-	for (auto event = sf::Event{}; m_window.pollEvent(event);)
-	{
-		switch (event.type)
-		{
+	for (auto event = sf::Event{}; m_window.pollEvent(event);) {
+		switch (event.type) {
 		case sf::Event::Closed:
 			m_window.close();
 			exit(EXIT_SUCCESS);
-		/*case sf::Event::Resized:
-			myView.setSize(SCREEN_X_SIZE * (m_window.getSize().x) / float(m_window.getSize().y), SCREEN_Y_SIZE);
-			break;*/
 		case sf::Event::MouseMoved:
 			break;
 		case sf::Event::MouseButtonReleased:
-			auto location = m_window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
+			// auto location = m_window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
+			break;
+		case sf::Event::KeyPressed:
+			handleInput(event);
+			break;
+		case sf::Event::KeyReleased:
+			handleInput(event); // Ensure KeyReleased is properly handled
 			break;
 		}
 	}
-	
 }
 
-void Controller::handleInput()
+void Controller::handleInput(sf::Event &event) 
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		m_board.playerDir(sf::Keyboard::Right);
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		m_board.playerDir(sf::Keyboard::Left);
-
+	if (event.type == sf::Event::KeyPressed) {
+	    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		m_board.playerDir(PRESS_UP);
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			m_board.playerDir(PRESS_RIGHT);
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			m_board.playerDir(PRESS_LEFT);
+	
+	}
+	else if (event.type == sf::Event::KeyReleased) {
+		if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Right) 
+			m_board.playerDir(RELEASE_WALK);
+		if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Right) 
+			m_board.playerDir(RELEASE_JUMP);
+		
+	}
 }
 
 void Controller::draw(/*sf::View myView*/) {

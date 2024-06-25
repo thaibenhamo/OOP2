@@ -2,18 +2,21 @@
 #include "PlayerState.h"
 #include "Player.h"
 
-class MovingState;
+// Forward declaration of StandingState
+class StandingState;
 
-class StandingState : public PlayerState
+class MovingState : public PlayerState
 {
 public:
-    StandingState();
-    ~StandingState();
+    MovingState(Direction dir);
+
+    ~MovingState();
 
     std::unique_ptr<PlayerState> handleInput(Input input) override;
 
     void enter(Player& player) override;
-   
+    
+
 private:
     //Direction m_direction;
 };

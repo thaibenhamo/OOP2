@@ -5,7 +5,14 @@ enum class Direction
 {
     Stay,
     Left,
-    Max,
+    Right,
+    Up,
+    UpRight,
+    UpLeft,
+    Down,
+    DownLeft,
+    DownRight,
+    Max
 };
 
 Direction opposite(Direction dir);

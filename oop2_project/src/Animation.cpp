@@ -9,7 +9,7 @@ Animation::Animation(AnimationData& data, const Direction dir, sf::Sprite& sprit
 
 void Animation::direction(const Direction dir) {
 
-    if (m_dir == dir || dir == Direction::Stay) 
+    if (m_dir == dir  /* || dir == Direction::Stay*/)
     {
 
         return;
@@ -36,5 +36,7 @@ void Animation::update()
     m_sprite.setTextureRect(m_data.m_data.find(m_dir)->second[m_index]);
     if (m_dir == Direction::Left)
         m_sprite.setScale(SCALE_TO_THE_LEFT);
+    if (m_dir == Direction::Right)
+        m_sprite.setScale(SCALE_TO_THE_RIGHT);
 
 }

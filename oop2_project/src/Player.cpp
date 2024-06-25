@@ -1,5 +1,9 @@
 #include "Player.h"
 #include "StandingState.h"
+#include "JumpingState.h"
+#include "FallingState.h"
+
+
 
 namespace
 {
@@ -30,16 +34,21 @@ void Player::setPlayer(sf::Vector2f location)
 
 void Player::update(sf::Time delta)
 {
-	sf::Vector2f newLoc;
-
 	setPrevLoc(m_sprite.getPosition());
-	//if(Input::)
-
-	//newLoc = findNewLoc(sf::Keyboard::Left, delta.asSeconds());
-	//m_sprite.setPosition(newLoc);
-	//m_sprite.move(toVector(m_dir) * delta.asSeconds() * 100.0f);
+	
+	movePlayer(delta);
 	m_animation.update(delta);
 }
+
+void Player::movePlayer(sf::Time delta)
+{
+	//for the cases we are jumping or falling
+	handleInput(RELEASE_DOWN);
+
+	m_sprite.move(toVector(m_state->getDirection()) * delta.asSeconds() * SPEED);
+
+}
+
 
 void Player::updateAnimation(sf::Time delta)
 {
@@ -53,13 +62,12 @@ void Player::handleInput(Input input)
 	{
 		m_state = std::move(newState);
 		m_state->enter(*this);
-		// move player
 	}
 
 }
 
 void Player::setStateAnimation(Direction dir)
 {
-	m_dir = dir;
+	//m_dir = dir;
 	m_animation.direction(dir);
 }

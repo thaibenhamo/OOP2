@@ -73,7 +73,7 @@ void Board::updateObjects(sf::Time dt) {
 
 	m_player.update(dt);
 	
-	// movePlayer(delta);
+	//movePlayer(delta);
     // handle collisions
 	updateAnimation(dt);
 }
@@ -105,12 +105,9 @@ const bool Board::getWinGame() const {
 	return m_winGame;
 }
 
-void Board::playerDir(const sf::Keyboard::Key key) 
+void Board::playerDir(const Input input)
 {
-	if (key == sf::Keyboard::Left)
-		m_player.handleInput(PRESS_LEFT);
-	else if (key == sf::Keyboard::Right)
-		m_player.handleInput(PRESS_RIGHT);
+	m_player.handleInput(input);
 
-	//m_player->state(key);
 }
+	

@@ -15,7 +15,7 @@ public:
 	void drawObjects(sf::RenderWindow& window) const;
 	const bool getWinGame() const;
 	void updateObjects(sf::Time dt);
-	void playerDir(const sf::Keyboard::Key key);
+	void playerDir(const Input input);
 private:
 	void updateAnimation(sf::Time dt);
 	void updatePlayer(sf::Time dt);

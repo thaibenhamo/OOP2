@@ -11,7 +11,7 @@ namespace
 		auto nextStart = [&]()
 			{
 				currentStart += middleSpace;
-				currentStart.y += size.y;
+				currentStart.x += size.x;
 				return currentStart;
 			};
 
@@ -34,9 +34,14 @@ namespace
 		// stay
 		readData(player, currentStart, initSpace, middleSpace, Direction::Stay, size, PLAYER_STAY_PICS,
 				 PLAYER_OFFSET, 0);
-		readData(player, currentStart, initSpace, middleSpace, Direction::Left, size, PLAYER_STAY_PICS,
-			PLAYER_OFFSET, 0);
-
+		readData(player, currentStart, initSpace, middleSpace, Direction::Left, size, PLAYER_MOVE_PICS,
+			PLAYER_OFFSET, 1);
+		readData(player, currentStart, initSpace, middleSpace, Direction::Right, size, PLAYER_MOVE_PICS,
+			PLAYER_OFFSET, 1);
+		readData(player, currentStart, initSpace, middleSpace, Direction::Up, size, PLAYER_UP_PICS,
+			PLAYER_OFFSET, 2);
+		readData(player, currentStart, initSpace, middleSpace, Direction::Down, size, PLAYER_DOWN_PICS,
+			PLAYER_OFFSET, 3);
 		return player;
 	}
 }
