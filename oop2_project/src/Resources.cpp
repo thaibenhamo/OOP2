@@ -54,14 +54,14 @@ namespace
 	}
 }
 
-Resources::Resources() : m_data(Max) {
-
+Resources::Resources() : m_data(Max) 
+{
 	m_textures.resize(NUM_OF_TEXTURES);
 
 	std::ifstream file = std::ifstream("FilesList.txt");	//open level file
 
-	if (file) {
-
+	if (file) 
+	{
 		auto line = std::string();			// to reads lines from the file
 
 		// read textures names from file
@@ -71,6 +71,13 @@ Resources::Resources() : m_data(Max) {
 				throw std::runtime_error("Can't read from file");
 
 			m_textures[i].loadFromFile(line);
+		}
+
+		// read font names from file
+		for (int i = 0; i < NUM_OF_FONTS; i++) {
+			if (!std::getline(file, line))
+				throw std::runtime_error("Can't read from file");
+			m_font.loadFromFile(line);
 		}
 	}
 	else
@@ -88,7 +95,8 @@ sf::Texture& Resources::get(const Object object)
 
 Resources::Object Resources::getResourceType(ObjectType type) 
 {
-	switch (type) {
+	switch (type) 
+	{
 	case ObjectType::PlayerChar:
 		return Player;
 	case ObjectType::WallChar:
@@ -110,4 +118,9 @@ Resources::Object Resources::getResourceType(ObjectType type)
 sf::Texture& Resources::get(const BackgroundType backgroundtype)
 {
 	return m_textures[backgroundtype];
+}
+
+sf::Font& Resources::getFont()
+{
+	return m_font;
 }

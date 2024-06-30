@@ -5,12 +5,13 @@
 
 Player::Player(sf::Vector2f location, Resources::Object object)
 	: MovingObject(location, object), m_state(std::make_unique<StandingState>()),
-					m_animation(Resources::instance().animationData(object),
-					Direction::Stay, m_sprite)
+	m_animation(Resources::instance().animationData(object),
+		Direction::Stay, m_sprite), m_gameData(CountGameData)
 {
 	m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f,
-					   m_sprite.getGlobalBounds().height / 2.f);
-    m_startPos = m_sprite.getPosition();
+		m_sprite.getGlobalBounds().height / 2.f);
+	m_startPos = m_sprite.getPosition();
+	
 }
 
 void Player::setPlayer(sf::Vector2f location)
@@ -20,7 +21,8 @@ void Player::setPlayer(sf::Vector2f location)
 
 void Player::update(sf::Time delta)
 {
-	if (m_flickering && m_flickerClock.getElapsedTime().asSeconds() >= 0.05f)
+	if (m_flickering && 
+		m_flickerClock.getElapsedTime().asSeconds() >= 0.05f)
 	{
 		m_flickering = false;
 		m_sprite.setColor(sf::Color::White);
@@ -33,15 +35,15 @@ void Player::update(sf::Time delta)
 
 void Player::draw(sf::RenderTarget& window)
 {
-	if (m_flickering && m_flickerClock.getElapsedTime().asSeconds() < 0.05f)
+	if (m_flickering && 
+		m_flickerClock.getElapsedTime().asSeconds() < 0.05f)
 	{
 		if (m_sprite.getColor() == sf::Color::Transparent)
 			m_sprite.setColor(sf::Color::White);
 		else
 			m_sprite.setColor(sf::Color::Transparent);
-
-
 	}
+
 	window.draw(m_sprite);
 }
 
@@ -67,7 +69,6 @@ void Player::handleInput(Input input)
 		m_state = std::move(newState);
 		m_state->enter(*this);
 	}
-
 }
 
 void Player::setStateAnimation(Direction dir)
@@ -78,13 +79,18 @@ void Player::setStateAnimation(Direction dir)
 
 void Player::setGameDate(GameData gameData, int num)
 {
-	m_gameDate[gameData] += num;
+	m_gameData[gameData] += num;
 }
 
 void Player::reduceLife()
 {
-	m_gameDate[Lives]--;
+	m_gameData[Lives]--;
 	m_flickering = true;
 	m_flickerClock.restart();
 	m_flickerStartTime = m_flickerClock.getElapsedTime();
+}
+
+const std::vector<int>& Player::getGameData() const
+{
+	return m_gameData;
 }

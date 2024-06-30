@@ -3,8 +3,8 @@
 #include "PlayerState.h"
 
 
-class Player : public MovingObject {
-
+class Player : public MovingObject 
+{
 public:
 	Player(sf::Vector2f location, Resources::Object object);
 	virtual ~Player() = default;
@@ -17,7 +17,7 @@ public:
 	void setJumping(bool jumping) { m_jumping = jumping; }
 	void setOnWall(bool onWall) { m_onWall = onWall; }
 	void setGameDate(GameData gameData, int num);
-	const int* getGameDate() const { return m_gameDate; };
+	const std::vector<int>& getGameData() const;
 	bool getFlickering() const { return m_flickering; };
 
 	void reduceLife();
@@ -37,7 +37,7 @@ private:
 	bool m_jumping = false;
 	bool m_onWall = true;
 	bool m_flickering = false;
-	
-	int m_gameDate[GameData::CountGameData] = { START_LIVES, 0 };
+	std::vector<int> m_gameData = { START_LIVES, 0 };
+	//int m_gameData[GameData::CountGameData] = { START_LIVES, 0 };
 	
 };

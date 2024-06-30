@@ -16,7 +16,7 @@ enum class ObjectType
 enum GameData
 {
 	Lives,
-	Points,
+	Score,
 	CountGameData
 };
 
@@ -36,7 +36,8 @@ enum class SoundType
 
 };
 
-const int NUM_OF_TEXTURES = 6;
+const int NUM_OF_TEXTURES = 11;
+const int NUM_OF_FONTS = 1;
 const std::string LEVEL_NAME = "Board", FILE_EXTENSION = ".txt";
 const int DEFAULT_ROWS = 12;
 const int DEFAULT_COLS = 24;

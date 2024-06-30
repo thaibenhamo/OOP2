@@ -15,5 +15,4 @@ enum class Direction
     Max
 };
 
-Direction opposite(Direction dir);
 sf::Vector2f toVector(Direction dir);

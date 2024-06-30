@@ -13,7 +13,6 @@
 
 namespace // anonymous namespace — the standard way to make function "static"
 {
-
     // primary collision-processing functions
 
     // ----------------- player -----------------
@@ -26,12 +25,12 @@ namespace // anonymous namespace — the standard way to make function "static"
         //for the player landing on the wall
         if (player.getPos().y + PLAYER_HIGHT >= wall.getSprite().getPosition().y and
             player.getPos().y + PLAYER_HIGHT < wall.getSprite().getPosition().y + (PLAYER_HIGHT / MIN_SPACE) and
-            player.getPos().y < wall.getSprite().getPosition().y + PLAYER_HIGHT) {
+            player.getPos().y < wall.getSprite().getPosition().y + PLAYER_HIGHT) 
+        {
             player.handleInput(RELEASE_ON_WALL);
             player.setOnWall(true);
         }  
     }
-
 
     // player with coin
     void playerCoin(GameObject& p, GameObject& c)
@@ -39,7 +38,7 @@ namespace // anonymous namespace — the standard way to make function "static"
         Player& player = dynamic_cast<Player&>(p);
         Coin& coin = dynamic_cast<Coin&>(c);
 
-        player.setGameDate(Points, ADD_POINTS);
+        player.setGameDate(Score, ADD_POINTS);
         coin.setIsDead(true);
         //Resources::instance().playSound(SoundType::CoinSound);
     }
@@ -50,7 +49,7 @@ namespace // anonymous namespace — the standard way to make function "static"
         RandomEnemy& randomEnemy = dynamic_cast<RandomEnemy&>(r);
 
         //for the player hit random enemy
-        if(player.getFlickering())
+        //if(player.getFlickering())
             player.reduceLife();
     }
 
