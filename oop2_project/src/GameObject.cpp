@@ -2,35 +2,9 @@
 #include "GameObject.h"
 #include "Animation.h"
 
-namespace
-{
-	std::optional<Direction> toDirection(sf::Keyboard::Key key)
-	{
-		switch (key)
-		{
-		case sf::Keyboard::Left:
-			return Direction::Left;
-
-		default:
-			return {};
-		}
-	}
-} // end namespace
-
-GameObject::GameObject(sf::Vector2f location, Resources::Object object) 
-	: m_animation(Resources::instance().animationData(object),
-				  Direction::Stay, m_sprite)
+GameObject::GameObject(sf::Vector2f location, Resources::Object object) 	
 {
 	m_sprite.setPosition(location);
-}
-
-void GameObject::direction(sf::Keyboard::Key key)
-{
-	if (auto dir = toDirection(key))
-	{
-		m_dir = *dir;
-		m_animation.direction(*dir);
-	}
 }
 
 void GameObject::draw(sf::RenderTarget& window) const

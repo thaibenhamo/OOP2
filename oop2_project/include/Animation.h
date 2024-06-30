@@ -20,5 +20,4 @@ private:
     Direction m_dir = Direction::Stay;
     int m_index = 0;
     sf::Sprite& m_sprite;
-
 };

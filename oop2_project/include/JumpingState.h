@@ -7,10 +7,9 @@ class StandingState;
 
 class JumpingState : public PlayerState
 {
-public:
 
-    JumpingState() : PlayerState(Direction::Up) {};
-    JumpingState(bool newJump, Direction dir) : PlayerState(dir), m_newJump(newJump) {};
+public:
+    JumpingState(Direction direction) : PlayerState(direction) {};
     ~JumpingState();
 
     std::unique_ptr<PlayerState> handleInput(Input input) override;
@@ -21,6 +20,6 @@ public:
 private:
     static std::chrono::steady_clock::time_point m_jumpingTime;
     //Direction jumpingDirection = Direction::Up;
-    bool m_newJump = false;
+    bool m_newJump = true;
 
 };

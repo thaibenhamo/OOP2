@@ -9,31 +9,37 @@ JumpingState::~JumpingState() {}
 std::unique_ptr<PlayerState> JumpingState::handleInput(Input input)
 {
     
-    if (jumpingTimerEnded() || input == RELEASE_JUMP)
+    if (jumpingTimerEnded() || !sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {   
-        return std::make_unique<FallingState>(true);      
+        return std::make_unique<FallingState>();      
     }
-    
+
     // so the player could move right or left while jumping
-    return std::make_unique<JumpingState>();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && m_direction != Direction::UpLeft) 
+    {
+        return std::make_unique<JumpingState>(Direction::UpLeft);
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && m_direction != Direction::UpRight) 
+    {
+        return std::make_unique<JumpingState>(Direction::UpRight);
+    }
+
+    //stay in the state
+    return nullptr;
 }
 
 
 void JumpingState::enter(Player& player)
 {
-    player.setStateAnimation(Direction::Up);
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        player.setStateAnimation(Direction::UpLeft);
-    }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        player.setStateAnimation(Direction::UpRight);
-    }
-
-    //restartClock - need to make it only when is new state
-    if (jumpingTimerEnded() && m_newJump) {
-        m_jumpingTime = std::chrono::steady_clock::now();
-        m_newJump = false;
+   
+    player.setStateAnimation(m_direction);
+    if (m_newJump) {
+        //restartClock - need to make it only when is new state
+        if (jumpingTimerEnded()) {
+            m_jumpingTime = std::chrono::steady_clock::now();
+            m_newJump = false;
+            player.setJumping(true);
+        }
     }
 }
 

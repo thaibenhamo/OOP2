@@ -3,13 +3,13 @@
 
 enum class Direction
 {
-    Stay,
     Left,
     Right,
     Up,
-    UpRight,
-    UpLeft,
     Down,
+    Stay,
+    UpRight,
+    UpLeft, 
     DownLeft,
     DownRight,
     Max

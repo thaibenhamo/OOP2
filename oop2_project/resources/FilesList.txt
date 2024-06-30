@@ -2,3 +2,4 @@ background1.png
 texture.png
 wall.png
 randomEnemy.png
+flyingEnemy.png

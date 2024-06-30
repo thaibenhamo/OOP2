@@ -10,13 +10,10 @@ class Player;
 
 enum Input
 {
-	PRESS_UP,
-	PRESS_DOWN,
-	PRESS_LEFT,
-	PRESS_RIGHT,
-	RELEASE_WALK,
+	PRESS_BOTTON,
 	RELEASE_DOWN,
-	RELEASE_JUMP
+	RELEASE_ON_WALL,
+	
 };
 
 class PlayerState {

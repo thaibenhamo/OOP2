@@ -14,11 +14,24 @@ public:
 	virtual void handleInput(Input input);
 	void setStateAnimation(Direction dir);
 	void update(sf::Time delta);
+	void setJumping(bool jumping) { m_jumping = jumping; }
+	void setOnWall(bool onWall) { m_onWall = onWall; }
+	void reduceLife();
+	void draw(sf::RenderTarget& window);
 
 private:
-	sf::Vector2f m_startPos;
-	bool m_enterExit = false;
-	std::unique_ptr<PlayerState> m_state;
-
 	void movePlayer(sf::Time delta);
+
+	std::unique_ptr<PlayerState> m_state;
+	sf::Vector2f m_startPos;
+	sf::Clock m_flickerClock;
+	sf::Time m_flickerStartTime;
+	Animation m_animation;
+
+	bool m_enterExit = false;
+	bool m_jumping = false;
+	bool m_onWall = true;
+	bool m_flickering = false;
+	int m_lives = 3;
+	
 };

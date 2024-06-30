@@ -10,5 +10,30 @@ static auto registerIt = Factory<MovingObject>::instance().registerType(
     }
 );
 
-RandomEnemy::RandomEnemy(sf::Vector2f location, Resources::Object object) 
-    : Enemy(location, object) {}
+RandomEnemy::RandomEnemy(sf::Vector2f location, Resources::Object object)
+    : Enemy(location, object), m_animation(Resources::instance().animationData(object),
+                                           Direction::Left, m_sprite)
+{
+    m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f,
+                    m_sprite.getGlobalBounds().height / 2.f * 0.8f);
+}
+
+void RandomEnemy::update(sf::Time delta)
+{
+    if (m_sprite.getPosition().x < 0)
+        m_dir = Direction::Right;
+
+    if (m_sprite.getPosition().x + m_sprite.getGlobalBounds().width > SCREEN_X_SIZE)
+        m_dir = Direction::Left;
+
+    m_animation.direction(m_dir);
+    
+    move(delta);
+    m_animation.update(delta);
+
+}
+
+void RandomEnemy::move(sf::Time delta)
+{
+    m_sprite.move(toVector(m_dir) * BASIC_ENEMY_SPEED * delta.asSeconds());
+};

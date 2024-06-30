@@ -5,17 +5,15 @@ namespace
 	int num_of_pics;
 
 	void readData(AnimationData& animation, sf::Vector2i& currentStart, sf::Vector2i& initSpace,
-		          sf::Vector2i& middleSpace, Direction state, sf::Vector2i& size, int pics, 
-				  int anim_off, int offset) {
+				  Direction state, sf::Vector2i& size, int pics, int offset) {
 
 		auto nextStart = [&]()
 			{
-				currentStart += middleSpace;
 				currentStart.x += size.x;
 				return currentStart;
 			};
 
-		currentStart = { initSpace.x, initSpace.y + anim_off * offset };
+		currentStart = { initSpace.x, initSpace.y + size.x * offset };
 		animation.m_data[state].emplace_back(currentStart, size);
 
 		for (num_of_pics = 1; num_of_pics < pics; num_of_pics++)
@@ -26,23 +24,33 @@ namespace
 	{
 		auto size = PLAYER_SIZE;
 		auto initSpace = PLAYER_INIT_SPACE;
-		auto middleSpace = PLAYER_MIDDLE_SPACE;
 
 		auto player = AnimationData{};
 		auto currentStart = initSpace;
 
-		// stay
-		readData(player, currentStart, initSpace, middleSpace, Direction::Stay, size, PLAYER_STAY_PICS,
-				 PLAYER_OFFSET, 0);
-		readData(player, currentStart, initSpace, middleSpace, Direction::Left, size, PLAYER_MOVE_PICS,
-			PLAYER_OFFSET, 1);
-		readData(player, currentStart, initSpace, middleSpace, Direction::Right, size, PLAYER_MOVE_PICS,
-			PLAYER_OFFSET, 1);
-		readData(player, currentStart, initSpace, middleSpace, Direction::Up, size, PLAYER_UP_PICS,
-			PLAYER_OFFSET, 2);
-		readData(player, currentStart, initSpace, middleSpace, Direction::Down, size, PLAYER_DOWN_PICS,
-			PLAYER_OFFSET, 3);
+		readData(player, currentStart, initSpace, Direction::Stay, size, PLAYER_STAY_PICS, 0);
+		readData(player, currentStart, initSpace, Direction::Left, size, PLAYER_MOVE_PICS, 1);
+		readData(player, currentStart, initSpace, Direction::Right, size, PLAYER_MOVE_PICS, 1);
+		readData(player, currentStart, initSpace, Direction::Up, size, PLAYER_UP_PICS, 2);
+		readData(player, currentStart, initSpace, Direction::UpLeft, size, PLAYER_UP_PICS, 2);
+		readData(player, currentStart, initSpace, Direction::UpRight, size, PLAYER_UP_PICS, 2);
+		readData(player, currentStart, initSpace, Direction::Down, size, PLAYER_DOWN_PICS, 3);
+		readData(player, currentStart, initSpace, Direction::DownLeft, size, PLAYER_DOWN_PICS, 3);
+		readData(player, currentStart, initSpace, Direction::DownRight, size, PLAYER_DOWN_PICS, 3);
+
 		return player;
+	}
+	AnimationData randomEnemyData()
+	{
+		auto size = BASIC_ENEMY_SIZE;
+		auto initSpace = BASIC_ENEMY_INIT_SPACE;
+
+		auto randomEnemy = AnimationData{};
+		auto currentStart = initSpace;
+
+		readData(randomEnemy, currentStart, initSpace, Direction::Left, size, BASIC_ENEMY_MOVE_PICS, 0);
+		readData(randomEnemy, currentStart, initSpace, Direction::Right, size, BASIC_ENEMY_MOVE_PICS, 0);
+		return  randomEnemy;
 	}
 }
 
@@ -62,7 +70,7 @@ Resources::Resources() : m_data(Max) {
 			if (!std::getline(file, line))
 				throw std::runtime_error("Can't read from file");
 
-			m_textures[i].loadFromFile(line);	
+			m_textures[i].loadFromFile(line);
 		}
 	}
 	else
@@ -70,6 +78,7 @@ Resources::Resources() : m_data(Max) {
 
 	// set animation
 	m_data[Player] = playerData();
+	m_data[RandomEnemy] = randomEnemyData();
 }
 
 sf::Texture& Resources::get(const Object object)
@@ -86,6 +95,8 @@ Resources::Object Resources::getResourceType(ObjectType type)
 		return Wall; 
 	case ObjectType::RandomEnemyChar:
 		return RandomEnemy;
+	case ObjectType::FlyingEnemyChar:
+		return FlyingEnemy;
 	case ObjectType::SpaceChar:
 		return Space;
 		// Add cases for other ObjectType values

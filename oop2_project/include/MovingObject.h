@@ -11,9 +11,9 @@ public:
 	const sf::Vector2f getPos() const;
 	void setPrevLoc(const sf::Vector2f prevLoc);
 	void setPos(sf::Vector2f pos);
-
+	virtual void update(sf::Time delta) = 0;
 protected:
 	sf::Vector2f m_prevLocation;	//to store previos location
 	sf::Clock m_clock;
-
+	//Animation m_animation;
 };

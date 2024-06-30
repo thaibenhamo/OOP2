@@ -2,7 +2,9 @@
 #include "MovingObject.h"
 
 MovingObject::MovingObject(sf::Vector2f location, Resources::Object object)
-	:GameObject(location, object) {
+	: GameObject(location, object)/*, m_animation(Resources::instance().animationData(object),
+		Direction::Stay, m_sprite)*/ 
+{
 	
 	m_prevLocation = getSprite().getPosition();
 }
@@ -26,3 +28,4 @@ void MovingObject::setPrevLoc(const sf::Vector2f prevLoc) {
 
 	m_prevLocation = prevLoc;
 }
+

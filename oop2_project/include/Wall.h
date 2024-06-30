@@ -1,11 +1,11 @@
 #pragma once
-#include "StaticObjects.h"
+#include "StaticObject.h"
 
 
-class Wall : public StaticObjects {
+class Wall : public StaticObject {
 
 public:
-	using StaticObjects::StaticObjects;
+	using StaticObject::StaticObject;
 
 private:
 

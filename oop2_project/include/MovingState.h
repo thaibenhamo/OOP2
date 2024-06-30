@@ -8,7 +8,7 @@ class StandingState;
 class MovingState : public PlayerState
 {
 public:
-    MovingState(Direction dir);
+    MovingState(Direction dir, bool newDirection);
 
     ~MovingState();
 
@@ -18,5 +18,5 @@ public:
     
 
 private:
-    //Direction m_direction;
+    bool m_newDirection;
 };

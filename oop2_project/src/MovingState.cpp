@@ -1,40 +1,41 @@
 #include "MovingState.h"
 #include "StandingState.h" 
 #include "JumpingState.h" 
+#include "FallingState.h" 
 
 
-MovingState::MovingState(Direction dir) : PlayerState(dir) {}
+MovingState::MovingState(Direction dir, bool newDirection) : PlayerState(dir), m_newDirection(newDirection){}
 
 MovingState::~MovingState() {}
 
 std::unique_ptr<PlayerState> MovingState::handleInput(Input input) 
 {
-    if (input == PRESS_RIGHT  && m_direction != Direction::Right) {
-        return std::make_unique<MovingState>(Direction::Right);
+    if (input == RELEASE_DOWN) {
+        return std::make_unique<FallingState>();
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        return std::make_unique<JumpingState>(Direction::Up);        
     }
 
-    if (input == PRESS_LEFT /* && m_direction != Direction::Left*/) {
-        return std::make_unique<MovingState>(Direction::Left);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        return std::make_unique<MovingState>(Direction::Right, true);
     }
 
-    if (input == PRESS_UP) {
-        return std::make_unique<JumpingState>(true, Direction::Up);        //true as for new jump
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        return std::make_unique<MovingState>(Direction::Left, true);
     }
 
-    if (input == RELEASE_WALK) {
-        return std::make_unique<StandingState>();
-    }
-
-    // Stay in this state.
-    return nullptr;
+    // Stop walking.
+    return std::make_unique<StandingState>();
 }
 
 void MovingState::enter(Player& player) 
-{
-    if (m_direction == Direction::Left)
-        player.setStateAnimation(Direction::Left);
-    if (m_direction == Direction::Right)
-        player.setStateAnimation(Direction::Right);
+{   
+    if (m_newDirection) {
+        player.setStateAnimation(m_direction);
+        player.setJumping(false);
+        m_newDirection = false;
+    }
 }
 
 

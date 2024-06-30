@@ -1,6 +1,7 @@
 #include "StandingState.h"
 #include "MovingState.h" 
 #include "JumpingState.h" 
+#include "FallingState.h" 
 
 StandingState::StandingState() : PlayerState(Direction::Stay) {}
 
@@ -8,15 +9,16 @@ StandingState::~StandingState()  {}
 
 std::unique_ptr<PlayerState> StandingState::handleInput(Input input) 
 {
-    if (input == PRESS_LEFT) {
-        return std::make_unique<MovingState>(Direction::Left);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        return std::make_unique<JumpingState> (Direction::Up);        
     }
-    if (input == PRESS_RIGHT) {
-        return std::make_unique<MovingState>(Direction::Right);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        return std::make_unique<MovingState>(Direction::Left, true);
     }
-    if (input == PRESS_UP) {
-        return std::make_unique<JumpingState>(true, Direction::Up);        //true as for new jump
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        return std::make_unique<MovingState>(Direction::Right, true);
     }
+    
     // Stay in this state.
     return nullptr;
 }
@@ -24,4 +26,5 @@ std::unique_ptr<PlayerState> StandingState::handleInput(Input input)
 void StandingState::enter(Player& player) 
 {
     player.setStateAnimation(Direction::Stay);
+    player.setJumping(false);
 }

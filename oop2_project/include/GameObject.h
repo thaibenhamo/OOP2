@@ -12,11 +12,9 @@ public:
 
 	void draw(sf::RenderTarget& window) const;
 	void setCurrPos(sf::Vector2f loc);
-	void direction(sf::Keyboard::Key key);
 	sf::Sprite getSprite() const;
-	
+
 protected:
 	sf::Sprite m_sprite;
-	Direction m_dir = Direction::Stay;
-	Animation m_animation;
+	Direction m_dir = Direction::Stay;	
 };

@@ -8,6 +8,7 @@ enum class ObjectType
 	PlayerChar = 'P',
 	WallChar = '#',
 	RandomEnemyChar = '&',
+	FlyingEnemyChar = '*',
 	SpaceChar = ' '
 };
 
@@ -27,7 +28,7 @@ enum class SoundType
 
 };
 
-const int NUM_OF_TEXTURES = 4;
+const int NUM_OF_TEXTURES = 5;
 const std::string LEVEL_NAME = "Board", FILE_EXTENSION = ".txt";
 const int DEFAULT_ROWS = 12;
 const int DEFAULT_COLS = 24;
@@ -40,3 +41,7 @@ const auto AnimationTime = sf::seconds(0.2f);
 const sf::Vector2f SCALE_TO_THE_LEFT = { -1, 1 }, SCALE_TO_THE_RIGHT = { 1, 1 };
 constexpr auto JUMPING_DURATION = std::chrono::milliseconds(500);
 const float SPEED = 260.0f;
+const int PLAYER_HIGHT = 75, MIN_SPACE = 6;
+const float BASIC_ENEMY_SPEED = 100.f;
+const int BASIC_ENEMY_MOVE_PICS = 9;
+const sf::Vector2i BASIC_ENEMY_SIZE = { 75,63 }, BASIC_ENEMY_INIT_SPACE = { 0,300 };

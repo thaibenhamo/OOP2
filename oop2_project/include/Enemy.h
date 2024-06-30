@@ -5,10 +5,11 @@
 class Enemy : public MovingObject {
 
 public:
-    using MovingObject::MovingObject;
+    Enemy(sf::Vector2f location, Resources::Object object);
     virtual ~Enemy() = default;
 
-private:
+protected:
     bool m_wasShot = false;
+    sf::Clock m_clock;
 
 };

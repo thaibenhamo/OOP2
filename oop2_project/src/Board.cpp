@@ -1,5 +1,6 @@
 #pragma once
 #include "Board.h"
+#include "CollisionHandling.h"
 
 Board::Board() 
 	: m_player(Player({ 0,0 }, Resources::Player)) {}
@@ -48,19 +49,20 @@ void Board::readLevelFile(std::ifstream& file) {
 
 		for (int j = 0; j < line.size(); j++)
 		{
-			auto pos = findLocation(i, j);
 			ObjectType objectType = static_cast<ObjectType>(line[j]);
 			Resources::Object resourceType = Resources::instance().getResourceType(objectType);
 
-			/*auto movingPtr = Factory<MovingObject>::instance().create(objectType, pos, resourceType);
+			auto pos = findLocation(i, j);
+
+			auto movingPtr = Factory<MovingObject>::instance().create(objectType, pos, resourceType);
 			if (movingPtr) {
 				m_movingObjects.push_back(std::move(movingPtr));
 			}
 
-			auto staticPtr = Factory<StaticObjects>::instance().create(objectType, pos, resourceType);
+			auto staticPtr = Factory<StaticObject>::instance().create(objectType, pos, resourceType);
 			if (staticPtr) {
 				m_staticObjects.push_back(std::move(staticPtr));
-			}*/
+			}
 
 			if (resourceType == Resources::Player) {
 				m_player.setPlayer(pos);
@@ -72,18 +74,41 @@ void Board::readLevelFile(std::ifstream& file) {
 void Board::updateObjects(sf::Time dt) {
 
 	m_player.update(dt);
-	
-	//movePlayer(delta);
-    // handle collisions
+
+	for (auto& movingObject : m_movingObjects)
+		movingObject->update(dt);
+	collisions();
+
 	updateAnimation(dt);
+}
+
+void Board::collisions() {
+
+	// collide player with static objects
+	for (auto& staticObject : m_staticObjects) {
+		if (collide(m_player, *staticObject))
+			processCollision(m_player, *staticObject);
+	}
+
+	for (auto& movingObject : m_movingObjects) {
+		if (collide(m_player, *movingObject))
+			processCollision(m_player, *movingObject);
+	}
+}
+
+//to change to game object??
+bool Board::collide(MovingObject& a, GameObject& b) const
+{
+	return a.getSprite().getGlobalBounds().intersects(b.getSprite().getGlobalBounds());
 }
 
 void Board::updateAnimation(sf::Time dt) {
 
 	m_player.updateAnimation(dt);
+
 }
 
-void Board::drawObjects(sf::RenderWindow& window) const {
+void Board::drawObjects(sf::RenderWindow& window)  {
 
 	// draw all objects
 	for (auto& staticObject : m_staticObjects)
@@ -97,7 +122,7 @@ void Board::drawObjects(sf::RenderWindow& window) const {
 
 const sf::Vector2f Board::findLocation(const int row, const int col) const {
 
-	return sf::Vector2f(OBJECTSIZE_X * col, OBJECTSIZE_Y * row);
+	return sf::Vector2f(OBJECTSIZE_X * col, OBJECTSIZE_Y* row);
 }
 
 const bool Board::getWinGame() const {
@@ -105,7 +130,7 @@ const bool Board::getWinGame() const {
 	return m_winGame;
 }
 
-void Board::playerDir(const Input input)
+void Board::handleInput(const Input input)
 {
 	m_player.handleInput(input);
 

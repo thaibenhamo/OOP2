@@ -16,7 +16,6 @@ private:
 	void draw(/*sf::View myView*/);
 	void runGame();
 	void runLevel();
-	void handleInput(sf::Event &event);
 	Board m_board;									//for menu
 	Infobar m_infobar;								//for level information data
 

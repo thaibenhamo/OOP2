@@ -37,14 +37,15 @@ void Controller::runLevel() {
 	//add init view
 	while (true/*!m_board.getWinLevel()*/)
 	{
-		
 		//updateView(myView);
-		draw(/*myView*/);
+		
 
 		handleEvents(/*myView*/);
 		delta = m_deltaTime.restart();
+
+		m_board.handleInput(PRESS_BOTTON);
 		m_board.updateObjects(delta);
-		//handleInput();
+		draw(/*myView*/);
 	}
 
 	//add restart view
@@ -61,35 +62,11 @@ void Controller::handleEvents(/*sf::View& myView*/) {
 		case sf::Event::MouseButtonReleased:
 			// auto location = m_window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
 			break;
-		case sf::Event::KeyPressed:
-			handleInput(event);
-			break;
-		case sf::Event::KeyReleased:
-			handleInput(event); // Ensure KeyReleased is properly handled
-			break;
+		
 		}
 	}
 }
 
-void Controller::handleInput(sf::Event &event) 
-{
-	if (event.type == sf::Event::KeyPressed) {
-	    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		m_board.playerDir(PRESS_UP);
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			m_board.playerDir(PRESS_RIGHT);
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-			m_board.playerDir(PRESS_LEFT);
-	
-	}
-	else if (event.type == sf::Event::KeyReleased) {
-		if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Right) 
-			m_board.playerDir(RELEASE_WALK);
-		if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::Right) 
-			m_board.playerDir(RELEASE_JUMP);
-		
-	}
-}
 
 void Controller::draw(/*sf::View myView*/) {
 

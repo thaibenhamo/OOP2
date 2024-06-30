@@ -3,27 +3,13 @@
 #include "JumpingState.h"
 #include "FallingState.h"
 
-
-
-namespace
-{
-	std::optional<Direction> toDirection(sf::Keyboard::Key key)
-	{
-		switch (key)
-		{
-		case sf::Keyboard::Left:
-			return Direction::Left;
-
-		default:
-			return {};
-		}
-	}
-} // end namespace
-
 Player::Player(sf::Vector2f location, Resources::Object object)
-	: MovingObject(location, object), m_state(std::make_unique<StandingState>())
+	: MovingObject(location, object), m_state(std::make_unique<StandingState>()),
+					m_animation(Resources::instance().animationData(object),
+					Direction::Stay, m_sprite)
 {
-    m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f, m_sprite.getGlobalBounds().height / 2.f);
+	m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f,
+					   m_sprite.getGlobalBounds().height / 2.f);
     m_startPos = m_sprite.getPosition();
 }
 
@@ -34,21 +20,39 @@ void Player::setPlayer(sf::Vector2f location)
 
 void Player::update(sf::Time delta)
 {
-	setPrevLoc(m_sprite.getPosition());
-	
+	if (m_flickering && m_flickerClock.getElapsedTime().asSeconds() >= 0.05f)
+	{
+		m_flickering = false;
+		m_sprite.setColor(sf::Color::White);
+	}
+
 	movePlayer(delta);
 	m_animation.update(delta);
+	m_onWall = false;
+}
+
+void Player::draw(sf::RenderTarget& window)
+{
+	if (m_flickering && m_flickerClock.getElapsedTime().asSeconds() < 0.05f)
+	{
+		if (m_sprite.getColor() == sf::Color::Transparent)
+			m_sprite.setColor(sf::Color::White);
+		else
+			m_sprite.setColor(sf::Color::Transparent);
+
+
+	}
+	window.draw(m_sprite);
 }
 
 void Player::movePlayer(sf::Time delta)
 {
-	//for the cases we are jumping or falling
-	handleInput(RELEASE_DOWN);
+	//for the cases we are jumping or going down from a wall
+	if(m_jumping || !m_onWall)
+		handleInput(RELEASE_DOWN);
 
-	m_sprite.move(toVector(m_state->getDirection()) * delta.asSeconds() * SPEED);
-
+	m_sprite.move(toVector(m_dir) * delta.asSeconds() * SPEED);
 }
-
 
 void Player::updateAnimation(sf::Time delta)
 {
@@ -68,6 +72,14 @@ void Player::handleInput(Input input)
 
 void Player::setStateAnimation(Direction dir)
 {
-	//m_dir = dir;
+	m_dir = dir;
 	m_animation.direction(dir);
+}
+
+void Player::reduceLife()
+{
+	m_lives--;
+	m_flickering = true;
+	m_flickerClock.restart();
+	m_flickerStartTime = m_flickerClock.getElapsedTime();
 }
