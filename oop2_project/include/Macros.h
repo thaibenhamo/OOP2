@@ -38,6 +38,8 @@ enum class SoundType
 
 const int NUM_OF_TEXTURES = 11;
 const int NUM_OF_FONTS = 1;
+const float FONT_SIZE = 12.f;
+const sf::Color PINK = { 221, 79, 154, 255 };
 const std::string LEVEL_NAME = "Board", FILE_EXTENSION = ".txt";
 const int DEFAULT_ROWS = 12;
 const int DEFAULT_COLS = 24;

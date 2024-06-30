@@ -19,38 +19,31 @@ void InfoBar::setData()
 	m_sprites[2].setPosition(sf::Vector2f(1755.f, 956.f));
 
 	sf::FloatRect spriteBounds = m_sprites[Score].getGlobalBounds();
+
 	m_score.setFont(Resources::instance().getFont());
-	m_score.setCharacterSize(12);
-	m_score.setFillColor(sf::Color(221, 79, 154, 255));
-	m_score.setPosition(spriteBounds.left + spriteBounds.width - 12.f * 5,
-						spriteBounds.top + ((spriteBounds.height - 12.f) / 2.f));
+	m_score.setCharacterSize(FONT_SIZE);
+	m_score.setFillColor(PINK);
+	m_score.setPosition(spriteBounds.left + spriteBounds.width - FONT_SIZE * 5,
+						spriteBounds.top + ((spriteBounds.height - FONT_SIZE) / 2.f));
 	
 }
 void InfoBar::draw(sf::RenderTarget& window, const std::vector<int>& gameData)
 {
-	updateScore(gameData[Score]);
+	update(gameData);
 
-	for(int spriteNum = 0; spriteNum < 2; spriteNum++)
+	for(int spriteNum = 0; spriteNum < 3; spriteNum++)
 		window.draw(m_sprites[spriteNum]);
 	
-	switch (gameData[Lives])
-	{
-	case 1:
-		m_sprites[2].setTexture(Resources::instance().get(Resources::Heart1));
-		break;
-	case 2:
-		m_sprites[2].setTexture(Resources::instance().get(Resources::Heart2));
-		break;
-	default:
-		break;
-	}
-	window.draw(m_sprites[2]);
 	window.draw(m_score);
 }
 
-void InfoBar::updateScore(const int score)
+void InfoBar::update(const std::vector<int>& gameData)
 {
-	m_score.setString(std::to_string(score));
+	m_score.setString(std::to_string(gameData[Score]));
 
+	if(gameData[Lives] == 1)
+		m_sprites[2].setTexture(Resources::instance().get(Resources::Heart1));
+	else if(gameData[Lives] == 2)
+		m_sprites[2].setTexture(Resources::instance().get(Resources::Heart2));
 }
 
