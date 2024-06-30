@@ -7,6 +7,7 @@
 #include <typeindex>
 #include "Player.h"
 #include "Wall.h"
+#include "Coin.h"
 #include "MovingObject.h"
 #include "RandomEnemy.h"
 
@@ -31,13 +32,26 @@ namespace // anonymous namespace — the standard way to make function "static"
         }  
     }
 
+
+    // player with coin
+    void playerCoin(GameObject& p, GameObject& c)
+    {
+        Player& player = dynamic_cast<Player&>(p);
+        Coin& coin = dynamic_cast<Coin&>(c);
+
+        player.setGameDate(Points, ADD_POINTS);
+        coin.setIsDead(true);
+        //Resources::instance().playSound(SoundType::CoinSound);
+    }
+
     void playerRandomEnemy(GameObject& p, GameObject& r)
     {
         Player& player = dynamic_cast<Player&>(p);
         RandomEnemy& randomEnemy = dynamic_cast<RandomEnemy&>(r);
 
         //for the player hit random enemy
-        player.reduceLife();
+        if(player.getFlickering())
+            player.reduceLife();
     }
 
     using HitFunctionPtr = void (*)(GameObject&, GameObject&);
@@ -49,6 +63,7 @@ namespace // anonymous namespace — the standard way to make function "static"
         HitMap phm;
         //----------------- player collision ------------------------
         phm[MapKey(typeid(Player), typeid(Wall))] = &playerWall;
+        phm[MapKey(typeid(Player), typeid(Coin))] = &playerCoin;
         phm[MapKey(typeid(Player), typeid(RandomEnemy))] = &playerRandomEnemy;
         return phm;
     }
@@ -69,9 +84,9 @@ namespace // anonymous namespace — the standard way to make function "static"
 void processCollision(GameObject& object1, GameObject& object2)
 {
     auto phf = lookup(typeid(object1), typeid(object2));
-    //if (!phf)
-    //{
-    //    //throw UnknownCollision(object1, object2);
-    //}
+    if (!phf)
+    {
+        throw UnknownCollision(object1, object2);
+    }
     phf(object1, object2);
 }

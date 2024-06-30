@@ -93,6 +93,8 @@ Resources::Object Resources::getResourceType(ObjectType type)
 		return Player;
 	case ObjectType::WallChar:
 		return Wall; 
+	case ObjectType::CoinChar:
+		return Coin;
 	case ObjectType::RandomEnemyChar:
 		return RandomEnemy;
 	case ObjectType::FlyingEnemyChar:

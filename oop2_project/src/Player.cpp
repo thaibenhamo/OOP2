@@ -76,9 +76,14 @@ void Player::setStateAnimation(Direction dir)
 	m_animation.direction(dir);
 }
 
+void Player::setGameDate(GameData gameData, int num)
+{
+	m_gameDate[gameData] += num;
+}
+
 void Player::reduceLife()
 {
-	m_lives--;
+	m_gameDate[Lives]--;
 	m_flickering = true;
 	m_flickerClock.restart();
 	m_flickerStartTime = m_flickerClock.getElapsedTime();

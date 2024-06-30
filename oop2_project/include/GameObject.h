@@ -13,8 +13,13 @@ public:
 	void draw(sf::RenderTarget& window) const;
 	void setCurrPos(sf::Vector2f loc);
 	sf::Sprite getSprite() const;
+	const bool getIsDead() const;
+	void setIsDead(bool status);
+
 
 protected:
 	sf::Sprite m_sprite;
 	Direction m_dir = Direction::Stay;	
+	bool m_isDead = false;
+
 };

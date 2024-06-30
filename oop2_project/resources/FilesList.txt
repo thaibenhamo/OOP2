@@ -1,5 +1,6 @@
 background1.png
 texture.png
 wall.png
+coin.png
 randomEnemy.png
 flyingEnemy.png

@@ -26,6 +26,7 @@ public:
 	{
 		Player = BackgroundType::Count,
 		Wall,
+		Coin,
 		RandomEnemy,
 		FlyingEnemy,
 		Space,

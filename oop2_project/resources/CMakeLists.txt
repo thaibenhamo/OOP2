@@ -1,5 +1,6 @@
 ﻿configure_file ("texture.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("wall.png" ${CMAKE_BINARY_DIR} COPYONLY)
+configure_file ("coin.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("randomEnemy.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("background1.png" ${CMAKE_BINARY_DIR} COPYONLY)
 configure_file ("flyingEnemy.png" ${CMAKE_BINARY_DIR} COPYONLY)

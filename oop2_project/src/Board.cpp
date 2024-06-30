@@ -77,7 +77,9 @@ void Board::updateObjects(sf::Time dt) {
 
 	for (auto& movingObject : m_movingObjects)
 		movingObject->update(dt);
+	
 	collisions();
+	eraseIfDead();
 
 	updateAnimation(dt);
 }
@@ -106,6 +108,18 @@ void Board::updateAnimation(sf::Time dt) {
 
 	m_player.updateAnimation(dt);
 
+}
+
+void Board::eraseIfDead() {
+
+	// delete dead objects
+	std::erase_if(m_movingObjects, [](auto& movingObject) {
+		return movingObject->getIsDead();
+		});
+
+	std::erase_if(m_staticObjects, [](auto& staticObject) {
+		return staticObject->getIsDead();
+		});
 }
 
 void Board::drawObjects(sf::RenderWindow& window)  {

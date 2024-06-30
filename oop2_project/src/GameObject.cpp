@@ -22,3 +22,13 @@ sf::Sprite GameObject::getSprite() const {
 	return m_sprite;
 }
 
+const bool GameObject::getIsDead() const
+{
+	return m_isDead;
+}
+
+void GameObject::setIsDead(bool status)
+{
+	m_isDead = status;
+}
+

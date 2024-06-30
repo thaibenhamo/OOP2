@@ -24,6 +24,7 @@ private:
 	void readLevelFile(std::ifstream& file);
 	void collisions();
 	bool collide(MovingObject& a, GameObject& b) const;
+	void eraseIfDead();
 
 	Player m_player;
 	std::vector<std::unique_ptr<StaticObject>> m_staticObjects; //store static objects

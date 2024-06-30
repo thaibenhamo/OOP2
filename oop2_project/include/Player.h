@@ -16,7 +16,12 @@ public:
 	void update(sf::Time delta);
 	void setJumping(bool jumping) { m_jumping = jumping; }
 	void setOnWall(bool onWall) { m_onWall = onWall; }
+	void setGameDate(GameData gameData, int num);
+	const int* getGameDate() const { return m_gameDate; };
+	bool getFlickering() const { return m_flickering; };
+
 	void reduceLife();
+	
 	void draw(sf::RenderTarget& window);
 
 private:
@@ -32,6 +37,7 @@ private:
 	bool m_jumping = false;
 	bool m_onWall = true;
 	bool m_flickering = false;
-	int m_lives = 3;
+	
+	int m_gameDate[GameData::CountGameData] = { START_LIVES, 0 };
 	
 };
