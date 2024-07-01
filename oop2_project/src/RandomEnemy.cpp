@@ -20,10 +20,11 @@ RandomEnemy::RandomEnemy(sf::Vector2f location, Resources::Object object)
 
 void RandomEnemy::update(sf::Time delta)
 {
-   
+    if (m_sprite.getPosition().x < 0)
+        m_dir = Direction::Right;
 
-    if (m_changeDir)
-        changeDir();
+    if (m_sprite.getPosition().x + m_sprite.getGlobalBounds().width > SCREEN_X_SIZE)
+        m_dir = Direction::Left;
 
     m_animation.direction(m_dir);
     
@@ -35,15 +36,4 @@ void RandomEnemy::update(sf::Time delta)
 void RandomEnemy::move(sf::Time delta)
 {
     m_sprite.move(toVector(m_dir) * BASIC_ENEMY_SPEED * delta.asSeconds());
-    m_changeDir = true;
 };
-
-void RandomEnemy::changeDir() {
-
-    if (m_dir == Direction::Right) {
-        m_dir = Direction::Left;
-    }
-    else {
-        m_dir = Direction::Right;
-    }
-}
