@@ -10,5 +10,8 @@ public:
 	const int getLevelNum() const;
 
 private:
-	int m_levelNum = 1;			// to store level number
+	void updateScore(const int score);
+	void setData();
+	std::vector<sf::Sprite> m_sprites;
+	sf::Text m_score;
 };
