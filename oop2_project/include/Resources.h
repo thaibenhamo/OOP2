@@ -26,7 +26,11 @@ public:
 	{
 		Player = BackgroundType::Count,
 		Wall,
-		Coin,
+		Coin, 
+		Arrow,
+		BubbleGift,
+		LifeGift,
+		SpeedGift,
 		RandomEnemy,
 		FlyingEnemy,
 		ScoreDisplay,

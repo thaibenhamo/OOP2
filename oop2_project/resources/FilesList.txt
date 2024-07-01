@@ -2,6 +2,10 @@ background1.png
 texture.png
 wall.png
 coin.png
+arrow.png
+bubbleGift.png
+lifeGift.png
+speedGift.png
 randomEnemy.png
 flyingEnemy.png
 scoreDisplay.png

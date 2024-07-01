@@ -8,6 +8,8 @@ enum class ObjectType
 	PlayerChar = 'P',
 	WallChar = '#',
 	CoinChar = '$',
+	ArrowChar = '>',
+	GiftChar = 'G',
 	RandomEnemyChar = '&',
 	FlyingEnemyChar = '*',
 	SpaceChar = ' '
@@ -36,7 +38,7 @@ enum class SoundType
 
 };
 
-const int NUM_OF_TEXTURES = 11;
+const int NUM_OF_TEXTURES = 15;
 const int NUM_OF_FONTS = 1;
 const float FONT_SIZE = 12.f;
 const sf::Color PINK = { 221, 79, 154, 255 };
@@ -53,6 +55,12 @@ const sf::Vector2f SCALE_TO_THE_LEFT = { -1, 1 }, SCALE_TO_THE_RIGHT = { 1, 1 };
 constexpr auto JUMPING_DURATION = std::chrono::milliseconds(500);
 const float SPEED = 260.0f;
 const int PLAYER_HIGHT = 75, MIN_SPACE = 6, START_LIVES = 3, ADD_POINTS = 50;
-const float BASIC_ENEMY_SPEED = 100.f;
+const float BASIC_ENEMY_SPEED = 170.f;
 const int BASIC_ENEMY_MOVE_PICS = 9;
 const sf::Vector2i BASIC_ENEMY_SIZE = { 75,63 }, BASIC_ENEMY_INIT_SPACE = { 0,300 };
+const float CHASE_RADIUS = 500.0f;
+const float FLICKERING_DURATION = 2.0f;
+const float BULLET_SPEED = SPEED * 3.5f;
+const float TIME_FOR_CREATE_ARROW = 1.2f;
+const int OFFSET_X_FOR_BULLET = 50, OFFSET_Y_FOR_BULLET = 10;
+const int DIF_PLAYER_ARROW = 30, TOP_WALL = 30;

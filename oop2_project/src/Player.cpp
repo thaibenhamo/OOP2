@@ -6,7 +6,7 @@
 Player::Player(sf::Vector2f location, Resources::Object object)
 	: MovingObject(location, object), m_state(std::make_unique<StandingState>()),
 	m_animation(Resources::instance().animationData(object),
-		Direction::Stay, m_sprite), m_gameData(CountGameData)
+		Direction::Stay, m_sprite), m_gameData({START_LIVES, 0})
 {
 	m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f,
 		m_sprite.getGlobalBounds().height / 2.f);
@@ -22,21 +22,43 @@ void Player::setPlayer(sf::Vector2f location)
 void Player::update(sf::Time delta)
 {
 	if (m_flickering && 
-		m_flickerClock.getElapsedTime().asSeconds() >= 0.05f)
+		m_flickerClock.getElapsedTime().asSeconds() >= FLICKERING_DURATION)
 	{
 		m_flickering = false;
 		m_sprite.setColor(sf::Color::White);
 	}
+	checkIfShotArrow();
 
 	movePlayer(delta);
 	m_animation.update(delta);
 	m_onWall = false;
 }
 
+void Player::checkIfShotArrow()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		// If space was not previously pressed, this is the first press
+		if (!m_spacePressed)
+		{
+			m_spacePressed = true;
+			if (m_createBullet.getElapsedTime().asSeconds() > TIME_FOR_CREATE_ARROW)
+			{
+				m_shotArrow = true;
+				m_createBullet.restart(); // Reset the timer after shooting an arrow
+			}
+		}
+	}
+	else
+	{
+		m_spacePressed = false;
+	}
+}
+
 void Player::draw(sf::RenderTarget& window)
 {
 	if (m_flickering && 
-		m_flickerClock.getElapsedTime().asSeconds() < 0.05f)
+		m_flickerClock.getElapsedTime().asSeconds() < FLICKERING_DURATION)
 	{
 		if (m_sprite.getColor() == sf::Color::Transparent)
 			m_sprite.setColor(sf::Color::White);
@@ -84,6 +106,7 @@ void Player::setGameDate(GameData gameData, int num)
 
 void Player::reduceLife()
 {
+	std::cout << m_gameData[Lives];
 	m_gameData[Lives]--;
 	m_flickering = true;
 	m_flickerClock.restart();

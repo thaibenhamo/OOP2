@@ -13,7 +13,9 @@ public:
 	void draw(sf::RenderTarget& window) const;
 	void setCurrPos(sf::Vector2f loc);
 	void setIsDead(bool status);
+	void setDir(Direction dir) { m_dir = dir; }
 	const bool getIsDead() const;
+	const Direction getDir() const { return m_dir; }
 	sf::Sprite getSprite() const;
 
 protected:

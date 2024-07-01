@@ -25,6 +25,7 @@ private:
 	void collisions();
 	bool collide(MovingObject& a, GameObject& b) const;
 	void eraseIfDead();
+	void updateArrow();
 
 	Player m_player;
 	std::vector<std::unique_ptr<StaticObject>> m_staticObjects; //store static objects
