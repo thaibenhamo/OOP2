@@ -1,8 +1,8 @@
 #pragma once
 #include "Controller.h"
 
-int main() try 
-{
+int main() try {
+
     Controller c;
     c.run();
 

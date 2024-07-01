@@ -2,7 +2,7 @@
 #include "StaticObject.h"
 
 
-class Coin : public StaticObject {
+class Gift : public StaticObject {
 
 public:
 	using StaticObject::StaticObject;

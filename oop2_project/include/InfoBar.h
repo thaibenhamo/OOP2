@@ -1,16 +1,14 @@
 #pragma once
 #include "Resources.h"
 
-class InfoBar
+class Infobar
 {
 public:
-	InfoBar();
-	virtual ~InfoBar() = default;
-	void draw(sf::RenderTarget& window, const std::vector<int>& gameData);
+	Infobar();
+	virtual ~Infobar() = default;
+
+	const int getLevelNum() const;
 
 private:
-	void update(const std::vector<int>& gameData);
-	void setData();
-	std::vector<sf::Sprite> m_sprites;
-	sf::Text m_score;
+	int m_levelNum = 1;			// to store level number
 };

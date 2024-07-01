@@ -8,6 +8,7 @@ class StandingState;
 class FallingState : public PlayerState
 {
 public:
+
     FallingState() : PlayerState(Direction::Down) {};
     FallingState(Direction dir) : PlayerState(dir) {};
     ~FallingState();
@@ -18,4 +19,5 @@ public:
 
 private:
     static std::chrono::steady_clock::time_point m_fallingTime;
+
 };

@@ -16,11 +16,10 @@ enum Input
 	
 };
 
-class PlayerState 
-{
+class PlayerState {
 public:
-	PlayerState(Direction dir) : m_direction(dir) {}
-	virtual ~PlayerState() {}
+	PlayerState(Direction dir) : m_direction(dir) { }
+	virtual ~PlayerState() { }
 
 	virtual std::unique_ptr<PlayerState> handleInput(Input input) = 0;
 	virtual void enter(Player& player) = 0;

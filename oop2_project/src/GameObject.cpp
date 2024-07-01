@@ -12,13 +12,13 @@ void GameObject::draw(sf::RenderTarget& window) const
 	window.draw(m_sprite);
 }
 
-void GameObject::setCurrPos(sf::Vector2f loc) 
-{
+void GameObject::setCurrPos(sf::Vector2f loc) {
+
 	m_sprite.setPosition(loc);
 }
 
-sf::Sprite GameObject::getSprite() const 
-{
+sf::Sprite GameObject::getSprite() const {
+
 	return m_sprite;
 }
 

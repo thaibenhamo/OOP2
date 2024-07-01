@@ -5,6 +5,7 @@
 #include <memory>
 #include <unordered_map>
 
+
 template <typename T>
 class Factory
 {
