@@ -24,13 +24,14 @@ class Resources
 public:
 	enum Object
 	{
-		Player = BackgroundType::Count,
+		Player = ButtonType::CountButton,
 		Wall,
 		Coin, 
 		Arrow,
 		BubbleGift,
 		LifeGift,
 		SpeedGift,
+		Bubble,
 		RandomEnemy,
 		FlyingEnemy,
 		ScoreDisplay,
@@ -55,8 +56,9 @@ public:
 
 	sf::Texture& get(const Object object);
 	sf::Texture& get(const BackgroundType type);
+	sf::Texture& get(const ButtonType buttonType);
 	sf::Font& getFont();
-	const sf::Texture& texture() const { return m_textures[1]; } // temporary
+	const sf::Texture& texture() const { return m_textures[5]; } // temporary
 	Resources::Object getResourceType(ObjectType type);	// Mapping from ObjectType to Resources::Object
 	AnimationData& animationData(Object object) { return m_data[object]; } // temporary
 

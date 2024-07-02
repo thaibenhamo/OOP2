@@ -86,17 +86,40 @@ void Level::readLevelFile(std::ifstream& file)
 	}
 }
 
+void Level::updateStaticObjects()
+{
+	for (auto& staticObject : m_staticObjects)
+	{
+		if (typeid(*staticObject) != typeid(Wall))
+		{
+			if (staticObject->lifeTimerEnded())
+			{
+				if (!staticObject->getIsFlickering())
+				{
+					staticObject->startFlickeringTimer();
+				}
+				else
+				{
+					staticObject->checkIfStillFlickering();
+				}
+			}
+		}
+	}
+
+
+}
 void Level::updateObjects(sf::Time dt) 
 {
 	m_player.update(dt);
 
-	for (auto& movingObject : m_movingObjects) 
-	{
+	for (auto& movingObject : m_movingObjects) {
 		movingObject->updateWithPlayerPosition(m_player.getPos());
 		movingObject->update(dt);
 	}
 
 	updateArrow();
+	updateStaticObjects();
+
 	collisions();
 	eraseIfDead();
 

@@ -2,6 +2,8 @@
 #include "Resources.h"
 #include "Level.h"
 #include "InfoBar.h"
+#include "Menu.h"
+
 
 class Controller 
 {
@@ -16,7 +18,8 @@ private:
 	void runGame();
 	void runLevel();
 
-	Level m_level;									//for menu
+	Menu m_menu;
+	Level m_level;									//for level
 	InfoBar m_infoBar;								//for level information data
 	sf::RenderWindow m_window;						//game render window
 	sf::Time m_gameTime;							//for the time of the game 

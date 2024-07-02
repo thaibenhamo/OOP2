@@ -29,7 +29,7 @@ std::unique_ptr<PlayerState> FallingState::handleInput(Input input)
 
 void FallingState::enter(Player& player)
 {
-    player.setStateAnimation(m_direction, AnimationState::Land);
+    player.setStateAnimation(m_direction);
     player.setJumping(false);
 }
 

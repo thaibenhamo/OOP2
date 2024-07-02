@@ -33,7 +33,7 @@ std::unique_ptr<PlayerState> JumpingState::handleInput(Input input)
 
 void JumpingState::enter(Player& player)
 { 
-    player.setStateAnimation(m_direction, AnimationState::Jump);
+    player.setStateAnimation(m_direction);
 
     if (m_newJump) 
     {

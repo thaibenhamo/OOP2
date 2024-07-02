@@ -1,4 +1,8 @@
 background1.png
+menuBackground.png
+playButton.png
+helpButton.png
+endButton.png
 texture.png
 wall.png
 coin.png
@@ -6,6 +10,7 @@ arrow.png
 bubbleGift.png
 lifeGift.png
 speedGift.png
+bubble.png
 randomEnemy.png
 flyingEnemy.png
 scoreDisplay.png

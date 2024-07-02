@@ -16,7 +16,7 @@ void Controller::run()
 	//main loop
 	while (m_window.isOpen()) 
 	{
-		//m_menu.runMenu(m_window);
+		//m_menu.activate(m_window);
 		m_level.setLevel(m_levelNum);
 		runGame();
 	}

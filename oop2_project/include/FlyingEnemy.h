@@ -14,6 +14,5 @@ private:
 	void move(sf::Time delta);
 	void chasePlayer();
 	float distance(const sf::Vector2f& a, const sf::Vector2f& b) const;
-	Animation m_animation;
 };
 

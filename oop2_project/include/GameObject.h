@@ -19,7 +19,7 @@ public:
 	sf::Sprite getSprite() const;
 
 protected:
-	sf::Sprite m_sprite;
+	mutable sf::Sprite m_sprite;
 	Direction m_dir = Direction::Stay;	
 	bool m_isDead = false;
 };

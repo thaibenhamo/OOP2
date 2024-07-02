@@ -6,5 +6,5 @@ static auto registerIt = Factory<StaticObject>::instance().registerType(
     [](sf::Vector2f position, Resources::Object object) -> std::unique_ptr<StaticObject>
     {
         return std::make_unique<Wall>(position, object);
-    }
+    } 
 );

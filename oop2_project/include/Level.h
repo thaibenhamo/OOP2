@@ -4,6 +4,8 @@
 #include "MovingObject.h"
 #include "StaticObject.h"
 #include "Factory.h"
+#include "Wall.h"
+
 
 class Level 
 {
@@ -26,6 +28,8 @@ private:
 	bool collide(MovingObject& a, GameObject& b) const;
 	void eraseIfDead();
 	void updateArrow();
+	void updateStaticObjects();
+
 
 	Player m_player;
 	std::vector<std::unique_ptr<StaticObject>> m_staticObjects; //store static objects

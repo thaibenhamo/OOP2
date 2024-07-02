@@ -13,6 +13,8 @@
 #include "FlyingEnemy.h"
 #include "Arrow.h"
 #include "SpeedGift.h"
+#include "BubbleGift.h"
+#include "LifeGift.h"
 
 namespace // anonymous namespace — the standard way to make function "static"
 {
@@ -50,33 +52,55 @@ namespace // anonymous namespace — the standard way to make function "static"
         SpeedGift& speedGift = dynamic_cast<SpeedGift&>(c);
 
         player.setGameDate(Score, ADD_POINTS);
+        player.setSuperSpeed(true);
         speedGift.setIsDead(true);
 
         //Resources::instance().playSound(SoundType::SpeedGiftSound);
     }
 
-    void playerRandomEnemy(GameObject& p, GameObject& r)
+    void playerInvincibleGift(GameObject& p, GameObject& g)
     {
         Player& player = dynamic_cast<Player&>(p);
-        RandomEnemy& randomEnemy = dynamic_cast<RandomEnemy&>(r);
+        BubbleGift& bubbleGift = dynamic_cast<BubbleGift&>(g);
+
+        player.setInvincible(true);
+        bubbleGift.setIsDead(true);
+
+        //Resources::instance().playSound(SoundType::SpeedGiftSound);
+    }
+
+    void playerLifeGift(GameObject& p, GameObject& g)
+    {
+        Player& player = dynamic_cast<Player&>(p);
+        LifeGift& lifeGift = dynamic_cast<LifeGift&>(g);
+
+        player.setGameDate(Lives, 1);
+        lifeGift.setIsDead(true);
+
+        //Resources::instance().playSound(SoundType::SpeedGiftSound);
+    }
+
+    void playerRandomEnemy(GameObject& p, GameObject& )
+    {
+        Player& player = dynamic_cast<Player&>(p);
+        //RandomEnemy& randomEnemy = dynamic_cast<RandomEnemy&>(r);
 
         //for the player hit random enemy
-        if (!player.getFlickering())
+        if (!player.getFlickering() && !player.getInvincible())
         {
             player.reduceLife();
         }
     }
 
-    void playerFlyingEnemy(GameObject& p, GameObject& r)
+    void playerFlyingEnemy(GameObject& p, GameObject&)
     {
         Player& player = dynamic_cast<Player&>(p);
-        FlyingEnemy& flyingEnemy = dynamic_cast<FlyingEnemy&>(r);
+        //FlyingEnemy& flyingEnemy = dynamic_cast<FlyingEnemy&>(r);
 
         //for the player hit random enemy
-        if (!player.getFlickering())
-        {
+        if (!player.getFlickering() && !player.getInvincible())
             player.reduceLife();
-        }      
+
     }
 
     void playerArrow(GameObject& p, GameObject& a)
@@ -132,10 +156,10 @@ namespace // anonymous namespace — the standard way to make function "static"
         flyingEnemy.changeDir();
     }
 
-    void flyingEnemyArrow(GameObject& f, GameObject& a)
+    void flyingEnemyArrow(GameObject& f, GameObject&)
     {
         FlyingEnemy& flyingEnemy = dynamic_cast<FlyingEnemy&>(f);
-        Arrow& arrow = dynamic_cast<Arrow&>(a);
+        //Arrow& arrow = dynamic_cast<Arrow&>(a);
 
         flyingEnemy.setCurrPos(flyingEnemy.getPrevLoc());
         flyingEnemy.handleEnemyDeath();
@@ -151,12 +175,13 @@ namespace // anonymous namespace — the standard way to make function "static"
         arrow.setIsDead(true);
     }
 
-    void ArrowWall(GameObject& b, GameObject& w)
+    void ArrowWall(GameObject& b, GameObject&)
     {
         Arrow& arrow = dynamic_cast<Arrow&>(b);
-        Wall& wall = dynamic_cast<Wall&>(w);
+        //Wall& wall = dynamic_cast<Wall&>(w);
 
         arrow.setDir(Direction::Stay);
+
     }
 
     using HitFunctionPtr = void (*)(GameObject&, GameObject&);
@@ -173,6 +198,8 @@ namespace // anonymous namespace — the standard way to make function "static"
         phm[MapKey(typeid(Player), typeid(FlyingEnemy))] = &playerFlyingEnemy;
         phm[MapKey(typeid(Player), typeid(Arrow))] = &playerArrow;
         phm[MapKey(typeid(Player), typeid(SpeedGift))] = &playerSpeedGift;
+        phm[MapKey(typeid(Player), typeid(BubbleGift))] = &playerInvincibleGift;
+        phm[MapKey(typeid(Player), typeid(LifeGift))] = &playerLifeGift;
 
         phm[MapKey(typeid(FlyingEnemy), typeid(Wall))] = &flyingEnemyWall;
         phm[MapKey(typeid(FlyingEnemy), typeid(Arrow))] = &flyingEnemyArrow;

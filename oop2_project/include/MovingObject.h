@@ -13,7 +13,7 @@ public:
 	void setPos(sf::Vector2f pos);
 	void updateWithPlayerPosition(const sf::Vector2f& playerPosition) { m_playerPosition = playerPosition; }
 	virtual void update(sf::Time delta) = 0;
-	Direction getDirection() { return m_dir; }
+
 protected:
 	sf::Vector2f m_playerPosition;
 	sf::Vector2f m_prevLocation;	//to store previos location
