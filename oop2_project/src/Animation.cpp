@@ -1,22 +1,31 @@
 #include "Animation.h"
 
-Animation::Animation(AnimationData& data, const Direction dir, sf::Sprite& sprite)
-    : m_data(data), m_dir(dir), m_sprite(sprite) 
+Animation::Animation(AnimationData& data, const AnimationState state, sf::Sprite& sprite, const Direction dir)
+    : m_data(data), m_state(state), m_sprite(sprite), m_dir(dir)
 {
     m_sprite.setTexture(Resources::instance().texture());
-    update();
+    updateState(); 
 }
 
-void Animation::direction(const Direction dir) 
+void Animation::state(const AnimationState state)
+{
+    if (m_state == state)
+        return;
+    
+    m_state = state;
+    m_index = 0;
+    updateState();
+}
+
+void Animation::direction(const Direction dir)
 {
     if (m_dir == dir)
         return;
-    
+
     m_dir = dir;
     m_index = 0;
-    update();
+    updateState();
 }
-
 void Animation::update(const sf::Time delta) 
 {
     m_elapsed += delta;
@@ -24,23 +33,26 @@ void Animation::update(const sf::Time delta)
     {
         m_elapsed -= AnimationTime;
         ++m_index;
-        m_index %= m_data.m_data.find(m_dir)->second.size();
-        update();
+        m_index %= m_data.m_data.find(m_state)->second.size();
+        updateState();
     }
 }
 
-void Animation::update()
+void Animation::updateState()
 {
-    m_sprite.setTextureRect(m_data.m_data.find(m_dir)->second[m_index]);
+    m_sprite.setTextureRect(m_data.m_data.find(m_state)->second[m_index]);
+    updateDir();
+}
 
-    if (m_dir == Direction::Left || 
-        m_dir == Direction::DownLeft || 
+void Animation::updateDir()
+{
+    if (m_dir == Direction::Left ||
+        m_dir == Direction::DownLeft ||
         m_dir == Direction::UpLeft)
         m_sprite.setScale(SCALE_TO_THE_LEFT);
 
-    if (m_dir == Direction::Right || 
-        m_dir == Direction::DownRight || 
+    if (m_dir == Direction::Right ||
+        m_dir == Direction::DownRight ||
         m_dir == Direction::UpRight)
         m_sprite.setScale(SCALE_TO_THE_RIGHT);
-
 }

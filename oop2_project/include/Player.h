@@ -12,7 +12,7 @@ public:
 	void setPlayer(sf::Vector2f location);
 	void updateAnimation(sf::Time delta);
 	virtual void handleInput(Input input);
-	void setStateAnimation(Direction dir);
+	void setStateAnimation(Direction dir, AnimationState state);
 	void update(sf::Time delta);
 	void setJumping(bool jumping) { m_jumping = jumping; }
 	void setOnWall(bool onWall) { m_onWall = onWall; }
@@ -22,7 +22,6 @@ public:
 	bool getShotArrow() const { return m_shotArrow; };
 	void setShotArrow(bool shot) { m_shotArrow = shot; }
 	void reduceLife();
-	
 	void draw(sf::RenderTarget& window);
 
 private:

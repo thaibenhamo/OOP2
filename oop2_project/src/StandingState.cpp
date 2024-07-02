@@ -29,6 +29,6 @@ std::unique_ptr<PlayerState> StandingState::handleInput(Input input)
 
 void StandingState::enter(Player& player) 
 {
-    player.setStateAnimation(Direction::Stay);
+    player.setStateAnimation(Direction::Stay, AnimationState::Stay);
     player.setJumping(false);
 }

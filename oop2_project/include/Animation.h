@@ -6,16 +6,18 @@
 class Animation
 {
 public:
-    Animation(AnimationData& data, const Direction dir, sf::Sprite& sprite);
+    Animation(AnimationData& data, const AnimationState state, sf::Sprite& sprite, const Direction dir);
     virtual ~Animation() = default;
-    void direction(const Direction dir);
+    void state(const AnimationState state);
     void update(const sf::Time delta);
-    
-private:
-    void update();
+    void direction(const Direction dir);
 
+private:
+    void updateState();
+    void updateDir();
     AnimationData& m_data;
-    Direction m_dir = Direction::Stay;
+    AnimationState m_state;
+    Direction m_dir;
     sf::Time m_elapsed = {};
     sf::Sprite& m_sprite;
     int m_index = 0;

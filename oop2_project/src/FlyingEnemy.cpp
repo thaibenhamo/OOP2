@@ -10,9 +10,11 @@ static auto registerIt = Factory<MovingObject>::instance().registerType(
 );
 
 FlyingEnemy::FlyingEnemy(sf::Vector2f location, Resources::Object object)
-    : Enemy(location, object)
+    : Enemy(location, object), m_animation(Resources::instance().animationData(object),
+        AnimationState::Move, m_sprite, Direction::Left)
 {
-    m_sprite.setTexture(Resources::instance().get(object));
+    m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f,
+        m_sprite.getGlobalBounds().height / 2.f * 0.8f);
 }
 
 void FlyingEnemy::update(sf::Time delta)
@@ -25,9 +27,9 @@ void FlyingEnemy::update(sf::Time delta)
     {
         m_dir = opposite(m_dir);
     }
-
+    m_animation.direction(m_dir);
     move(delta);
-    //m_animation.update(delta);
+    m_animation.update(delta);
 }
 
 void FlyingEnemy::move(sf::Time delta)

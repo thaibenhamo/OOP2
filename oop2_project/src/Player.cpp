@@ -6,12 +6,11 @@
 Player::Player(sf::Vector2f location, Resources::Object object)
 	: MovingObject(location, object), m_state(std::make_unique<StandingState>()),
 	m_animation(Resources::instance().animationData(object),
-		Direction::Stay, m_sprite), m_gameData({START_LIVES, 0})
+		AnimationState::Stay, m_sprite, Direction::Stay), m_gameData({START_LIVES, 0})
 {
 	m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f,
 		m_sprite.getGlobalBounds().height / 2.f);
 	m_startPos = m_sprite.getPosition();
-	
 }
 
 void Player::setPlayer(sf::Vector2f location)
@@ -41,7 +40,9 @@ void Player::checkIfShotArrow()
 		// If space was not previously pressed, this is the first press
 		if (!m_spacePressed)
 		{
+			setStateAnimation(m_dir, AnimationState::Shoot);
 			m_spacePressed = true;
+			
 			if (m_createBullet.getElapsedTime().asSeconds() > TIME_FOR_CREATE_ARROW)
 			{
 				m_shotArrow = true;
@@ -52,6 +53,7 @@ void Player::checkIfShotArrow()
 	else
 	{
 		m_spacePressed = false;
+		setStateAnimation(m_dir, AnimationState::Stay);
 	}
 }
 
@@ -93,10 +95,11 @@ void Player::handleInput(Input input)
 	}
 }
 
-void Player::setStateAnimation(Direction dir)
+void Player::setStateAnimation(Direction dir, AnimationState state)
 {
 	m_dir = dir;
-	m_animation.direction(dir);
+	m_animation.state(state);
+	m_animation.direction(dir);	
 }
 
 void Player::setGameDate(GameData gameData, int num)

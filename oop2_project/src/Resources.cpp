@@ -5,7 +5,8 @@ namespace
 	int num_of_pics;
 
 	void readData(AnimationData& animation, sf::Vector2i& currentStart, sf::Vector2i& initSpace,
-				  Direction state, sf::Vector2i& size, int pics, int offset) {
+				  AnimationState state, sf::Vector2i& size, int pics, int offset) 
+	{
 
 		auto nextStart = [&]()
 			{
@@ -28,18 +29,14 @@ namespace
 		auto player = AnimationData{};
 		auto currentStart = initSpace;
 
-		readData(player, currentStart, initSpace, Direction::Stay, size, PLAYER_STAY_PICS, 0);
-		readData(player, currentStart, initSpace, Direction::Left, size, PLAYER_MOVE_PICS, 1);
-		readData(player, currentStart, initSpace, Direction::Right, size, PLAYER_MOVE_PICS, 1);
-		readData(player, currentStart, initSpace, Direction::Up, size, PLAYER_UP_PICS, 2);
-		readData(player, currentStart, initSpace, Direction::UpLeft, size, PLAYER_UP_PICS, 2);
-		readData(player, currentStart, initSpace, Direction::UpRight, size, PLAYER_UP_PICS, 2);
-		readData(player, currentStart, initSpace, Direction::Down, size, PLAYER_DOWN_PICS, 3);
-		readData(player, currentStart, initSpace, Direction::DownLeft, size, PLAYER_DOWN_PICS, 3);
-		readData(player, currentStart, initSpace, Direction::DownRight, size, PLAYER_DOWN_PICS, 3);
-
+		readData(player, currentStart, initSpace, AnimationState::Stay, size, PLAYER_STAY_PICS, 0);
+		readData(player, currentStart, initSpace, AnimationState::Move, size, PLAYER_MOVE_PICS, 1);
+		readData(player, currentStart, initSpace, AnimationState::Jump, size, PLAYER_JUMP_PICS, 2);
+		readData(player, currentStart, initSpace, AnimationState::Land, size, PLAYER_LAND_PICS, 3);
+		readData(player, currentStart, initSpace, AnimationState::Shoot, size, PLAYER_SHOOT_PICS, 4);
 		return player;
 	}
+
 	AnimationData randomEnemyData()
 	{
 		auto size = BASIC_ENEMY_SIZE;
@@ -48,9 +45,20 @@ namespace
 		auto randomEnemy = AnimationData{};
 		auto currentStart = initSpace;
 
-		readData(randomEnemy, currentStart, initSpace, Direction::Left, size, BASIC_ENEMY_MOVE_PICS, 0);
-		readData(randomEnemy, currentStart, initSpace, Direction::Right, size, BASIC_ENEMY_MOVE_PICS, 0);
+		readData(randomEnemy, currentStart, initSpace, AnimationState::Move, size, BASIC_ENEMY_MOVE_PICS, 0);
 		return  randomEnemy;
+	}
+
+	AnimationData flyingEnemyData()
+	{
+		auto size = FLYING_ENEMY_SIZE;
+		auto initSpace = FLYING_ENEMY_INIT_SPACE;
+
+		auto flyingEnemy = AnimationData{};
+		auto currentStart = initSpace;
+
+		readData(flyingEnemy, currentStart, initSpace, AnimationState::Move, size, FLYING_ENEMY_MOVE_PICS, 0);
+		return  flyingEnemy;
 	}
 }
 
@@ -86,6 +94,7 @@ Resources::Resources() : m_data(Max)
 	// set animation
 	m_data[Player] = playerData();
 	m_data[RandomEnemy] = randomEnemyData();
+	m_data[FlyingEnemy] = flyingEnemyData();
 }
 
 sf::Texture& Resources::get(const Object object)

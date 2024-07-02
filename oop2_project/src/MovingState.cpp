@@ -27,10 +27,10 @@ std::unique_ptr<PlayerState> MovingState::handleInput(Input input)
 }
 
 void MovingState::enter(Player& player) 
-{   
+{
     if (m_newDirection) 
     {
-        player.setStateAnimation(m_direction);
+        player.setStateAnimation(m_direction, AnimationState::Move);
         player.setJumping(false);
         m_newDirection = false;
     }
