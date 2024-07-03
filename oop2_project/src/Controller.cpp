@@ -43,7 +43,6 @@ void Controller::runLevel()
 
 		m_level.handleInput(PRESS_BOTTON);
 		m_level.updateObjects(delta);
-		
 		draw(/*myView*/);
 	}
 	//add restart view

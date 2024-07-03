@@ -53,3 +53,29 @@ Direction opposite(Direction dir)
     }
     throw std::runtime_error("Unknown direction");
 }
+
+Direction oppositeForHit(Direction dir)
+{
+    switch (dir)
+    {
+    case Direction::Stay:
+        return Direction::UpRight;
+    case Direction::Left:
+        return Direction::UpRight;
+    case Direction::Right:
+        return Direction::UpLeft;
+    case Direction::Up:
+        return Direction::DownRight;
+    case Direction::Down:
+        return Direction::UpRight;
+    case Direction::UpRight:
+        return Direction::DownLeft;
+    case Direction::UpLeft:
+        return Direction::DownRight;
+    case Direction::DownRight:
+        return Direction::UpLeft;
+    case Direction::DownLeft:
+        return Direction::UpRight;
+    }
+    throw std::runtime_error("Unknown direction");
+}

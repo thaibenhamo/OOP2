@@ -6,10 +6,10 @@
 Player::Player(sf::Vector2f location, Resources::Object object)
 	: MovingObject(location, object), m_state(std::make_unique<StandingState>()),
 	m_animation(Resources::instance().animationData(object),
-		Direction::Stay, m_sprite), m_gameData({START_LIVES, 0})
+		AnimationState::Stay, m_sprite, Direction::Stay), m_gameData({ START_LIVES, 0 })
 {
 	m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f,
-		m_sprite.getGlobalBounds().height / 2.f);
+					   m_sprite.getGlobalBounds().height / 2.f);
 	m_startPos = m_sprite.getPosition();
 
 	m_bubble.setTexture(Resources::instance().get(Resources::Bubble));
@@ -34,12 +34,14 @@ void Player::update(sf::Time delta)
 	{
 		m_flickering = false;
 		m_sprite.setColor(sf::Color::White);
+		setStateAnimation(Direction::Stay, AnimationState::Stay);
 	}
 	checkIfShotArrow();
 	
 	m_bubble.setPosition(getPos());
-	movePlayer(delta);
 	m_animation.update(delta);
+	movePlayer(delta);
+	
 	m_onWall = false;
 }
 
@@ -47,14 +49,17 @@ void Player::checkIfShotArrow()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
+		
+
 		// If space was not previously pressed, this is the first press
 		if (!m_spacePressed)
 		{
+			//setStateAnimation(m_dir, AnimationState::Shoot);
 			m_spacePressed = true;
 			if (m_createBullet.getElapsedTime().asSeconds() > TIME_FOR_CREATE_ARROW)
 			{
 				m_shotArrow = true;
-				m_createBullet.restart(); // Reset the timer after shooting an arrow
+				m_createBullet.restart(); // Reset the timer after shooting an arrow	
 			}
 		}
 	}
@@ -69,6 +74,7 @@ void Player::draw(sf::RenderTarget& window)
 	if (m_flickering && 
 		m_flickerClock.getElapsedTime().asSeconds() < FLICKERING_DURATION)
 	{
+		
 		if (m_sprite.getColor() == sf::Color::Transparent)
 			m_sprite.setColor(sf::Color::White);
 		else
@@ -106,9 +112,12 @@ void Player::handleInput(Input input)
 	}
 }
 
-void Player::setStateAnimation(Direction dir)
+void Player::setStateAnimation(Direction dir, AnimationState state)
 {
+	std::cout << "Setting animation state to " << state << " in direction " << toVector(dir).x <<
+		" " << toVector(dir).x << std::endl; // for debug
 	m_dir = dir;
+	m_animation.state(state);
 	m_animation.direction(dir);
 }
 
@@ -119,7 +128,8 @@ void Player::setGameDate(GameData gameData, int num)
 
 void Player::reduceLife()
 {
-	std::cout << m_gameData[Lives];
+	//m_sprite.move(toVector(opposite(m_dir)) * 300.f);
+	setStateAnimation(m_dir, AnimationState::Hit);
 	m_gameData[Lives]--;
 	m_flickering = true;
 	m_flickerClock.restart();

@@ -32,7 +32,7 @@ namespace // anonymous namespace — the standard way to make function "static"
         {
             player.handleInput(RELEASE_ON_WALL);
             player.setOnWall(true);
-        }  
+        }
     }
 
     // player with coin
@@ -80,7 +80,7 @@ namespace // anonymous namespace — the standard way to make function "static"
         //Resources::instance().playSound(SoundType::SpeedGiftSound);
     }
 
-    void playerRandomEnemy(GameObject& p, GameObject& )
+    void playerEnemy(GameObject& p, GameObject& )
     {
         Player& player = dynamic_cast<Player&>(p);
         //RandomEnemy& randomEnemy = dynamic_cast<RandomEnemy&>(r);
@@ -90,17 +90,6 @@ namespace // anonymous namespace — the standard way to make function "static"
         {
             player.reduceLife();
         }
-    }
-
-    void playerFlyingEnemy(GameObject& p, GameObject&)
-    {
-        Player& player = dynamic_cast<Player&>(p);
-        //FlyingEnemy& flyingEnemy = dynamic_cast<FlyingEnemy&>(r);
-
-        //for the player hit random enemy
-        if (!player.getFlickering() && !player.getInvincible())
-            player.reduceLife();
-
     }
 
     void playerArrow(GameObject& p, GameObject& a)
@@ -114,6 +103,12 @@ namespace // anonymous namespace — the standard way to make function "static"
             player.setOnWall(true);
         }
     }
+
+    // ----------------- Enemy -----------------------
+    void enemyGift(GameObject&, GameObject&)
+    {}
+    void enemyCoin(GameObject&, GameObject&)
+    {}
     // ----------------- randomEnemy -----------------
 
     void randomEnemyWall(GameObject& m, GameObject& w)
@@ -122,13 +117,12 @@ namespace // anonymous namespace — the standard way to make function "static"
         Wall& wall = dynamic_cast<Wall&>(w);
 
         //check if the enemy is on the wall
-        //check if the enemy is on the wall
-        if (wall.getSprite().getGlobalBounds().contains(randomEnemy.getSprite().getPosition().x - randomEnemy.getSprite().getGlobalBounds().width,
+        if (wall.getSprite().getGlobalBounds().contains(randomEnemy.getSprite().getPosition().x - randomEnemy.getSprite().getGlobalBounds().width/2,
             randomEnemy.getSprite().getPosition().y + randomEnemy.getSprite().getGlobalBounds().height)) 
         {
             randomEnemy.setChangeDir(false);
         }
-        else if (wall.getSprite().getGlobalBounds().contains(randomEnemy.getSprite().getPosition().x + randomEnemy.getSprite().getGlobalBounds().width,
+        else if (wall.getSprite().getGlobalBounds().contains(randomEnemy.getSprite().getPosition().x + randomEnemy.getSprite().getGlobalBounds().width/2,
             randomEnemy.getSprite().getPosition().y + randomEnemy.getSprite().getGlobalBounds().height)) 
         {
             randomEnemy.setChangeDir(false);
@@ -145,6 +139,9 @@ namespace // anonymous namespace — the standard way to make function "static"
         randomEnemy.handleEnemyDeath();
         //Resources::instance().playSound(SoundType::DeathRandomEnemySound);
     }
+    void randomEnemyFlyingEnemy(GameObject&, GameObject&)
+    {}
+
 
     // ----------------- flyingEnemy -----------------
 
@@ -183,6 +180,8 @@ namespace // anonymous namespace — the standard way to make function "static"
         arrow.setDir(Direction::Stay);
 
     }
+    void ArrowArrow(GameObject&, GameObject&)
+    {}
 
     using HitFunctionPtr = void (*)(GameObject&, GameObject&);
     using MapKey = std::pair<std::type_index, std::type_index>;
@@ -194,8 +193,8 @@ namespace // anonymous namespace — the standard way to make function "static"
         //----------------- player collision ------------------------
         phm[MapKey(typeid(Player), typeid(Wall))] = &playerWall;
         phm[MapKey(typeid(Player), typeid(Coin))] = &playerCoin;
-        phm[MapKey(typeid(Player), typeid(RandomEnemy))] = &playerRandomEnemy;
-        phm[MapKey(typeid(Player), typeid(FlyingEnemy))] = &playerFlyingEnemy;
+        phm[MapKey(typeid(Player), typeid(RandomEnemy))] = &playerEnemy;
+        phm[MapKey(typeid(Player), typeid(FlyingEnemy))] = &playerEnemy;
         phm[MapKey(typeid(Player), typeid(Arrow))] = &playerArrow;
         phm[MapKey(typeid(Player), typeid(SpeedGift))] = &playerSpeedGift;
         phm[MapKey(typeid(Player), typeid(BubbleGift))] = &playerInvincibleGift;
@@ -203,13 +202,25 @@ namespace // anonymous namespace — the standard way to make function "static"
 
         phm[MapKey(typeid(FlyingEnemy), typeid(Wall))] = &flyingEnemyWall;
         phm[MapKey(typeid(FlyingEnemy), typeid(Arrow))] = &flyingEnemyArrow;
+        phm[MapKey(typeid(FlyingEnemy), typeid(RandomEnemy))] = randomEnemyFlyingEnemy;
+        phm[MapKey(typeid(FlyingEnemy), typeid(Coin))] = &enemyCoin;
+        phm[MapKey(typeid(FlyingEnemy), typeid(SpeedGift))] = &enemyGift;
+        phm[MapKey(typeid(FlyingEnemy), typeid(LifeGift))] = &enemyGift;
+        phm[MapKey(typeid(FlyingEnemy), typeid(BubbleGift))] = &enemyGift;
 
         phm[MapKey(typeid(RandomEnemy), typeid(Wall))] = &randomEnemyWall;
         phm[MapKey(typeid(RandomEnemy), typeid(Arrow))] = &randomEnemyArrow;
+        phm[MapKey(typeid(RandomEnemy), typeid(FlyingEnemy))] = randomEnemyFlyingEnemy;
+        phm[MapKey(typeid(RandomEnemy), typeid(Coin))] = &enemyCoin;
+        phm[MapKey(typeid(RandomEnemy), typeid(SpeedGift))] = &enemyGift;
+        phm[MapKey(typeid(RandomEnemy), typeid(LifeGift))] = &enemyGift;
+        phm[MapKey(typeid(RandomEnemy), typeid(BubbleGift))] = &enemyGift;
 
         phm[MapKey(typeid(Arrow), typeid(RandomEnemy))] = &ArrowEnemy;
         phm[MapKey(typeid(Arrow), typeid(FlyingEnemy))] = &ArrowEnemy;
         phm[MapKey(typeid(Arrow), typeid(Wall))] = &ArrowWall;
+        phm[MapKey(typeid(Arrow), typeid(Arrow))] = &ArrowArrow;
+        
         return phm;
     }
 

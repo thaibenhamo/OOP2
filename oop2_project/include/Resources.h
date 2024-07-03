@@ -1,23 +1,9 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <fstream>
-#include <thread>
-#include <vector>
-#include <iostream>
-#include <sstream>
-#include <typeinfo>
-#include <chrono>
-#include <thread>
-#include <cstdlib>
-#include <ctime>   
-#include <list>
-#include <stdexcept>
-#include "Macros.h"
 #include "FileError.h"
+#include <vector>
+#include "Macros.h"
 #include "AnimationData.h"
-#include "Direction.h"
 
 class Resources 
 {

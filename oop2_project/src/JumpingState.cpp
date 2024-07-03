@@ -22,7 +22,7 @@ std::unique_ptr<PlayerState> JumpingState::handleInput(Input input)
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && 
-        m_direction != Direction::UpRight) 
+        m_direction != Direction::UpRight)
     {
         return std::make_unique<JumpingState>(Direction::UpRight);
     }
@@ -33,7 +33,7 @@ std::unique_ptr<PlayerState> JumpingState::handleInput(Input input)
 
 void JumpingState::enter(Player& player)
 { 
-    player.setStateAnimation(m_direction);
+    player.setStateAnimation(m_direction, AnimationState::Jump);
 
     if (m_newJump) 
     {

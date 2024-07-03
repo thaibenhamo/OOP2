@@ -15,6 +15,16 @@ enum class ObjectType
 	SpaceChar = ' '
 };
 
+enum AnimationState
+{
+	Stay,
+	Move,
+	Jump,
+	Land,
+	Shoot,
+	Hit
+};
+
 enum GameData
 {
 	Lives,
@@ -47,17 +57,16 @@ enum class SoundType
 
 };
 
-const int NUM_OF_TEXTURES = 20;
-const int NUM_OF_FONTS = 1;
+const int NUM_OF_TEXTURES = 20, NUM_OF_FONTS = 1;
 const float FONT_SIZE = 12.f;
 const sf::Color PINK = { 221, 79, 154, 255 };
 const std::string LEVEL_NAME = "Board", FILE_EXTENSION = ".txt";
-const int DEFAULT_ROWS = 12;
-const int DEFAULT_COLS = 24;
-const float SCREEN_X_SIZE = 1920.f, SCREEN_Y_SIZE = 1050.f;
+const int DEFAULT_ROWS = 12, DEFAULT_COLS = 24;
+const float SCREEN_X_SIZE = 1600.f, SCREEN_Y_SIZE = 900.f;
 const int FPS = 60;
 const float OBJECTSIZE_X = 75.f, OBJECTSIZE_Y = 75.f;
-const int PLAYER_STAY_PICS = 4, PLAYER_MOVE_PICS = 7, PLAYER_UP_PICS = 2, PLAYER_DOWN_PICS = 2, PLAYER_OFFSET = 75;
+const int PLAYER_STAY_PICS = 4, PLAYER_MOVE_PICS = 7, PLAYER_JUMP_PICS = 2, PLAYER_LAND_PICS = 2, PLAYER_SHOOT_PICS = 7,
+		  PLAYER_HIT_PICS = 1, PLAYER_OFFSET = 75;
 const sf::Vector2i PLAYER_SIZE = { 75, 75 }, PLAYER_INIT_SPACE = { 0, 0 }, PLAYER_MIDDLE_SPACE = { 0, 0 };
 const auto AnimationTime = sf::seconds(0.2f);
 const sf::Vector2f SCALE_TO_THE_LEFT = { -1, 1 }, SCALE_TO_THE_RIGHT = { 1, 1 };
@@ -66,7 +75,9 @@ const float SPEED = 260.0f, ADD_SPEED = 150.0f;
 const int PLAYER_HIGHT = 75, MIN_SPACE = 6, START_LIVES = 3, ADD_POINTS = 50;
 const float BASIC_ENEMY_SPEED = 170.f;
 const int BASIC_ENEMY_MOVE_PICS = 9;
-const sf::Vector2i BASIC_ENEMY_SIZE = { 75,63 }, BASIC_ENEMY_INIT_SPACE = { 0,300 };
+const int FLYING_ENEMY_MOVE_PICS = 4;
+const sf::Vector2i BASIC_ENEMY_SIZE = { 75,63 }, BASIC_ENEMY_INIT_SPACE = { 0,450 };
+const sf::Vector2i FLYING_ENEMY_SIZE = { 75,75 }, FLYING_ENEMY_INIT_SPACE = { 0,513 };
 const float CHASE_RADIUS = 500.0f;
 const float FLICKERING_DURATION = 2.0f, MIN_STATIC_LIFE_DURATION = 10.0f;
 const float MAX_STATIC_LIFE_DURATION = 20.0f;

@@ -6,7 +6,6 @@
 #include "Factory.h"
 #include "Wall.h"
 
-
 class Level 
 {
 public:

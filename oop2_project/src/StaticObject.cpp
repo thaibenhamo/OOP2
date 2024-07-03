@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "StaticObject.h"
 #include "Factory.h"
+#include <iostream> // for debug
 
 StaticObject::StaticObject(sf::Vector2f location, Resources::Object object)
 	: GameObject(location, object)

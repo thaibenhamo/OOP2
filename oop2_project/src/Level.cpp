@@ -4,6 +4,8 @@
 #include "RandomEnemy.h"
 #include "FlyingEnemy.h"
 #include "Arrow.h"
+#include <fstream>
+
 
 Level::Level()
 	: m_player(Player({ 0,0 }, Resources::Player)) {}
@@ -105,14 +107,15 @@ void Level::updateStaticObjects()
 			}
 		}
 	}
-
-
 }
+
 void Level::updateObjects(sf::Time dt) 
 {
 	m_player.update(dt);
+	updateAnimation(dt);
 
-	for (auto& movingObject : m_movingObjects) {
+	for (auto& movingObject : m_movingObjects) 
+	{
 		movingObject->updateWithPlayerPosition(m_player.getPos());
 		movingObject->update(dt);
 	}
@@ -122,8 +125,6 @@ void Level::updateObjects(sf::Time dt)
 
 	collisions();
 	eraseIfDead();
-
-	updateAnimation(dt);
 }
 
 void Level::updateArrow()

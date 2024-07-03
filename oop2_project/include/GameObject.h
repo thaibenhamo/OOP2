@@ -15,7 +15,6 @@ public:
 	void setIsDead(bool status);
 	void setDir(Direction dir) { m_dir = dir; }
 	const bool getIsDead() const;
-	const Direction getDir() const { return m_dir; }
 	sf::Sprite getSprite() const;
 
 protected:

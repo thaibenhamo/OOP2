@@ -17,3 +17,4 @@ enum class Direction
 
 Direction opposite(Direction dir);
 sf::Vector2f toVector(Direction dir);
+Direction oppositeForHit(Direction dir);
