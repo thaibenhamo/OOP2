@@ -5,7 +5,8 @@
 #include "FlyingEnemy.h"
 #include "Arrow.h"
 #include <fstream>
-
+#include <sstream>
+#include <vector>
 
 Level::Level()
 	: m_player(Player({ 0,0 }, Resources::Player)) {}
@@ -236,7 +237,7 @@ void Level::drawObjects(sf::RenderWindow& window)
 
 const sf::Vector2f Level::findLocation(const int row, const int col) const 
 {
-	return sf::Vector2f(OBJECTSIZE_X * col, OBJECTSIZE_Y* row);
+	return sf::Vector2f(OBJECTSIZE_X* col, OBJECTSIZE_Y* row);
 }
 
 const bool Level::getWinGame() const

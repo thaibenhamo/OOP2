@@ -10,13 +10,13 @@ InfoBar::InfoBar()
 void InfoBar::setData()
 {
 	m_sprites[0].setTexture(Resources::instance().get(Resources::LivesDisplay));
-	m_sprites[0].setPosition(sf::Vector2f(1750.f, 950.f));
+	m_sprites[0].setPosition(sf::Vector2f(SCREEN_X_SIZE - 170.f , SCREEN_Y_SIZE - 100.f));
 
 	m_sprites[1].setTexture(Resources::instance().get(Resources::ScoreDisplay));
-	m_sprites[1].setPosition(sf::Vector2f(1730.f, 990.f));
+	m_sprites[1].setPosition(sf::Vector2f(SCREEN_X_SIZE - 190.f, SCREEN_Y_SIZE - 60.f));
 
 	m_sprites[2].setTexture(Resources::instance().get(Resources::Heart3));
-	m_sprites[2].setPosition(sf::Vector2f(1755.f, 956.f));
+	m_sprites[2].setPosition(sf::Vector2f(SCREEN_X_SIZE - 165.f, SCREEN_Y_SIZE - 94.f));
 
 	sf::FloatRect spriteBounds = m_sprites[Score].getGlobalBounds();
 

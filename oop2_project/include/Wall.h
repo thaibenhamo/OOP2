@@ -2,10 +2,10 @@
 #include "StaticObject.h"
 
 
-class Wall : public StaticObject {
-
+class Wall : public StaticObject 
+{
 public:
-	using StaticObject::StaticObject;
+	Wall(sf::Vector2f location, Resources::Object object);
 
 private:
 

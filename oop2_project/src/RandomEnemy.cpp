@@ -21,10 +21,11 @@ RandomEnemy::RandomEnemy(sf::Vector2f location, Resources::Object object)
 void RandomEnemy::update(sf::Time delta)
 {
     if (m_changeDir)
+    {
         changeDir();
-
-    m_animation.direction(m_dir);
-    
+        m_animation.direction(m_dir);
+    }    
+   
     move(delta);
     m_animation.update(delta);
 }

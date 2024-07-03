@@ -62,7 +62,7 @@ const float FONT_SIZE = 12.f;
 const sf::Color PINK = { 221, 79, 154, 255 };
 const std::string LEVEL_NAME = "Board", FILE_EXTENSION = ".txt";
 const int DEFAULT_ROWS = 12, DEFAULT_COLS = 24;
-const float SCREEN_X_SIZE = 1600.f, SCREEN_Y_SIZE = 900.f;
+const float SCREEN_X_SIZE = 1650.f, SCREEN_Y_SIZE = 900.f;
 const int FPS = 60;
 const float OBJECTSIZE_X = 75.f, OBJECTSIZE_Y = 75.f;
 const int PLAYER_STAY_PICS = 4, PLAYER_MOVE_PICS = 7, PLAYER_JUMP_PICS = 2, PLAYER_LAND_PICS = 2, PLAYER_SHOOT_PICS = 7,

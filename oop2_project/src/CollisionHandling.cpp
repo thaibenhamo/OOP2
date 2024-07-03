@@ -33,6 +33,10 @@ namespace // anonymous namespace — the standard way to make function "static"
             player.handleInput(RELEASE_ON_WALL);
             player.setOnWall(true);
         }
+        else
+        {
+            player.setPos(player.getPrevLoc());
+        }
     }
 
     // player with coin
@@ -104,10 +108,8 @@ namespace // anonymous namespace — the standard way to make function "static"
         }
     }
 
-    // ----------------- Enemy -----------------------
-    void enemyGift(GameObject&, GameObject&)
-    {}
-    void enemyCoin(GameObject&, GameObject&)
+    // ----------------- nothing -----------------------
+    void nothingShouldHappen(GameObject&, GameObject&)
     {}
     // ----------------- randomEnemy -----------------
 
@@ -117,13 +119,10 @@ namespace // anonymous namespace — the standard way to make function "static"
         Wall& wall = dynamic_cast<Wall&>(w);
 
         //check if the enemy is on the wall
-        if (wall.getSprite().getGlobalBounds().contains(randomEnemy.getSprite().getPosition().x - randomEnemy.getSprite().getGlobalBounds().width/2,
-            randomEnemy.getSprite().getPosition().y + randomEnemy.getSprite().getGlobalBounds().height)) 
-        {
-            randomEnemy.setChangeDir(false);
-        }
-        else if (wall.getSprite().getGlobalBounds().contains(randomEnemy.getSprite().getPosition().x + randomEnemy.getSprite().getGlobalBounds().width/2,
-            randomEnemy.getSprite().getPosition().y + randomEnemy.getSprite().getGlobalBounds().height)) 
+        if (wall.getSprite().getGlobalBounds().contains(randomEnemy.getSprite().getPosition().x - randomEnemy.getSprite().getGlobalBounds().width, 
+            randomEnemy.getSprite().getPosition().y + randomEnemy.getSprite().getGlobalBounds().height) ||
+            wall.getSprite().getGlobalBounds().contains(randomEnemy.getSprite().getPosition().x + randomEnemy.getSprite().getGlobalBounds().width,
+                randomEnemy.getSprite().getPosition().y + randomEnemy.getSprite().getGlobalBounds().height))
         {
             randomEnemy.setChangeDir(false);
         }
@@ -139,9 +138,6 @@ namespace // anonymous namespace — the standard way to make function "static"
         randomEnemy.handleEnemyDeath();
         //Resources::instance().playSound(SoundType::DeathRandomEnemySound);
     }
-    void randomEnemyFlyingEnemy(GameObject&, GameObject&)
-    {}
-
 
     // ----------------- flyingEnemy -----------------
 
@@ -180,8 +176,6 @@ namespace // anonymous namespace — the standard way to make function "static"
         arrow.setDir(Direction::Stay);
 
     }
-    void ArrowArrow(GameObject&, GameObject&)
-    {}
 
     using HitFunctionPtr = void (*)(GameObject&, GameObject&);
     using MapKey = std::pair<std::type_index, std::type_index>;
@@ -202,25 +196,29 @@ namespace // anonymous namespace — the standard way to make function "static"
 
         phm[MapKey(typeid(FlyingEnemy), typeid(Wall))] = &flyingEnemyWall;
         phm[MapKey(typeid(FlyingEnemy), typeid(Arrow))] = &flyingEnemyArrow;
-        phm[MapKey(typeid(FlyingEnemy), typeid(RandomEnemy))] = randomEnemyFlyingEnemy;
-        phm[MapKey(typeid(FlyingEnemy), typeid(Coin))] = &enemyCoin;
-        phm[MapKey(typeid(FlyingEnemy), typeid(SpeedGift))] = &enemyGift;
-        phm[MapKey(typeid(FlyingEnemy), typeid(LifeGift))] = &enemyGift;
-        phm[MapKey(typeid(FlyingEnemy), typeid(BubbleGift))] = &enemyGift;
+        phm[MapKey(typeid(FlyingEnemy), typeid(RandomEnemy))] = &nothingShouldHappen;
+        phm[MapKey(typeid(FlyingEnemy), typeid(Coin))] = &nothingShouldHappen;
+        phm[MapKey(typeid(FlyingEnemy), typeid(SpeedGift))] = &nothingShouldHappen;
+        phm[MapKey(typeid(FlyingEnemy), typeid(LifeGift))] = &nothingShouldHappen;
+        phm[MapKey(typeid(FlyingEnemy), typeid(BubbleGift))] = &nothingShouldHappen;
 
         phm[MapKey(typeid(RandomEnemy), typeid(Wall))] = &randomEnemyWall;
         phm[MapKey(typeid(RandomEnemy), typeid(Arrow))] = &randomEnemyArrow;
-        phm[MapKey(typeid(RandomEnemy), typeid(FlyingEnemy))] = randomEnemyFlyingEnemy;
-        phm[MapKey(typeid(RandomEnemy), typeid(Coin))] = &enemyCoin;
-        phm[MapKey(typeid(RandomEnemy), typeid(SpeedGift))] = &enemyGift;
-        phm[MapKey(typeid(RandomEnemy), typeid(LifeGift))] = &enemyGift;
-        phm[MapKey(typeid(RandomEnemy), typeid(BubbleGift))] = &enemyGift;
+        phm[MapKey(typeid(RandomEnemy), typeid(RandomEnemy))] = &nothingShouldHappen;
+        phm[MapKey(typeid(RandomEnemy), typeid(FlyingEnemy))] = &nothingShouldHappen;
+        phm[MapKey(typeid(RandomEnemy), typeid(Coin))] = &nothingShouldHappen;
+        phm[MapKey(typeid(RandomEnemy), typeid(SpeedGift))] = &nothingShouldHappen;
+        phm[MapKey(typeid(RandomEnemy), typeid(LifeGift))] = &nothingShouldHappen;
+        phm[MapKey(typeid(RandomEnemy), typeid(BubbleGift))] = &nothingShouldHappen;
 
         phm[MapKey(typeid(Arrow), typeid(RandomEnemy))] = &ArrowEnemy;
         phm[MapKey(typeid(Arrow), typeid(FlyingEnemy))] = &ArrowEnemy;
         phm[MapKey(typeid(Arrow), typeid(Wall))] = &ArrowWall;
-        phm[MapKey(typeid(Arrow), typeid(Arrow))] = &ArrowArrow;
-        
+        phm[MapKey(typeid(Arrow), typeid(Arrow))] = &nothingShouldHappen;
+        phm[MapKey(typeid(Arrow), typeid(SpeedGift))] = &nothingShouldHappen;
+        phm[MapKey(typeid(Arrow), typeid(LifeGift))] = &nothingShouldHappen;
+        phm[MapKey(typeid(Arrow), typeid(BubbleGift))] = &nothingShouldHappen;
+        phm[MapKey(typeid(Arrow), typeid(Coin))] = &nothingShouldHappen;
         return phm;
     }
 
