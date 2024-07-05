@@ -60,9 +60,20 @@ namespace
 		readData(flyingEnemy, currentStart, initSpace, AnimationState::Move, size, FLYING_ENEMY_MOVE_PICS, 0);
 		return  flyingEnemy;
 	}
+	AnimationData clouds()
+	{
+		auto size = FLYING_ENEMY_SIZE;
+		auto initSpace = FLYING_ENEMY_INIT_SPACE;
+
+		auto flyingEnemy = AnimationData{};
+		auto currentStart = initSpace;
+
+		readData(flyingEnemy, currentStart, initSpace, AnimationState::Move, size, FLYING_ENEMY_MOVE_PICS, 0);
+		return  flyingEnemy;
+	}
 }
 
-Resources::Resources() : m_data(Max) 
+Resources::Resources() : m_data(Max), m_music(NUM_OF_MUSIC_TYPES)
 {
 	m_textures.resize(NUM_OF_TEXTURES);
 
@@ -73,24 +84,41 @@ Resources::Resources() : m_data(Max)
 		auto line = std::string();			// to reads lines from the file
 
 		// read textures names from file
-		for (int i = 0; i < NUM_OF_TEXTURES; i++) {
-
+		for (int i = 0; i < NUM_OF_TEXTURES; i++) 
+		{
 			if (!std::getline(file, line))
+			{
 				throw std::runtime_error("Can't read from file");
-
+			}	
 			m_textures[i].loadFromFile(line);
 		}
 
 		// read font names from file
-		for (int i = 0; i < NUM_OF_FONTS; i++) {
+		for (int i = 0; i < NUM_OF_FONTS; i++) 
+		{
 			if (!std::getline(file, line))
+			{
 				throw std::runtime_error("Can't read from file");
+			}		
 			m_font.loadFromFile(line);
+		}
+
+		// read musics names from file
+		for (int i = 0; i < NUM_OF_MUSIC_TYPES; i++) 
+		{
+			if (!std::getline(file, line))
+			{
+				throw std::runtime_error("Can't read from file");
+			}	
+			m_music[i].openFromFile(line);
 		}
 	}
 	else
-		throw std::runtime_error("Can't load file1");
+		throw std::runtime_error("Can't load file");
 
+	// set volume
+	m_music[MenuMusic].setVolume(MENU_SONG_VOLUME);
+	m_music[GameMusic].setVolume(GAME_SONG_VOLUME);
 	// set animation
 	m_data[Player] = playerData();
 	m_data[RandomEnemy] = randomEnemyData();
@@ -141,4 +169,24 @@ sf::Font& Resources::getFont()
 sf::Texture& Resources::get(const ButtonType buttonType)
 {
 	return m_textures[buttonType];
+}
+
+void Resources::playMusic(const MusicType type) 
+{
+	switch (type)
+	{
+		// game intro takes
+	case MusicType::MenuMusic:
+		m_music[GameMusic].stop();
+		m_music[MenuMusic].play();
+		m_music[MenuMusic].setLoop(true);
+		return;
+	
+	case MusicType::GameMusic:
+		m_music[MenuMusic].stop();
+		m_music[GameMusic].play();
+		m_music[GameMusic].setLoop(true);
+		return;
+	}
+	throw std::runtime_error("No music found");
 }

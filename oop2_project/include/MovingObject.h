@@ -1,8 +1,8 @@
 #pragma once
 #include "GameObject.h"
 
-class MovingObject : public GameObject {
-
+class MovingObject : public GameObject 
+{
 public:
 	MovingObject(sf::Vector2f location, Resources::Object object);
 	virtual ~MovingObject() = default;

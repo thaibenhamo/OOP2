@@ -1,26 +1,24 @@
+#pragma once
 #include "Resources.h"
 #include "MenuCommand.h"
 #include "Button.h"
 
-//#include <pair>
+typedef std::pair<Button, std::unique_ptr<MenuCommand>> option;
 
-
-//typedef pair<int, unique_ptr<MenuCommand>> option;
-
-class Menu {
-
+class Menu 
+{
 public:
 	Menu();
 	~Menu() {}
 
-	void activate(sf::RenderWindow &window);
+	void activate(sf::RenderWindow& window, int& numOfLevel);
 
 private:
-	//vector<option> m_options;
-	std::vector<std::unique_ptr<Button>> m_buttons;
+	std::vector<option> m_options;
+	sf::Sprite m_CloudsSprite;
 
-	void show(sf::RenderWindow &window);
-	//int getOptionFromUser();
-	//bool performAction(unsigned n);
+	void show(sf::RenderWindow& window);
+	void handleMove(const sf::Vector2f& location);
+	bool handleClick(const sf::Vector2f& location, sf::RenderWindow& window, int& numOfLevel);
 
 };

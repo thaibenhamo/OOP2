@@ -25,10 +25,12 @@ public:
 	void setInvincible(bool status) { m_invincible = status; }
 	bool getInvincible() const { return m_invincible; }
 	bool getSuperSpeed() const { return m_superSpeed; }
+	bool isFallingOffTheScreen() const;
+	bool isOutOfScreenBounds() const;
 	void reduceLife();
-	
-	void draw(sf::RenderTarget& window);
-
+	void setFlickering();
+	void draw(sf::RenderWindow& window);
+	void hittedByEnemy();
 private:
 	void movePlayer(sf::Time delta);
 	void checkIfShotArrow();
@@ -47,5 +49,5 @@ private:
 	bool m_flickering = false;
 	bool m_invincible = false;	//protected?
 	bool m_superSpeed = false;	//protected?
-	std::vector<int> m_gameData = { START_LIVES, 0 };	
+	std::vector<int> m_gameData;	
 };

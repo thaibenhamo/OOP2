@@ -1,8 +1,17 @@
 background1.png
 menuBackground.png
+levelsMenuBackground.png
+helpMenuBackground.png
+clouds.png
 playButton.png
 helpButton.png
 endButton.png
+backButton.png
+lockLevelButton.png
+level1Button.png
+level2Button.png
+level3Button.png
+level4Button.png
 texture.png
 wall.png
 coin.png
@@ -19,3 +28,5 @@ heart1.png
 heart2.png
 heart3.png
 FFF_Zerofactor_Bold.ttf
+gameMusic.wav
+menuMusic.wav

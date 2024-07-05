@@ -7,7 +7,7 @@ GameObject::GameObject(sf::Vector2f location, Resources::Object object)
 	m_sprite.setPosition(location);
 }
 
-void GameObject::draw(sf::RenderTarget& window) const
+void GameObject::draw(sf::RenderWindow& window) const
 {
 	window.draw(m_sprite);
 }

@@ -13,4 +13,5 @@ Wall::Wall(sf::Vector2f location, Resources::Object object)
     : StaticObject(location, object)
 {
     m_sprite.setOrigin(0.f, m_sprite.getGlobalBounds().height / 2.f);
+    
 }

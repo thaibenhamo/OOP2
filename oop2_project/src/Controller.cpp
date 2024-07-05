@@ -16,7 +16,8 @@ void Controller::run()
 	//main loop
 	while (m_window.isOpen()) 
 	{
-		//m_menu.activate(m_window);
+		Resources::instance().playMusic(MusicType::MenuMusic);
+		m_menu.activate(m_window, m_levelNum);
 		m_level.setLevel(m_levelNum);
 		runGame();
 	}
@@ -25,6 +26,7 @@ void Controller::run()
 //run level
 void Controller::runGame() 
 {
+	Resources::instance().playMusic(MusicType::GameMusic);
 	while (!m_level.getWinGame()) 
 	{
 		runLevel();

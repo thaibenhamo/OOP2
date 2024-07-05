@@ -10,13 +10,13 @@
 class Button
 {
 public:
-	Button(sf::Vector2f size, int obj);
+	Button(sf::Vector2f size, ButtonType buttonType);
 	virtual ~Button() = default;
-	void draw(sf::RenderWindow& window);
+	void draw(sf::RenderWindow& window) const;
 	void setPosition(sf::Vector2f pos);
-	sf::FloatRect get_global_bounds()const;
+	sf::FloatRect getGlobalBounds() const;
 	void setLooks(sf::Color color);
-	void setTexture(sf::Texture &tex) { m_button.setTexture(&tex); }
+	void setTexture(sf::Texture& tex) { m_button.setTexture(&tex); }
 
 protected:
 	sf::RectangleShape m_button;

@@ -20,10 +20,11 @@ FlyingEnemy::FlyingEnemy(sf::Vector2f location, Resources::Object object)
 void FlyingEnemy::update(sf::Time delta)
 {
     //change direction if reaches current screens border
-    if (m_sprite.getPosition().x < 0 ||
+    /*if (m_sprite.getPosition().x < 0 ||
         m_sprite.getPosition().y + m_sprite.getGlobalBounds().height > SCREEN_Y_SIZE ||
         m_sprite.getPosition().y < 0 ||
-        m_sprite.getPosition().x + m_sprite.getGlobalBounds().width > SCREEN_X_SIZE)
+        m_sprite.getPosition().x + m_sprite.getGlobalBounds().width > SCREEN_X_SIZE)*/
+    if (isOutOfScreenBounds())
     {
         m_dir = opposite(m_dir);
     }
@@ -77,5 +78,13 @@ float FlyingEnemy::distance(const sf::Vector2f& a, const sf::Vector2f& b) const
 {
     sf::Vector2f diff = a - b;
     return std::sqrt(diff.x * diff.x + diff.y * diff.y);
+}
+
+bool FlyingEnemy::isOutOfScreenBounds() const
+{
+    return(m_sprite.getPosition().x - m_sprite.getGlobalBounds().width / 2 < 0 ||
+           m_sprite.getPosition().x + m_sprite.getGlobalBounds().width / 2 > SCREEN_X_SIZE ||
+           m_sprite.getPosition().y + m_sprite.getGlobalBounds().height / 2 > SCREEN_Y_SIZE ||
+           m_sprite.getPosition().y - m_sprite.getGlobalBounds().height / 2 < 0);
 }
 

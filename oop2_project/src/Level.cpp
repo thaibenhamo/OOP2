@@ -84,6 +84,7 @@ void Level::readLevelFile(std::ifstream& file)
 			if (resourceType == Resources::Player)
 			{
 				m_player.setPlayer(pos);
+
 			}		
 		}
 	}
@@ -133,8 +134,8 @@ void Level::updateArrow()
 	if (m_player.getShotArrow())
 	{
 		float param = m_player.getSprite().getScale().x;		//shows if player is looking to left or to the right
-		sf::Vector2f pos = { m_player.getPos().x + (param * OFFSET_X_FOR_BULLET), 
-							 m_player.getPos().y + OFFSET_Y_FOR_BULLET };
+		sf::Vector2f pos = { m_player.getPos().x + (param * OFFSET_X_FOR_ARROW), 
+							 m_player.getPos().y + OFFSET_Y_FOR_ARROW };
 		m_movingObjects.emplace_back(std::make_unique<Arrow>(pos, Resources::Arrow, param));
 		m_player.setShotArrow(false);
 

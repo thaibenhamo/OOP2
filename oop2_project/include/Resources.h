@@ -4,6 +4,7 @@
 #include <vector>
 #include "Macros.h"
 #include "AnimationData.h"
+#include <SFML/Audio.hpp>
 
 class Resources 
 {
@@ -44,7 +45,8 @@ public:
 	sf::Texture& get(const BackgroundType type);
 	sf::Texture& get(const ButtonType buttonType);
 	sf::Font& getFont();
-	const sf::Texture& texture() const { return m_textures[5]; } // temporary
+	const sf::Texture& texture() const { return m_textures[14]; } // temporary
+	void playMusic(const MusicType type);
 	Resources::Object getResourceType(ObjectType type);	// Mapping from ObjectType to Resources::Object
 	AnimationData& animationData(Object object) { return m_data[object]; } // temporary
 
@@ -52,5 +54,6 @@ private:
 	Resources();
 	std::vector<sf::Texture> m_textures;	//to store all game textures
 	std::vector<AnimationData> m_data;
+	std::vector<sf::Music> m_music;
 	sf::Font m_font; // vector if we need more
 };

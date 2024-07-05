@@ -29,5 +29,5 @@ Arrow::Arrow(sf::Vector2f location, Resources::Object object, float dir)
 
 void Arrow::update(sf::Time delta)
 {
-    m_sprite.move(toVector(m_dir) * delta.asSeconds() * BULLET_SPEED);
+    m_sprite.move(toVector(m_dir) * delta.asSeconds() * ARROW_SPEED);
 }

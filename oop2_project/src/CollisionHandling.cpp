@@ -92,7 +92,7 @@ namespace // anonymous namespace — the standard way to make function "static"
         //for the player hit random enemy
         if (!player.getFlickering() && !player.getInvincible())
         {
-            player.reduceLife();
+            player.hittedByEnemy();
         }
     }
 
@@ -118,13 +118,17 @@ namespace // anonymous namespace — the standard way to make function "static"
         RandomEnemy& randomEnemy = dynamic_cast<RandomEnemy&>(m);
         Wall& wall = dynamic_cast<Wall&>(w);
 
+        sf::FloatRect wallBounds = wall.getSprite().getGlobalBounds();
+        sf::FloatRect enemyBounds = randomEnemy.getSprite().getGlobalBounds();
+
         //check if the enemy is on the wall
-        if (wall.getSprite().getGlobalBounds().contains(randomEnemy.getSprite().getPosition().x - randomEnemy.getSprite().getGlobalBounds().width, 
-            randomEnemy.getSprite().getPosition().y + randomEnemy.getSprite().getGlobalBounds().height) ||
-            wall.getSprite().getGlobalBounds().contains(randomEnemy.getSprite().getPosition().x + randomEnemy.getSprite().getGlobalBounds().width,
-                randomEnemy.getSprite().getPosition().y + randomEnemy.getSprite().getGlobalBounds().height))
+        if (wallBounds.contains(randomEnemy.getPos().x - enemyBounds.width,
+                                randomEnemy.getPos().y + wallBounds.height / 2.f) ||
+            wallBounds.contains(randomEnemy.getPos().x + enemyBounds.width,
+                                randomEnemy.getPos().y + wallBounds.height / 2.f))
         {
             randomEnemy.setChangeDir(false);
+            return;
         }
     }
 
@@ -201,7 +205,9 @@ namespace // anonymous namespace — the standard way to make function "static"
         phm[MapKey(typeid(FlyingEnemy), typeid(SpeedGift))] = &nothingShouldHappen;
         phm[MapKey(typeid(FlyingEnemy), typeid(LifeGift))] = &nothingShouldHappen;
         phm[MapKey(typeid(FlyingEnemy), typeid(BubbleGift))] = &nothingShouldHappen;
+        phm[MapKey(typeid(FlyingEnemy), typeid(Player))] = &playerEnemy;
 
+        phm[MapKey(typeid(RandomEnemy), typeid(Player))] = &playerEnemy; 
         phm[MapKey(typeid(RandomEnemy), typeid(Wall))] = &randomEnemyWall;
         phm[MapKey(typeid(RandomEnemy), typeid(Arrow))] = &randomEnemyArrow;
         phm[MapKey(typeid(RandomEnemy), typeid(RandomEnemy))] = &nothingShouldHappen;

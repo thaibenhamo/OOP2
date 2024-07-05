@@ -1,14 +1,13 @@
 #include "Button.h"
 
-Button::Button(sf::Vector2f size, int obj)
+Button::Button(sf::Vector2f size, ButtonType buttonType)
 {
 	m_button.setSize(size);
 	m_button.setFillColor(sf::Color(255, 255, 255, 200));
-	m_texture = Resources::instance().get((ButtonType)((int)(ButtonType::PlayButton)+obj));
-	m_button.setTexture(&m_texture);
+	m_button.setTexture(&(Resources::instance().get(buttonType)));
 }
 
-void Button::draw(sf::RenderWindow& window)
+void Button::draw(sf::RenderWindow& window) const
 {
 	window.draw(m_button);
 };
@@ -18,7 +17,7 @@ void Button::setPosition(sf::Vector2f pos)
 	m_button.setPosition(pos);
 }
 
-sf::FloatRect Button::get_global_bounds()const
+sf::FloatRect Button::getGlobalBounds()const
 {
 	return m_button.getGlobalBounds();
 };

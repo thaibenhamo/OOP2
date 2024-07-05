@@ -10,7 +10,7 @@ public:
 	GameObject(sf::Vector2f location, Resources::Object object);
 	virtual ~GameObject() = default;
 
-	void draw(sf::RenderTarget& window) const;
+	void draw(sf::RenderWindow& window) const;
 	void setCurrPos(sf::Vector2f loc);
 	void setIsDead(bool status);
 	void setDir(Direction dir) { m_dir = dir; }

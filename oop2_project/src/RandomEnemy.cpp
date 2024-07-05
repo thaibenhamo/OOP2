@@ -14,8 +14,9 @@ RandomEnemy::RandomEnemy(sf::Vector2f location, Resources::Object object)
     : Enemy(location, object), m_animation(Resources::instance().animationData(object),
                                            AnimationState::Move, m_sprite, Direction::Left)
 {
-    m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f,
-                       m_sprite.getGlobalBounds().height / 2.f * 0.8f);
+   m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f,
+                      m_sprite.getGlobalBounds().height * 0.4f);
+   
 }
 
 void RandomEnemy::update(sf::Time delta)
@@ -46,4 +47,9 @@ void RandomEnemy::changeDir()
     {
         m_dir = Direction::Right;
     }
+}
+
+Direction RandomEnemy::getDir() const
+{
+    return m_dir;
 }
