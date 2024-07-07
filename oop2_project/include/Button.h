@@ -1,10 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-//#include <vector>
 #include "Resources.h"
-//#include <iostream>
-//#include <cstdlib> // for std::system()
-//#include <fstream>
 
 class Button
 {
@@ -17,6 +13,7 @@ public:
 	void setLooks(const sf::Color& color);
 	void setTexture(sf::Texture& tex) { m_button.setTexture(&tex); }
 	sf::FloatRect getGlobalBounds() const;
+	void setSize(sf::Vector2f size);
 
 protected:
 	sf::RectangleShape m_button;

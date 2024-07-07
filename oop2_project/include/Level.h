@@ -17,9 +17,11 @@ public:
 	void updateObjects(sf::Time dt);
 	void handleInput(const Input input);
 	void setLoseLevel(const bool status) { m_loseLevel = status; }
+	void initScore() { m_player.setGameData(Score, -getScore()); }
 	void updateWinOrLose();
 	bool getWinLevel() const { return m_winLevel; }
 	bool getLoseLevel() const { return m_loseLevel; }
+	const int getScore() const;
 	const std::vector<int>& getInfoBarData() const;
 
 private:

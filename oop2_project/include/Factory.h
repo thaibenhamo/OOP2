@@ -1,7 +1,5 @@
 #pragma once
 #include "GameObject.h"
-//#include <SFML/Graphics.hpp>
-//#include <memory>
 #include <unordered_map>
 
 template <typename T>

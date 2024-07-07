@@ -1,18 +1,18 @@
 #pragma once
 #include "LevelsMenuCommand.h"
-#include <iostream>
+
 LevelsMenuCommand::LevelsMenuCommand()
 {
 	for (int i = 0; i < NUM_OF_LEVELS; i++)
 	{
-			m_levelsButtons.push_back(std::make_unique<Button>(sf::Vector2f(115, 70), LevelLockButton));
-			m_levelsButtons.back()->setPosition(sf::Vector2f(440 + 130 * i, 400));
+		m_levelsButtons.push_back(std::make_unique<Button>(sf::Vector2f(115, 70), LevelLockButton));
+		m_levelsButtons.back()->setPosition(sf::Vector2f(440 + 130 * i, 400));
 	}
 
 	m_levelsButtons[0]->setTexture(Resources::instance().get(Level1Button));
 	m_unLock[0] = true;
 
-	m_backButton->setPosition(sf::Vector2f(633, 550)); 
+	m_backButton->setPosition(sf::Vector2f(633, 550));
 
 }
 
@@ -38,7 +38,7 @@ bool LevelsMenuCommand::execute(sf::RenderWindow& window, int& numOfLevel)
 				break;
 			case sf::Event::MouseButtonReleased:
 				auto location = window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
-				inMenuCommand = handleClick(location, window, numOfLevel);
+				inMenuCommand = handleClick(location, numOfLevel);
 				break;
 			}
 		}
@@ -54,10 +54,10 @@ void LevelsMenuCommand::show(sf::RenderWindow& window) const
 	auto sprite = sf::Sprite(Resources::instance().get(BackgroundType::LevelsMenuBackground));
 	window.draw(sprite);
 
-	m_backButton->draw(window); 
+	m_backButton->draw(window);
 	for (auto& x : m_levelsButtons)
 	{
-		x->draw(window); 
+		x->draw(window);
 	}
 
 	window.display();
@@ -92,7 +92,7 @@ void LevelsMenuCommand::handleMove(const sf::Vector2f& location)
 }
 
 
-bool LevelsMenuCommand::handleClick(const sf::Vector2f& location, sf::RenderWindow& window, int& numOfLevel)
+bool LevelsMenuCommand::handleClick(const sf::Vector2f& location, int& numOfLevel)
 {
 
 	if (m_backButton->getGlobalBounds().contains(location))
@@ -106,7 +106,6 @@ bool LevelsMenuCommand::handleClick(const sf::Vector2f& location, sf::RenderWind
 		{
 			if (m_unLock[level])
 			{
-				std::cout << "unlocked level " << level+1 << "\n";
 				numOfLevel = level + 1;
 				m_inMenu = false;
 				return false;
@@ -136,5 +135,5 @@ void LevelsMenuCommand::updateValues(int numOfLevel)
 		}
 		m_largestUnLockLevel = numOfLevel;
 	}
-	
+
 }

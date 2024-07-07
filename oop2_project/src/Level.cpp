@@ -20,7 +20,6 @@ void Level::initObjects()
 	m_numOfEnemies = 0;
 }
 
-//to fix so it will be with  exceptions!!!!
 void Level::setLevel(const int levelNum) 
 {
 	initObjects();	//reset all objects
@@ -217,7 +216,6 @@ void Level::collisions()
 	}
 }
 
-//to change to game object??
 bool Level::collide(MovingObject& a, GameObject& b) const
 {
 	return a.getSprite().getGlobalBounds().intersects(b.getSprite().getGlobalBounds());
@@ -273,3 +271,7 @@ const std::vector<int>& Level::getInfoBarData() const
 	return m_player.getGameData();
 }
 	
+const int Level::getScore() const
+{
+	return m_player.getGameData()[Score];
+}

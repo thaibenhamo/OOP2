@@ -1,19 +1,19 @@
 #pragma once
 #include "MenuCommand.h"
 
-class LevelsMenuCommand : public MenuCommand
+class ScoresMenuCommand : public MenuCommand
 {
 public:
-	LevelsMenuCommand();
-	virtual bool execute(sf::RenderWindow& window, int& numOfLevel) override;
+	ScoresMenuCommand();
+	virtual bool execute(sf::RenderWindow& window, int& score) override;
 	virtual void show(sf::RenderWindow& window) const override;
 	virtual void handleMove(const sf::Vector2f& location) override;
 	virtual bool handleClick(const sf::Vector2f& location, int& numOfLevel) override;
 
 private:
-	std::vector< std::unique_ptr<Button>> m_levelsButtons;
-	bool m_unLock[NUM_OF_LEVELS] = { 0 };
-	int m_largestUnLockLevel = 1;
+	std::vector<std::pair<int, sf::Text>> m_scores;
+	int m_largestScore = 0;
 
 	void updateValues(int numOfLevel);
+	sf::Text setText(int i);
 };

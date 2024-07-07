@@ -69,10 +69,11 @@ void Player::checkIfShotArrow()
 		{
 			//setStateAnimation(m_dir, AnimationState::Shoot);
 			m_spacePressed = true;
-			if (Clock::instance().getShootClock().getElapsedTime().asSeconds() > TIME_FOR_CREATE_ARROW)
+			if (Clock::instance().getShootClock().getElapsedTime().asSeconds() > TIME_FOR_CREATE_ARROW || m_first)
 			{
+				m_first = false;
 				m_shotArrow = true;
-				Resources::instance().playSound(SoundType::PlayerShoot);	
+				Resources::instance().playSound(SoundType::PlayerShoot);
 				Clock::instance().getShootClock().restart(); // Reset the timer after shooting an arrow	
 			}
 		}

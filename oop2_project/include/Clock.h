@@ -1,8 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-//#include <iostream>
-//#include <cstdlib> // for std::system()
-//#include <fstream>
 
 class Clock
 {

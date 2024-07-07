@@ -2,6 +2,7 @@ background1.png
 menuBackground.png
 levelsMenuBackground.png
 helpMenuBackground.png
+scoresMenuBackground.png
 clouds.png
 winBackgroud.png
 loseBackgroud.png
@@ -9,6 +10,7 @@ playButton.png
 helpButton.png
 endButton.png
 backButton.png
+scoresButton.png
 lockLevelButton.png
 level1Button.png
 level2Button.png

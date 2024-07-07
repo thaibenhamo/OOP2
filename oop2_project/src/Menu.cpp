@@ -2,6 +2,7 @@
 #include "Button.h"
 #include "LevelsMenuCommand.h"
 #include "HelpMenuCommand.h"
+#include "ScoresMenuCommand.h"
 #include "Button.h"
 #include "MenuCommand.h"
 
@@ -10,15 +11,18 @@ Menu::Menu()
 {
 	m_options.emplace_back(std::make_pair(Button(sf::Vector2f(210, 70), PlayButton), std::make_unique<LevelsMenuCommand>()));
 	m_options.emplace_back(std::make_pair(Button(sf::Vector2f(210, 70), HelpButton), std::make_unique<HelpMenuCommand>()));
+	m_options.emplace_back(std::make_pair(Button(sf::Vector2f(210, 70), ScoresButton), std::make_unique<ScoresMenuCommand>()));
+
 	m_options[0].first.setPosition({ 730.f, float(550 + 80 * 0) });
 	m_options[1].first.setPosition({ 730.f, float(550 + 80 * 1) });
+	m_options[2].first.setPosition({ 730.f, float(550 + 80 * 2) });
 
 	m_CloudsSprite.setTexture(Resources::instance().get(BackgroundType::CloudsBackground));
 	m_CloudsSprite.setPosition(0.f, 150.f);
 	m_CloudsSprite.setColor(sf::Color(255, 255, 255, 200));
 }
 
-void Menu::activate(sf::RenderWindow& window, int& numOfLevel)
+void Menu::activate(sf::RenderWindow& window, int& numOfLevel, int score)
 {
 	bool inMenu = true;
 
@@ -38,7 +42,7 @@ void Menu::activate(sf::RenderWindow& window, int& numOfLevel)
 				break;
 			case sf::Event::MouseButtonReleased:
 				auto location = window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
-				inMenu = handleClick(location, window, numOfLevel);//if click - do on options execute() 
+				inMenu = handleClick(location, window, numOfLevel, score);
 				break;
 			}
 		}
@@ -60,7 +64,7 @@ void Menu::show(sf::RenderWindow& window)
 
 	for (auto& x : m_options)
 	{
-		x.first.draw(window); 
+		x.first.draw(window);
 	}
 
 	window.display();
@@ -85,13 +89,17 @@ void Menu::handleMove(const sf::Vector2f& location)
 }
 
 
-bool Menu::handleClick(const sf::Vector2f& location, sf::RenderWindow& window, int& numOfLevel)
+bool Menu::handleClick(const sf::Vector2f& location, sf::RenderWindow& window, int& numOfLevel, int score)
 {
-	for (auto& x : m_options)
+	for (int i = 0; i < 3; i++)
 	{
-		if (x.first.getGlobalBounds().contains(location))
+		if (m_options[i].first.getGlobalBounds().contains(location))
 		{
-			return x.second->execute(window, numOfLevel); // darker
+			if (i == 2)
+			{
+				return m_options[i].second->execute(window, score); // darker
+			}
+			return m_options[i].second->execute(window, numOfLevel); // darker
 		}
 	}
 	return true;

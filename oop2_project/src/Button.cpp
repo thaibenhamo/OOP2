@@ -26,3 +26,8 @@ void Button::setLooks(const sf::Color& color)
 {
 	m_button.setFillColor(color);
 };
+
+void Button::setSize(sf::Vector2f size)
+{
+	m_button.setSize(size);
+};

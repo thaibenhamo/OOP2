@@ -43,7 +43,7 @@ public:
 
 	const sf::Texture& get(const Object object) const;
 	const sf::Texture& get(const BackgroundType type) const;
-	const sf::Texture& texture() const { return m_textures[16]; }
+	const sf::Texture& texture() const { return m_textures[18]; }
 	sf::Texture& get(const ButtonType buttonType);
 	const sf::Font& getFont() const;
 	Resources::Object getResourceType(ObjectType type);	// Mapping from ObjectType to Resources::Object

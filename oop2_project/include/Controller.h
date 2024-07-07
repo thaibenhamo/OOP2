@@ -18,8 +18,8 @@ private:
 	void runGame();
 	void runLevel();
 	void printWinOrLoseBackground();
-	void handleMove(const sf::Vector2f& location);
-	void handleClick(const sf::Vector2f& location);
+	void handleMove(const sf::Vector2f location);
+	void handleClick(const sf::Vector2f location);
 
 	Menu m_menu;
 	Level m_level;									//for level

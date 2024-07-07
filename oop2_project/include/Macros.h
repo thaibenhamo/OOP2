@@ -38,6 +38,7 @@ enum BackgroundType
 	MenuBackground,
 	LevelsMenuBackground,
 	HelpMenuBackground,
+	ScoresMenuBackground,
 	CloudsBackground,
 	WinBackground,
 	LoseBackground,
@@ -50,6 +51,7 @@ enum ButtonType
 	HelpButton,
 	EndButton,
 	BackButton,
+	ScoresButton,
 	LevelLockButton,
 	Level1Button,
 	Level2Button,
@@ -76,7 +78,7 @@ enum SoundType
 	PlayerShoot
 };
 
-const int NUM_OF_TEXTURES = 31, NUM_OF_FONTS = 1;
+const int NUM_OF_TEXTURES = 33, NUM_OF_FONTS = 1;
 const int DEFAULT_ROWS = 12, DEFAULT_COLS = 24;
 const int FPS = 60;
 const int PLAYER_STAY_PICS = 4, PLAYER_MOVE_PICS = 7, PLAYER_JUMP_PICS = 2, PLAYER_LAND_PICS = 2, 

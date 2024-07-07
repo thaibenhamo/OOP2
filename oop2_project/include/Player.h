@@ -47,7 +47,8 @@ private:
 	bool m_spacePressed = false;
 	bool m_jumping = false;
 	bool m_onWall = true;
+	bool m_first = true;
 	bool m_flickering = false;
-	bool m_invincible = false;	//protected?
-	bool m_superSpeed = false;	//protected?
+	bool m_invincible = false;	
+	bool m_superSpeed = false;	
 };

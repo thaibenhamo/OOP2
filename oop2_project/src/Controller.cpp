@@ -19,7 +19,7 @@ void Controller::run()
 	while (m_window.isOpen()) 
 	{
 		Resources::instance().playMusic(MusicType::MenuMusic);
-		m_menu.activate(m_window, m_levelNum);
+		m_menu.activate(m_window, m_levelNum, m_level.getScore());
 		runGame();
 	}
 }
@@ -66,13 +66,13 @@ void Controller::handleEvents()
 {
 	for (auto event = sf::Event{}; m_window.pollEvent(event);) 
 	{
-		switch (event.type) 
+		switch (event.type)
 		{
 		case sf::Event::Closed:
 			m_window.close();
 			exit(EXIT_SUCCESS);
 		case sf::Event::MouseMoved:
-			handleMove(sf::Vector2f(event.mouseMove.x, event.mouseMove.y));
+			handleMove(m_window.mapPixelToCoords({event.mouseMove.x, event.mouseMove.y }));
 			break;
 		case sf::Event::MouseButtonReleased:
 			auto location = m_window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
@@ -99,14 +99,12 @@ void Controller::printWinOrLoseBackground()
 	{
 		sf::Sprite winSprite(Resources::instance().get(BackgroundType::WinBackground));
 		m_window.draw(winSprite);
-		//Resources::instance().playSound(SoundType::WinGameSound);
 	}
 
 	if (m_level.getLoseLevel())
 	{
 		sf::Sprite winSprite(Resources::instance().get(BackgroundType::LoseBackground));
 		m_window.draw(winSprite);
-		//Resources::instance().playSound(SoundType::LoseGameSound);
 	}
 	
 	m_window.display();
@@ -120,7 +118,7 @@ void Controller::printWinOrLoseBackground()
 	}
 }
 
-void Controller::handleMove(const sf::Vector2f& location)
+void Controller::handleMove(const sf::Vector2f location)
 {
 	m_backButton->setLooks(sf::Color(255, 255, 255, 255)); // original
 
@@ -130,7 +128,7 @@ void Controller::handleMove(const sf::Vector2f& location)
 	}
 }
 
-void Controller::handleClick(const sf::Vector2f& location)
+void Controller::handleClick(const sf::Vector2f location)
 {
 	if (m_backButton->getGlobalBounds().contains(location))
 	{
