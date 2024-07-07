@@ -4,7 +4,7 @@
 class StaticObject : public GameObject 
 {
 public:
-	StaticObject(const sf::Vector2f location, const Resources::Object object);
+	StaticObject(const sf::Vector2f& location, const Resources::Object object);
 	virtual ~StaticObject() = default;
 
 	bool lifeTimerEnded() const;

@@ -5,7 +5,7 @@
 class GameObject
 {
 public:
-	GameObject(const sf::Vector2f& location, const Resources::Object object);
+	GameObject(const sf::Vector2f& location/*, const Resources::Object object*/);
 	virtual ~GameObject() = default;
 
 	void draw(sf::RenderWindow& window) const;

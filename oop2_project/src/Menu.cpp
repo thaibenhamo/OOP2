@@ -6,12 +6,14 @@
 #include "Button.h"
 #include "MenuCommand.h"
 
-
 Menu::Menu()
 {
-	m_options.emplace_back(std::make_pair(Button(sf::Vector2f(210, 70), PlayButton), std::make_unique<LevelsMenuCommand>()));
-	m_options.emplace_back(std::make_pair(Button(sf::Vector2f(210, 70), HelpButton), std::make_unique<HelpMenuCommand>()));
-	m_options.emplace_back(std::make_pair(Button(sf::Vector2f(210, 70), ScoresButton), std::make_unique<ScoresMenuCommand>()));
+	m_options.emplace_back(std::make_pair(Button(sf::Vector2f(210, 70), PlayButton), 
+						   std::make_unique<LevelsMenuCommand>()));
+	m_options.emplace_back(std::make_pair(Button(sf::Vector2f(210, 70), HelpButton), 
+						   std::make_unique<HelpMenuCommand>()));
+	m_options.emplace_back(std::make_pair(Button(sf::Vector2f(210, 70), ScoresButton), 
+					       std::make_unique<ScoresMenuCommand>()));
 
 	m_options[0].first.setPosition({ 730.f, float(550 + 80 * 0) });
 	m_options[1].first.setPosition({ 730.f, float(550 + 80 * 1) });
@@ -26,7 +28,8 @@ void Menu::activate(sf::RenderWindow& window, int& numOfLevel, int score)
 {
 	bool inMenu = true;
 
-	while (window.isOpen() && inMenu) {
+	while (window.isOpen() && inMenu) 
+	{
 		show(window);
 
 		if (auto event = sf::Event{}; window.waitEvent(event))
@@ -38,7 +41,7 @@ void Menu::activate(sf::RenderWindow& window, int& numOfLevel, int score)
 				exit(EXIT_SUCCESS);
 				break;
 			case sf::Event::MouseMoved:
-				handleMove(sf::Vector2f(event.mouseMove.x, event.mouseMove.y));
+				handleMove(window.mapPixelToCoords({ event.mouseMove.x, event.mouseMove.y }));
 				break;
 			case sf::Event::MouseButtonReleased:
 				auto location = window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
@@ -47,7 +50,6 @@ void Menu::activate(sf::RenderWindow& window, int& numOfLevel, int score)
 			}
 		}
 	}
-
 }
 
 void Menu::show(sf::RenderWindow& window)

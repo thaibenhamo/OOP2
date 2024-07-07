@@ -2,7 +2,7 @@
 #include "MovingObject.h"
 
 MovingObject::MovingObject(const sf::Vector2f& location, const Resources::Object object)
-	: GameObject(location, object)
+	: GameObject(location/*, object*/)
 {	
 	m_prevLocation = getSprite().getPosition();
 }

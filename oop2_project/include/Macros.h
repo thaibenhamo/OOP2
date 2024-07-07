@@ -85,7 +85,7 @@ const int PLAYER_STAY_PICS = 4, PLAYER_MOVE_PICS = 7, PLAYER_JUMP_PICS = 2, PLAY
 		  PLAYER_SHOOT_PICS = 7, PLAYER_HIT_PICS = 1, PLAYER_OFFSET = 75;
 const int BASIC_ENEMY_MOVE_PICS = 9;
 const int FLYING_ENEMY_MOVE_PICS = 4;
-const int PLAYER_HIGHT = 75, MIN_SPACE = 6, START_LIVES = 3, ADD_POINTS = 50;
+const int MIN_SPACE = 6, START_LIVES = 3, ADD_POINTS = 50;
 const int OFFSET_X_FOR_ARROW = -20, OFFSET_Y_FOR_ARROW = 10;
 const int DIF_PLAYER_ARROW = 30;
 const int TOP_WALL = 30;
@@ -94,10 +94,10 @@ const int NUM_OF_MENU_BUTTONS = 3, NUM_OF_LEVELS = 4;
 const int BUTTON_MENU_Y_LOC = 555, MIDDLE_SPCAE_BUTTON_MENU_Y = 100, OFFSET_BUTTON_MENU_Y = 40;
 const int NUM_OF_SOUNDS = 8;
 const int NUM_OF_MUSIC_TYPES = 2;
+const unsigned int FONT_SIZE = 12;
 const float MENU_SONG_VOLUME = 35.f, GAME_SONG_VOLUME = 50.f;
 const float SCREEN_X_SIZE = 1650.f, SCREEN_Y_SIZE = 900.f;
 const float OBJECTSIZE_X = 75.f, OBJECTSIZE_Y = 75.f;
-const float FONT_SIZE = 12.f;
 const float CHASE_RADIUS = 500.0f;
 const float FLICKERING_DURATION = 2.0f, MIN_STATIC_LIFE_DURATION = 10.0f;
 const float MAX_STATIC_LIFE_DURATION = 10.0f, GIFT_DURATION = 10.0f;
@@ -105,7 +105,7 @@ const float TIME_FOR_CREATE_ARROW = 0.5f;
 const float SPEED = 260.0f, ADD_SPEED = 150.0f;
 const float ARROW_SPEED = SPEED * 3.5f;
 const float BASIC_ENEMY_SPEED = 170.f;
-
+const float PLAYER_HIGHT = 75.f;
 
 const std::string LEVEL_NAME = "Level", FILE_EXTENSION = ".txt";
 

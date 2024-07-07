@@ -16,7 +16,8 @@ public:
 	void update(sf::Time delta);
 	void setJumping(const bool jumping) { m_jumping = jumping; }
 	void setOnWall(const bool onWall) { m_onWall = onWall; }
-	void setGameData(GameData gameData, const int num);		
+	void setGameData(GameData gameData, const int num);	
+	void setLives(const int num) { m_gameData[Lives] = num; }
 	void setShotArrow(const bool shot) { m_shotArrow = shot; }
 	void setSuperSpeed(const bool status) { m_superSpeed = status; }
 	void setInvincible(const bool status) { m_invincible = status; }

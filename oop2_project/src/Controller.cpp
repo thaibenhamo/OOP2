@@ -20,6 +20,7 @@ void Controller::run()
 	{
 		Resources::instance().playMusic(MusicType::MenuMusic);
 		m_menu.activate(m_window, m_levelNum, m_level.getScore());
+		m_level.initScore();
 		runGame();
 	}
 }
@@ -35,7 +36,6 @@ void Controller::runGame()
 		runLevel();
 		m_levelNum++;
 	}
-
 	if (m_inGame)
 	{
 		printWinOrLoseBackground();
@@ -43,6 +43,7 @@ void Controller::runGame()
 	m_inGame = true;
 	m_levelNum--;
 	m_level.setLoseLevel(false);
+	m_level.initLives();
 }
 
 //run level
@@ -66,13 +67,13 @@ void Controller::handleEvents()
 {
 	for (auto event = sf::Event{}; m_window.pollEvent(event);) 
 	{
-		switch (event.type)
+		switch (event.type) 
 		{
 		case sf::Event::Closed:
 			m_window.close();
 			exit(EXIT_SUCCESS);
 		case sf::Event::MouseMoved:
-			handleMove(m_window.mapPixelToCoords({event.mouseMove.x, event.mouseMove.y }));
+			handleMove(m_window.mapPixelToCoords({ event.mouseMove.x, event.mouseMove.y }));
 			break;
 		case sf::Event::MouseButtonReleased:
 			auto location = m_window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });

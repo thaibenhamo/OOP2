@@ -18,6 +18,7 @@ public:
 	void handleInput(const Input input);
 	void setLoseLevel(const bool status) { m_loseLevel = status; }
 	void initScore() { m_player.setGameData(Score, -getScore()); }
+	void initLives() { m_player.setLives(3); }
 	void updateWinOrLose();
 	bool getWinLevel() const { return m_winLevel; }
 	bool getLoseLevel() const { return m_loseLevel; }

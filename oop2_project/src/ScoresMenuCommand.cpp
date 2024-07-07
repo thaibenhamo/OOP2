@@ -30,7 +30,7 @@ bool ScoresMenuCommand::execute(sf::RenderWindow& window, int& score)
                 exit(EXIT_SUCCESS);
                 break;
             case sf::Event::MouseMoved:
-                handleMove(sf::Vector2f(event.mouseMove.x, event.mouseMove.y));
+                handleMove(window.mapPixelToCoords({ event.mouseMove.x, event.mouseMove.y }));
                 break;
             case sf::Event::MouseButtonReleased:
                 auto location = window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });

@@ -6,7 +6,7 @@ LevelsMenuCommand::LevelsMenuCommand()
 	for (int i = 0; i < NUM_OF_LEVELS; i++)
 	{
 		m_levelsButtons.push_back(std::make_unique<Button>(sf::Vector2f(115, 70), LevelLockButton));
-		m_levelsButtons.back()->setPosition(sf::Vector2f(440 + 130 * i, 400));
+		m_levelsButtons.back()->setPosition(sf::Vector2f(float(440 + 130 * i), 400.f));
 	}
 
 	m_levelsButtons[0]->setTexture(Resources::instance().get(Level1Button));
@@ -34,7 +34,7 @@ bool LevelsMenuCommand::execute(sf::RenderWindow& window, int& numOfLevel)
 				exit(EXIT_SUCCESS);
 				break;
 			case sf::Event::MouseMoved:
-				handleMove(sf::Vector2f(event.mouseMove.x, event.mouseMove.y));
+				handleMove(window.mapPixelToCoords({ event.mouseMove.x, event.mouseMove.y }));
 				break;
 			case sf::Event::MouseButtonReleased:
 				auto location = window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
@@ -43,7 +43,6 @@ bool LevelsMenuCommand::execute(sf::RenderWindow& window, int& numOfLevel)
 			}
 		}
 	}
-
 	return m_inMenu;
 }
 
@@ -61,7 +60,6 @@ void LevelsMenuCommand::show(sf::RenderWindow& window) const
 	}
 
 	window.display();
-
 }
 
 
@@ -88,13 +86,10 @@ void LevelsMenuCommand::handleMove(const sf::Vector2f& location)
 			x->setLooks(sf::Color(255, 192, 203)); // darker
 		}
 	}
-
 }
-
 
 bool LevelsMenuCommand::handleClick(const sf::Vector2f& location, int& numOfLevel)
 {
-
 	if (m_backButton->getGlobalBounds().contains(location))
 	{
 		return false;
@@ -113,9 +108,7 @@ bool LevelsMenuCommand::handleClick(const sf::Vector2f& location, int& numOfLeve
 			}
 		}
 	}
-
 	return true;
-
 }
 
 void LevelsMenuCommand::updateValues(int numOfLevel)
@@ -135,5 +128,4 @@ void LevelsMenuCommand::updateValues(int numOfLevel)
 		}
 		m_largestUnLockLevel = numOfLevel;
 	}
-
 }

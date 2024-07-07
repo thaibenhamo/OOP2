@@ -23,7 +23,7 @@ bool HelpMenuCommand::execute(sf::RenderWindow& window, int& numOfLevel)
 				exit(EXIT_SUCCESS);
 				break;
 			case sf::Event::MouseMoved:
-				handleMove(sf::Vector2f(event.mouseMove.x, event.mouseMove.y));
+				handleMove(window.mapPixelToCoords({ event.mouseMove.x, event.mouseMove.y }));
 				break;
 			case sf::Event::MouseButtonReleased:
 				auto location = window.mapPixelToCoords({ event.mouseButton.x, event.mouseButton.y });
@@ -32,7 +32,6 @@ bool HelpMenuCommand::execute(sf::RenderWindow& window, int& numOfLevel)
 			}
 		}
 	}
-
 	return 	m_inMenu;
 }
 
@@ -46,30 +45,23 @@ void HelpMenuCommand::show(sf::RenderWindow& window) const
 	m_backButton->draw(window); // original
 
 	window.display();
-
 }
-
 
 void HelpMenuCommand::handleMove(const sf::Vector2f& location)
 {
-
 	m_backButton->setLooks(sf::Color(255, 255, 255, 255)); // original
 
 	if (m_backButton->getGlobalBounds().contains(location))
 	{
 		m_backButton->setLooks(sf::Color(255, 192, 203)); // darker
 	}
-
 }
-
 
 bool HelpMenuCommand::handleClick(const sf::Vector2f& location, int& numOfLevel)
 {
-
 	if (m_backButton->getGlobalBounds().contains(location))
 	{
 		return false;
 	}
 	return true;
-
 }

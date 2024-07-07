@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject(const sf::Vector2f& location, const Resources::Object object) 	
+GameObject::GameObject(const sf::Vector2f& location/*, const Resources::Object object*/)
 {
 	m_sprite.setPosition(location);
 }
@@ -11,11 +11,6 @@ void GameObject::draw(sf::RenderWindow& window) const
 {
 	window.draw(m_sprite);
 }
-
-/*void GameObject::setPos(const sf::Vector2f& loc)
-{
-	m_sprite.setPosition(loc);
-}*/
 
 sf::Sprite GameObject::getSprite() const 
 {
