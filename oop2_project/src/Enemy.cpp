@@ -9,12 +9,6 @@ Enemy::Enemy(sf::Vector2f location, Resources::Object object)
 
 void Enemy::handleEnemyDeath() 
 {
-    /*  m_clock.restart();
-      m_dir = State::Stay;
-      m_animation.state(m_dir);
-      m_wasShot = true;*/
-
-      //just for now - before we handle death animation
     m_isDead = true;
 }
 

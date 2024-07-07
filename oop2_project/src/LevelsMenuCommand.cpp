@@ -106,6 +106,7 @@ bool LevelsMenuCommand::handleClick(const sf::Vector2f& location, sf::RenderWind
 		{
 			if (m_unLock[level])
 			{
+				std::cout << "unlocked level " << level+1 << "\n";
 				numOfLevel = level + 1;
 				m_inMenu = false;
 				return false;
@@ -121,11 +122,11 @@ bool LevelsMenuCommand::handleClick(const sf::Vector2f& location, sf::RenderWind
 void LevelsMenuCommand::updateValues(int numOfLevel)
 {
 	m_inMenu = true;
-	
+
 	//unlock new levels if needed
 	if (m_largestUnLockLevel < numOfLevel)
 	{
-		for (int i = m_largestUnLockLevel; i < numOfLevel; i++)
+		for (int i = 0; i < numOfLevel; i++)
 		{
 			if (m_unLock[i] == 0)
 			{
@@ -133,6 +134,7 @@ void LevelsMenuCommand::updateValues(int numOfLevel)
 				m_levelsButtons[i]->setTexture(Resources::instance().get(ButtonType(int(Level1Button) + i)));
 			}
 		}
+		m_largestUnLockLevel = numOfLevel;
 	}
 	
 }

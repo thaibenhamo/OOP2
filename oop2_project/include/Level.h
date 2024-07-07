@@ -14,10 +14,14 @@ public:
 
 	void setLevel(const int LevelNum);
 	void drawObjects(sf::RenderWindow& window);
-	const bool getWinGame() const;
 	void updateObjects(sf::Time dt);
 	void handleInput(const Input input);
 	const std::vector<int>& getInfoBarData() const;
+	bool getWinLevel() const { return m_winLevel; }
+	bool getLoseLevel() const { return m_loseLevel; }
+	void setLoseLevel(bool status) { m_loseLevel = status; }
+	void updateWinOrLose();
+
 private:
 	void updateAnimation(sf::Time dt);
 	const sf::Vector2f findLocation(const int row, const int col) const;
@@ -37,6 +41,7 @@ private:
 	int m_rows = DEFAULT_ROWS;		//num of rows in board
 	int m_cols = DEFAULT_COLS;		//num of cols in board
 	bool m_winLevel = false;		//if win level
-	bool m_winGame = false;			//if win game
+	bool m_loseLevel = false;		//if lose level
+	int m_numOfEnemies = 0;
 
 };

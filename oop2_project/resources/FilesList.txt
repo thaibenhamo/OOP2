@@ -3,6 +3,8 @@ menuBackground.png
 levelsMenuBackground.png
 helpMenuBackground.png
 clouds.png
+winBackgroud.png
+loseBackgroud.png
 playButton.png
 helpButton.png
 endButton.png
@@ -30,3 +32,11 @@ heart3.png
 FFF_Zerofactor_Bold.ttf
 gameMusic.wav
 menuMusic.wav
+arrowHitEnemy.wav
+arrowHitWall.wav
+collectCoin.wav
+collectGift.wav
+enemyHitPlayer.wav
+playerDeath.wav
+playerJump.wav
+playerShoot.wav

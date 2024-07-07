@@ -14,42 +14,33 @@ RandomEnemy::RandomEnemy(sf::Vector2f location, Resources::Object object)
     : Enemy(location, object), m_animation(Resources::instance().animationData(object),
                                            AnimationState::Move, m_sprite, Direction::Left)
 {
-   m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f,
-                      m_sprite.getGlobalBounds().height * 0.4f);
-   
+    m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f,
+                       m_sprite.getGlobalBounds().height * 0.404769f);
+    
+    Clock::instance().getRandomEnemyClock().restart();
 }
 
 void RandomEnemy::update(sf::Time delta)
 {
-    if (m_changeDir)
-    {
-        changeDir();
+    if (m_changeDir || Clock::instance().getRandomEnemyClock().getElapsedTime().asSeconds() >= 2)
+    { 
+        m_sprite.setPosition(m_prevLocation);
+        m_dir = opposite(m_dir);
         m_animation.direction(m_dir);
-    }    
-   
+        m_changeDir = false;
+        //if (Clock::instance().getRandomEnemyClock().getElapsedTime().asSeconds() >= 2)
+        Clock::instance().getRandomEnemyClock().restart();
+    }
+
     move(delta);
     m_animation.update(delta);
 }
 
 void RandomEnemy::move(sf::Time delta)
 {
+    m_prevLocation = m_sprite.getPosition();
     m_sprite.move(toVector(m_dir) * BASIC_ENEMY_SPEED * delta.asSeconds());
-    m_changeDir = true;
+    //m_changeDir = true;
 };
 
-void RandomEnemy::changeDir() 
-{
-    if (m_dir == Direction::Right) 
-    {
-        m_dir = Direction::Left;
-    }
-    else 
-    {
-        m_dir = Direction::Right;
-    }
-}
 
-Direction RandomEnemy::getDir() const
-{
-    return m_dir;
-}

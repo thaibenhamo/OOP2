@@ -4,6 +4,7 @@
 #include <vector>
 #include "Macros.h"
 #include "AnimationData.h"
+#include "Clock.h"
 #include <SFML/Audio.hpp>
 
 class Resources 
@@ -41,19 +42,21 @@ public:
 	Resources(const Resources&) = delete;
 	void operator=(const Resources&) = delete;
 
-	sf::Texture& get(const Object object);
-	sf::Texture& get(const BackgroundType type);
+	const sf::Texture& get(const Object object) const;
+	const sf::Texture& get(const BackgroundType type) const;
 	sf::Texture& get(const ButtonType buttonType);
-	sf::Font& getFont();
-	const sf::Texture& texture() const { return m_textures[14]; } // temporary
-	void playMusic(const MusicType type);
+	const sf::Font& getFont() const;
+	const sf::Texture& texture() const { return m_textures[16]; } 
 	Resources::Object getResourceType(ObjectType type);	// Mapping from ObjectType to Resources::Object
-	AnimationData& animationData(Object object) { return m_data[object]; } // temporary
-
+	AnimationData& animationData(Object object) { return m_data[object]; } 
+	void playMusic(const MusicType type);
+	void playSound(const SoundType type);
 private:
 	Resources();
 	std::vector<sf::Texture> m_textures;	//to store all game textures
-	std::vector<AnimationData> m_data;
 	std::vector<sf::Music> m_music;
-	sf::Font m_font; // vector if we need more
+	std::vector<sf::SoundBuffer> m_buffers;	//to store game sounds
+	std::vector<AnimationData> m_data;
+	sf::Font m_font; 
+	sf::Sound m_sound;
 };

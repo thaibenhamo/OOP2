@@ -44,18 +44,12 @@ void Menu::activate(sf::RenderWindow& window, int& numOfLevel)
 		}
 	}
 
-	/*	loop that checks mouse move, click, exit
-			if move - do on the button setLooks
-			if click - do on options execute()
-	*/
-
 }
 
 void Menu::show(sf::RenderWindow& window)
 {
 	window.clear();
 
-	//לעשות את זה בבנאי עם עננים ורץ על לולאה
 	auto sprite = sf::Sprite(Resources::instance().get(BackgroundType::Background1));
 	window.draw(sprite);
 	window.draw(m_CloudsSprite);
@@ -66,7 +60,7 @@ void Menu::show(sf::RenderWindow& window)
 
 	for (auto& x : m_options)
 	{
-		x.first.draw(window); // original
+		x.first.draw(window); 
 	}
 
 	window.display();
@@ -85,7 +79,7 @@ void Menu::handleMove(const sf::Vector2f& location)
 	{
 		if (x.first.getGlobalBounds().contains(location))
 		{
-			x.first.setLooks(sf::Color(255, 192, 203)/*(255, 255, 255, 220)*/); // darker
+			x.first.setLooks(sf::Color(255, 192, 203)); // darker
 		}
 	}
 }

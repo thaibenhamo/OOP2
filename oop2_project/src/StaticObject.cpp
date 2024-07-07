@@ -29,7 +29,7 @@ void StaticObject::startFlickeringTimer()
 
 void StaticObject::checkIfStillFlickering()
 {
-	if (m_lifeClock.getElapsedTime().asSeconds() >= FLICKERING_DURATION)
+	if (m_flickeringClock.getElapsedTime().asSeconds() >= FLICKERING_DURATION)
 	{
 		m_isDead = true;
 	}
@@ -43,9 +43,6 @@ void StaticObject::draw(sf::RenderTarget& window) const
 			m_sprite.setColor(sf::Color::White);
 		else
 			m_sprite.setColor(sf::Color::Transparent);
-
-		std::cout << "is flickering ";
-
 	}
 
 	window.draw(m_sprite);

@@ -16,7 +16,7 @@ public:
 	void update(sf::Time delta);
 	void setJumping(bool jumping) { m_jumping = jumping; }
 	void setOnWall(bool onWall) { m_onWall = onWall; }
-	void setGameDate(GameData gameData, int num);
+	void setGameData(GameData gameData, int num);
 	const std::vector<int>& getGameData() const;
 	bool getFlickering() const { return m_flickering; };
 	bool getShotArrow() const { return m_shotArrow; };
@@ -25,21 +25,19 @@ public:
 	void setInvincible(bool status) { m_invincible = status; }
 	bool getInvincible() const { return m_invincible; }
 	bool getSuperSpeed() const { return m_superSpeed; }
-	bool isFallingOffTheScreen() const;
-	bool isOutOfScreenBounds() const;
 	void reduceLife();
 	void setFlickering();
 	void draw(sf::RenderWindow& window);
 	void hittedByEnemy();
-private:
+	void updatePlayerGiftPowers();
 	void movePlayer(sf::Time delta);
+	bool isFallingOffTheScreen() const;
+	bool isOutOfScreenBounds() const;
+private:
+	
 	void checkIfShotArrow();
-
 	std::unique_ptr<PlayerState> m_state;
 	sf::Vector2f m_startPos;
-	sf::Clock m_flickerClock;
-	sf::Clock m_createBullet;
-	sf::Time m_flickerStartTime;
 	Animation m_animation;
 	sf::Sprite m_bubble;
 	bool m_shotArrow = false;
@@ -50,4 +48,5 @@ private:
 	bool m_invincible = false;	//protected?
 	bool m_superSpeed = false;	//protected?
 	std::vector<int> m_gameData;	
+	sf::Time m_delta1;
 };

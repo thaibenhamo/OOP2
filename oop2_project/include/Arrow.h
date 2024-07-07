@@ -8,6 +8,9 @@ public:
     ~Arrow();
 
     void update(sf::Time delta) override;
+    void setSoundPlayed(bool played) { m_soundPlayed = played; }
+    bool getSoundPlayed() const { return m_soundPlayed; }
 
 private:
+    bool m_soundPlayed = false;
 };

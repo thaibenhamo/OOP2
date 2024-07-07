@@ -16,7 +16,7 @@
 #include "BubbleGift.h"
 #include "LifeGift.h"
 
-namespace // anonymous namespace — the standard way to make function "static"
+namespace 
 {
     // primary collision-processing functions
 
@@ -26,7 +26,7 @@ namespace // anonymous namespace — the standard way to make function "static"
     {
         Player& player = dynamic_cast<Player&>(p);
         Wall& wall = dynamic_cast<Wall&>(w);
-
+    
         //for the player landing on the wall
         if (player.getPos().y + PLAYER_HIGHT / 2 <= wall.getSprite().getPosition().y - TOP_WALL)
         {
@@ -35,6 +35,10 @@ namespace // anonymous namespace — the standard way to make function "static"
         }
         else
         {
+            if (player.getDir() == Direction::DownLeft || player.getDir() == Direction::DownRight)
+            {
+                player.setDir(Direction::Down);
+            }        
             player.setPos(player.getPrevLoc());
         }
     }
@@ -45,9 +49,9 @@ namespace // anonymous namespace — the standard way to make function "static"
         Player& player = dynamic_cast<Player&>(p);
         Coin& coin = dynamic_cast<Coin&>(c);
 
-        player.setGameDate(Score, ADD_POINTS);
+        player.setGameData(Score, ADD_POINTS);
         coin.setIsDead(true);
-        //Resources::instance().playSound(SoundType::CoinSound);
+        Resources::instance().playSound(SoundType::CollectCoin);
     }
 
     void playerSpeedGift(GameObject& p, GameObject& c)
@@ -55,11 +59,11 @@ namespace // anonymous namespace — the standard way to make function "static"
         Player& player = dynamic_cast<Player&>(p);
         SpeedGift& speedGift = dynamic_cast<SpeedGift&>(c);
 
-        player.setGameDate(Score, ADD_POINTS);
+        player.setGameData(Score, ADD_POINTS);
         player.setSuperSpeed(true);
         speedGift.setIsDead(true);
-
-        //Resources::instance().playSound(SoundType::SpeedGiftSound);
+        Clock::instance().getSpeedGiftClock().restart();
+        Resources::instance().playSound(SoundType::CollectGift);
     }
 
     void playerInvincibleGift(GameObject& p, GameObject& g)
@@ -69,8 +73,9 @@ namespace // anonymous namespace — the standard way to make function "static"
 
         player.setInvincible(true);
         bubbleGift.setIsDead(true);
+        Clock::instance().getBubbleGiftClock().restart();
 
-        //Resources::instance().playSound(SoundType::SpeedGiftSound);
+        Resources::instance().playSound(SoundType::CollectGift);
     }
 
     void playerLifeGift(GameObject& p, GameObject& g)
@@ -78,21 +83,24 @@ namespace // anonymous namespace — the standard way to make function "static"
         Player& player = dynamic_cast<Player&>(p);
         LifeGift& lifeGift = dynamic_cast<LifeGift&>(g);
 
-        player.setGameDate(Lives, 1);
+        if (player.getGameData()[Lives] != START_LIVES)
+        {
+            player.setGameData(Lives, 1);
+        }
         lifeGift.setIsDead(true);
 
-        //Resources::instance().playSound(SoundType::SpeedGiftSound);
+        Resources::instance().playSound(SoundType::CollectGift);
     }
 
-    void playerEnemy(GameObject& p, GameObject& )
+    void playerEnemy(GameObject& p, GameObject&)
     {
         Player& player = dynamic_cast<Player&>(p);
-        //RandomEnemy& randomEnemy = dynamic_cast<RandomEnemy&>(r);
 
         //for the player hit random enemy
         if (!player.getFlickering() && !player.getInvincible())
         {
             player.hittedByEnemy();
+            Resources::instance().playSound(SoundType::EnemyHitPlayer);
         }
     }
 
@@ -121,15 +129,8 @@ namespace // anonymous namespace — the standard way to make function "static"
         sf::FloatRect wallBounds = wall.getSprite().getGlobalBounds();
         sf::FloatRect enemyBounds = randomEnemy.getSprite().getGlobalBounds();
 
-        //check if the enemy is on the wall
-        if (wallBounds.contains(randomEnemy.getPos().x - enemyBounds.width,
-                                randomEnemy.getPos().y + wallBounds.height / 2.f) ||
-            wallBounds.contains(randomEnemy.getPos().x + enemyBounds.width,
-                                randomEnemy.getPos().y + wallBounds.height / 2.f))
-        {
-            randomEnemy.setChangeDir(false);
-            return;
-        }
+        randomEnemy.setChangeDir(true);
+        
     }
 
     void randomEnemyArrow(GameObject& r, GameObject& a)
@@ -137,10 +138,18 @@ namespace // anonymous namespace — the standard way to make function "static"
         RandomEnemy& randomEnemy = dynamic_cast<RandomEnemy&>(r);
         Arrow& arrow = dynamic_cast<Arrow&>(a);
 
-        arrow.setIsDead(true);
-        randomEnemy.setCurrPos(randomEnemy.getPrevLoc());
-        randomEnemy.handleEnemyDeath();
-        //Resources::instance().playSound(SoundType::DeathRandomEnemySound);
+        if (arrow.getDir() != Direction::Stay)
+        {
+            arrow.setMakeCoin();
+            arrow.setIsDead(true);
+            randomEnemy.setCurrPos(randomEnemy.getPrevLoc());
+            randomEnemy.setIsDead(true);
+            Resources::instance().playSound(SoundType::ArrowHitEnemy);     
+        }
+        else
+        {
+            randomEnemy.setChangeDir(true);
+        }    
     }
 
     // ----------------- flyingEnemy -----------------
@@ -153,32 +162,79 @@ namespace // anonymous namespace — the standard way to make function "static"
         flyingEnemy.changeDir();
     }
 
-    void flyingEnemyArrow(GameObject& f, GameObject&)
+    void flyingEnemyArrow(GameObject& f, GameObject& a)
     {
         FlyingEnemy& flyingEnemy = dynamic_cast<FlyingEnemy&>(f);
-        //Arrow& arrow = dynamic_cast<Arrow&>(a);
-
-        flyingEnemy.setCurrPos(flyingEnemy.getPrevLoc());
-        flyingEnemy.handleEnemyDeath();
-        //Resources::instance().playSound(SoundType::DeathflyingEnemySound);
+        Arrow& arrow = dynamic_cast<Arrow&>(a);
+        
+        if (arrow.getDir() != Direction::Stay)
+        {
+            arrow.setIsDead(true);
+            flyingEnemy.setMakeCoin();
+            flyingEnemy.setCurrPos(flyingEnemy.getPrevLoc());
+            flyingEnemy.setIsDead(true);
+            Resources::instance().playSound(SoundType::ArrowHitEnemy);
+        }
+        else
+        {
+            flyingEnemy.setCurrPos(flyingEnemy.getPrevLoc());
+            flyingEnemy.changeDir();
+        }   
     }
 
     // ----------------- Arrow -----------------
 
-    void ArrowEnemy(GameObject& b, GameObject&)
+    //void ArrowEnemy(GameObject& b, GameObject&)
+    //{
+    //    Arrow& arrow = dynamic_cast<Arrow&>(b);
+    //    if (arrow.getDir() != Direction::Stay)
+    //    {
+    //        arrow.setMakeCoin();
+    //        arrow.setIsDead(true);
+    //    }
+
+    //}
+
+    void ArrowWall(GameObject& b, GameObject& w)
     {
         Arrow& arrow = dynamic_cast<Arrow&>(b);
+        Wall& wall = dynamic_cast<Wall&>(w);
 
-        arrow.setIsDead(true);
-    }
+        if (arrow.getSprite().getScale().x == 1)
+        {
+            if (arrow.getPos().x + arrow.getSprite().getGlobalBounds().width / 2 - 10.f <
+                wall.getSprite().getPosition().x - 10.f)
+            {
+                arrow.setDir(Direction::Stay);
 
-    void ArrowWall(GameObject& b, GameObject&)
-    {
-        Arrow& arrow = dynamic_cast<Arrow&>(b);
-        //Wall& wall = dynamic_cast<Wall&>(w);
-
-        arrow.setDir(Direction::Stay);
-
+                if (!arrow.getSoundPlayed()) 
+                {
+                    Resources::instance().playSound(SoundType::ArrowHitWall);
+                    arrow.setSoundPlayed(true);
+                }
+            }
+            else 
+            {
+                arrow.setIsDead(true);
+            }
+        }
+        else 
+        {
+            if (arrow.getPos().x - arrow.getSprite().getGlobalBounds().width >
+                wall.getSprite().getPosition().x + wall.getSprite().getGlobalBounds().width / 2 + 5.f)
+            {
+                arrow.setDir(Direction::Stay);
+                if (!arrow.getSoundPlayed()) 
+                {
+                    Resources::instance().playSound(SoundType::ArrowHitWall);
+                    arrow.setSoundPlayed(true);
+                }
+            }
+            else
+            {
+                arrow.setIsDead(true);
+            }
+        }    
     }
 
     using HitFunctionPtr = void (*)(GameObject&, GameObject&);
@@ -205,9 +261,10 @@ namespace // anonymous namespace — the standard way to make function "static"
         phm[MapKey(typeid(FlyingEnemy), typeid(SpeedGift))] = &nothingShouldHappen;
         phm[MapKey(typeid(FlyingEnemy), typeid(LifeGift))] = &nothingShouldHappen;
         phm[MapKey(typeid(FlyingEnemy), typeid(BubbleGift))] = &nothingShouldHappen;
+        phm[MapKey(typeid(FlyingEnemy), typeid(FlyingEnemy))] = &nothingShouldHappen;
         phm[MapKey(typeid(FlyingEnemy), typeid(Player))] = &playerEnemy;
 
-        phm[MapKey(typeid(RandomEnemy), typeid(Player))] = &playerEnemy; 
+        phm[MapKey(typeid(RandomEnemy), typeid(Player))] = &playerEnemy;
         phm[MapKey(typeid(RandomEnemy), typeid(Wall))] = &randomEnemyWall;
         phm[MapKey(typeid(RandomEnemy), typeid(Arrow))] = &randomEnemyArrow;
         phm[MapKey(typeid(RandomEnemy), typeid(RandomEnemy))] = &nothingShouldHappen;
@@ -217,8 +274,8 @@ namespace // anonymous namespace — the standard way to make function "static"
         phm[MapKey(typeid(RandomEnemy), typeid(LifeGift))] = &nothingShouldHappen;
         phm[MapKey(typeid(RandomEnemy), typeid(BubbleGift))] = &nothingShouldHappen;
 
-        phm[MapKey(typeid(Arrow), typeid(RandomEnemy))] = &ArrowEnemy;
-        phm[MapKey(typeid(Arrow), typeid(FlyingEnemy))] = &ArrowEnemy;
+        phm[MapKey(typeid(Arrow), typeid(RandomEnemy))] = &nothingShouldHappen/*ArrowEnemy*/;
+        phm[MapKey(typeid(Arrow), typeid(FlyingEnemy))] = &nothingShouldHappen/*ArrowEnemy*/;
         phm[MapKey(typeid(Arrow), typeid(Wall))] = &ArrowWall;
         phm[MapKey(typeid(Arrow), typeid(Arrow))] = &nothingShouldHappen;
         phm[MapKey(typeid(Arrow), typeid(SpeedGift))] = &nothingShouldHappen;

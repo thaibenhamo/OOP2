@@ -17,6 +17,7 @@ private:
 	void draw(/*sf::View myView*/);
 	void runGame();
 	void runLevel();
+	void printWinOrLoseBackground();
 
 	Menu m_menu;
 	Level m_level;									//for level

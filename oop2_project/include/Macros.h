@@ -39,6 +39,8 @@ enum BackgroundType
 	LevelsMenuBackground,
 	HelpMenuBackground,
 	CloudsBackground,
+	WinBackground,
+	LoseBackground,
 	Count
 };
 
@@ -62,12 +64,19 @@ enum MusicType
 	MenuMusic
 };
 
-enum class SoundType
+enum SoundType
 {
-
+	ArrowHitEnemy,
+	ArrowHitWall,
+	CollectCoin,
+	CollectGift,
+	EnemyHitPlayer,
+	PlayerDeath,
+	PlayerJump,
+	PlayerShoot
 };
 
-const int NUM_OF_TEXTURES = 29, NUM_OF_FONTS = 1;
+const int NUM_OF_TEXTURES = 31, NUM_OF_FONTS = 1;
 const int DEFAULT_ROWS = 12, DEFAULT_COLS = 24;
 const int FPS = 60;
 const int PLAYER_STAY_PICS = 4, PLAYER_MOVE_PICS = 7, PLAYER_JUMP_PICS = 2, PLAYER_LAND_PICS = 2, 
@@ -81,7 +90,7 @@ const int TOP_WALL = 30;
 const int NUM_OF_GIFTS = 3;
 const int NUM_OF_MENU_BUTTONS = 3, NUM_OF_LEVELS = 4;
 const int BUTTON_MENU_Y_LOC = 555, MIDDLE_SPCAE_BUTTON_MENU_Y = 100, OFFSET_BUTTON_MENU_Y = 40;
-//const int NUM_OF_SOUNDS = 9;
+const int NUM_OF_SOUNDS = 8;
 const int NUM_OF_MUSIC_TYPES = 2;
 const float MENU_SONG_VOLUME = 35.f, GAME_SONG_VOLUME = 50.f;
 const float SCREEN_X_SIZE = 1650.f, SCREEN_Y_SIZE = 900.f;
@@ -89,7 +98,7 @@ const float OBJECTSIZE_X = 75.f, OBJECTSIZE_Y = 75.f;
 const float FONT_SIZE = 12.f;
 const float CHASE_RADIUS = 500.0f;
 const float FLICKERING_DURATION = 2.0f, MIN_STATIC_LIFE_DURATION = 10.0f;
-const float MAX_STATIC_LIFE_DURATION = 20.0f;
+const float MAX_STATIC_LIFE_DURATION = 20.0f, GIFT_DURATION = 10.0f;
 const float TIME_FOR_CREATE_ARROW = 0.5f;
 const float SPEED = 260.0f, ADD_SPEED = 150.0f;
 const float ARROW_SPEED = SPEED * 3.5f;

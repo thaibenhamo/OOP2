@@ -40,12 +40,12 @@ void InfoBar::draw(sf::RenderTarget& window, const std::vector<int>& gameData)
 void InfoBar::update(const std::vector<int>& gameData)
 {
 	m_score.setString(std::to_string(gameData[Score]));
-	
+
 	if(gameData[Lives] == 1)
 		m_sprites[2].setTexture(Resources::instance().get(Resources::Heart1));
 	else if(gameData[Lives] == 2)
 		m_sprites[2].setTexture(Resources::instance().get(Resources::Heart2));
-	else if(gameData[Lives] >= 3)
+	else if (gameData[Lives] >= 3)
 		m_sprites[2].setTexture(Resources::instance().get(Resources::Heart3));
 }
 

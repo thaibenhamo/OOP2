@@ -15,6 +15,9 @@ void Level::initObjects()
 {
 	m_staticObjects.clear();
 	m_movingObjects.clear();
+	m_winLevel = false;
+	m_loseLevel = false;
+	m_numOfEnemies = 0;
 }
 
 //to fix so it will be with  exceptions!!!!
@@ -29,17 +32,11 @@ void Level::setLevel(const int levelNum)
 
 	std::ifstream file = std::ifstream(levelName);	//open level file
 
-	if (file)
+	if (!file)
 	{
-		readLevelFile(file);
+		throw FileError();
 	}
-
-	else
-	{
-		m_winGame = true;		// no more levels to read
-	}
-
-	m_winLevel = false;		//for next level/game
+	readLevelFile(file);
 }
 
 void Level::readLevelFile(std::ifstream& file) 
@@ -73,6 +70,7 @@ void Level::readLevelFile(std::ifstream& file)
 			if (movingPtr)
 			{
 				m_movingObjects.push_back(std::move(movingPtr));
+				m_numOfEnemies++;
 			}
 				
 			auto staticPtr = Factory<StaticObject>::instance().create(objectType, pos, resourceType);
@@ -84,9 +82,63 @@ void Level::readLevelFile(std::ifstream& file)
 			if (resourceType == Resources::Player)
 			{
 				m_player.setPlayer(pos);
-
 			}		
 		}
+	}
+}
+
+void Level::updateObjects(sf::Time dt) 
+{
+	m_player.update(dt);
+	updateAnimation(dt);
+
+	for (auto& movingObject : m_movingObjects) 
+	{
+		movingObject->updateWithPlayerPosition(m_player.getPos());
+		movingObject->update(dt);
+	}
+	collisions();
+	updateArrow();
+	
+	updateStaticObjects();
+	eraseIfDead();
+	updateWinOrLose();
+}
+
+void Level::updateWinOrLose()
+{
+	if (m_numOfEnemies == 0)
+	{
+		m_winLevel = true;
+	}
+
+	if (m_player.getGameData()[Lives] == 0)
+	{
+		m_loseLevel = true;
+		Resources::instance().playSound(SoundType::PlayerDeath);
+		m_player.setGameData(Lives, START_LIVES);
+	}
+}
+
+void Level::updateArrow()
+{
+	if (m_player.getShotArrow())
+	{
+		float param = m_player.getSprite().getScale().x;		//shows if player is looking to left or to the right
+		sf::Vector2f pos = { m_player.getPos().x + (param * OFFSET_X_FOR_ARROW), 
+							 m_player.getPos().y + OFFSET_Y_FOR_ARROW };
+		m_movingObjects.emplace_back(std::make_unique<Arrow>(pos, Resources::Arrow, param));
+		m_player.setShotArrow(false);
+
+		/*
+		//???
+		ObjectType objectType = static_cast<ObjectType>('>');
+		Resources::Object resourceType = Resources::instance().getResourceType(objectType);
+		sf::Vector2f pos = { m_player.getPos().x + OFFSET_X_FOR_BULLET, m_player.getPos().y + OFFSET_Y_FOR_BULLET };
+		auto movingPtr = Factory<MovingObject>::instance().create(objectType, pos, resourceType);
+		if (movingPtr) {
+			m_movingObjects.push_back(std::move(movingPtr));
+		}*/
 	}
 }
 
@@ -109,45 +161,16 @@ void Level::updateStaticObjects()
 			}
 		}
 	}
-}
 
-void Level::updateObjects(sf::Time dt) 
-{
-	m_player.update(dt);
-	updateAnimation(dt);
-
-	for (auto& movingObject : m_movingObjects) 
+	for (auto& movingObject : m_movingObjects)
 	{
-		movingObject->updateWithPlayerPosition(m_player.getPos());
-		movingObject->update(dt);
-	}
-
-	updateArrow();
-	updateStaticObjects();
-
-	collisions();
-	eraseIfDead();
-}
-
-void Level::updateArrow()
-{
-	if (m_player.getShotArrow())
-	{
-		float param = m_player.getSprite().getScale().x;		//shows if player is looking to left or to the right
-		sf::Vector2f pos = { m_player.getPos().x + (param * OFFSET_X_FOR_ARROW), 
-							 m_player.getPos().y + OFFSET_Y_FOR_ARROW };
-		m_movingObjects.emplace_back(std::make_unique<Arrow>(pos, Resources::Arrow, param));
-		m_player.setShotArrow(false);
-
-		/*
-		//???
-		ObjectType objectType = static_cast<ObjectType>('>');
-		Resources::Object resourceType = Resources::instance().getResourceType(objectType);
-		sf::Vector2f pos = { m_player.getPos().x + OFFSET_X_FOR_BULLET, m_player.getPos().y + OFFSET_Y_FOR_BULLET };
-		auto movingPtr = Factory<MovingObject>::instance().create(objectType, pos, resourceType);
-		if (movingPtr) {
-			m_movingObjects.push_back(std::move(movingPtr));
-		}*/
+		if (movingObject->getMakeCoin() && movingObject->getIsDead())
+		{
+			m_staticObjects.emplace_back(Factory<StaticObject>::instance().create(
+				ObjectType::CoinChar, movingObject->getPos(), Resources::instance().getResourceType(ObjectType::CoinChar)));
+			m_numOfEnemies--;
+			
+		}
 	}
 }
 
@@ -179,7 +202,7 @@ void Level::collisions()
 			{
 				processCollision(*m1, *s1);
 			}		
-		}		
+		}
 	}
 		
 	// collide moving with moving objects
@@ -239,11 +262,6 @@ void Level::drawObjects(sf::RenderWindow& window)
 const sf::Vector2f Level::findLocation(const int row, const int col) const 
 {
 	return sf::Vector2f(OBJECTSIZE_X* col, OBJECTSIZE_Y* row);
-}
-
-const bool Level::getWinGame() const
-{
-	return m_winGame;
 }
 
 void Level::handleInput(const Input input)

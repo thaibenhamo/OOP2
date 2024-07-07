@@ -6,7 +6,6 @@
 #include <cstdlib> // for std::system()
 #include <fstream>
 
-
 class Button
 {
 public:
@@ -22,5 +21,3 @@ protected:
 	sf::RectangleShape m_button;
 	sf::Texture m_texture;
 };
-
-

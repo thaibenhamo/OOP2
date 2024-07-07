@@ -3,10 +3,11 @@
 #include "MenuCommand.h"
 #include "Button.h"
 
+
 typedef std::pair<Button, std::unique_ptr<MenuCommand>> option;
 
-class Menu 
-{
+class Menu {
+
 public:
 	Menu();
 	~Menu() {}

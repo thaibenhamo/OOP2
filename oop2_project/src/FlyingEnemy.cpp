@@ -15,18 +15,16 @@ FlyingEnemy::FlyingEnemy(sf::Vector2f location, Resources::Object object)
 {
     m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f,
                        m_sprite.getGlobalBounds().height / 2.f);
+    Clock::instance().getSmartEnemyClock().restart();
 }
 
 void FlyingEnemy::update(sf::Time delta)
 {
     //change direction if reaches current screens border
-    /*if (m_sprite.getPosition().x < 0 ||
-        m_sprite.getPosition().y + m_sprite.getGlobalBounds().height > SCREEN_Y_SIZE ||
-        m_sprite.getPosition().y < 0 ||
-        m_sprite.getPosition().x + m_sprite.getGlobalBounds().width > SCREEN_X_SIZE)*/
     if (isOutOfScreenBounds())
     {
         m_dir = opposite(m_dir);
+        setCurrPos(m_prevLocation);
     }
     m_animation.direction(m_dir);
     move(delta);
@@ -35,9 +33,9 @@ void FlyingEnemy::update(sf::Time delta)
 
 void FlyingEnemy::move(sf::Time delta)
 {
-    if (m_clock.getElapsedTime().asSeconds() >= 2)
+    if (Clock::instance().getSmartEnemyClock().getElapsedTime().asSeconds() >= 2)
     {
-        m_clock.restart();
+        Clock::instance().getSmartEnemyClock().restart();
 
         if (distance(m_sprite.getPosition(), m_playerPosition) < CHASE_RADIUS) 
         {
@@ -87,4 +85,3 @@ bool FlyingEnemy::isOutOfScreenBounds() const
            m_sprite.getPosition().y + m_sprite.getGlobalBounds().height / 2 > SCREEN_Y_SIZE ||
            m_sprite.getPosition().y - m_sprite.getGlobalBounds().height / 2 < 0);
 }
-

@@ -10,12 +10,12 @@ std::unique_ptr<PlayerState> FallingState::handleInput(Input input)
     {
         return std::make_unique<StandingState>();
     }
-    
+
     if (input == FALLING_OUT_OF_BOUNDS)
     {
         return std::make_unique<FallingState>(Direction::Down);
     }
-   
+
     // so the player could move right or left while falling
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && 
         m_direction != Direction::DownLeft)

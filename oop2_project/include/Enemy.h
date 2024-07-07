@@ -13,5 +13,5 @@ public:
 
 protected:
     bool m_wasShot = false;
-    sf::Clock m_clock;
+    bool m_makeCoin = false;
 };

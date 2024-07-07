@@ -11,7 +11,7 @@ public:
     void state(const AnimationState state);
     void update(const sf::Time delta);
     void direction(const Direction dir);
- 
+
 private:
     void updateState();
     void updateDir();

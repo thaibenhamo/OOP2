@@ -34,9 +34,10 @@ std::unique_ptr<PlayerState> JumpingState::handleInput(Input input)
 void JumpingState::enter(Player& player)
 { 
     player.setStateAnimation(m_direction, AnimationState::Jump);
-
+    
     if (m_newJump) 
     {
+        Resources::instance().playSound(SoundType::PlayerJump);
         //restartClock - need to make it only when is new state
         if (jumpingTimerEnded()) 
         {

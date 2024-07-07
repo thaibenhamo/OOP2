@@ -14,7 +14,6 @@ enum Input
 	RELEASE_DOWN,
 	RELEASE_ON_WALL,
 	FALLING_OUT_OF_BOUNDS
-	
 };
 
 class PlayerState 

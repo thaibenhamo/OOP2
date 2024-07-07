@@ -14,7 +14,7 @@ void Animation::state(const AnimationState state)
     {
         return;
     }
-    
+        
     m_state = state;
     m_index = 0;
     updateState();
