@@ -4,8 +4,6 @@
 #include "LifeGift.h"
 #include "BubbleGift.h"
 
-
-
 static auto registerIt = Factory<StaticObject>::instance().registerType(
     ObjectType::GiftChar,
     [](sf::Vector2f position, Resources::Object object) -> std::unique_ptr<StaticObject>
@@ -32,5 +30,4 @@ void Gift::startGiftTime()
 {
     m_timeGiftClock.restart();
     m_isOn = true;
-
 }

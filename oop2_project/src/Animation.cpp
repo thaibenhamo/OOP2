@@ -1,6 +1,6 @@
 #include "Animation.h"
 
-Animation::Animation(AnimationData& data, const AnimationState state, sf::Sprite& sprite,
+Animation::Animation(const AnimationData& data, const AnimationState state, sf::Sprite& sprite,
                      const Direction dir)
     : m_data(data), m_state(state), m_sprite(sprite), m_dir(dir)
 {

@@ -35,11 +35,13 @@ namespace
         }
         else
         {
-            if (player.getDir() == Direction::DownLeft || player.getDir() == Direction::DownRight)
+            if (player.getDir() == Direction::DownLeft || 
+                player.getDir() == Direction::DownRight)
             {
                 player.setDir(Direction::Down);
-            }
-            if (player.getDir() == Direction::UpLeft || player.getDir() == Direction::UpRight)
+            }  
+            if (player.getDir() == Direction::UpLeft || 
+                player.getDir() == Direction::UpRight)
             {
                 player.setDir(Direction::Up);
             }
@@ -133,7 +135,7 @@ namespace
         sf::FloatRect wallBounds = wall.getSprite().getGlobalBounds();
         sf::FloatRect enemyBounds = randomEnemy.getSprite().getGlobalBounds();
 
-        randomEnemy.setChangeDir(true);    
+        randomEnemy.setChangeDir(true);   
     }
 
     void randomEnemyArrow(GameObject& r, GameObject& a)
@@ -145,7 +147,7 @@ namespace
         {
             arrow.setMakeCoin();
             arrow.setIsDead(true);
-            randomEnemy.setCurrPos(randomEnemy.getPrevLoc());
+            randomEnemy.setPos(randomEnemy.getPrevLoc());
             randomEnemy.setIsDead(true);
             Resources::instance().playSound(SoundType::ArrowHitEnemy);     
         }
@@ -161,7 +163,7 @@ namespace
     {
         FlyingEnemy& flyingEnemy = dynamic_cast<FlyingEnemy&>(g);
 
-        flyingEnemy.setCurrPos(flyingEnemy.getPrevLoc());
+        flyingEnemy.setPos(flyingEnemy.getPrevLoc());
         flyingEnemy.changeDir();
     }
 
@@ -174,29 +176,16 @@ namespace
         {
             arrow.setIsDead(true);
             flyingEnemy.setMakeCoin();
-            flyingEnemy.setCurrPos(flyingEnemy.getPrevLoc());
+            flyingEnemy.setPos(flyingEnemy.getPrevLoc());
             flyingEnemy.setIsDead(true);
             Resources::instance().playSound(SoundType::ArrowHitEnemy);
         }
         else
         {
-            flyingEnemy.setCurrPos(flyingEnemy.getPrevLoc());
+            flyingEnemy.setPos(flyingEnemy.getPrevLoc());
             flyingEnemy.changeDir();
         }   
     }
-
-    // ----------------- Arrow -----------------
-
-    //void ArrowEnemy(GameObject& b, GameObject&)
-    //{
-    //    Arrow& arrow = dynamic_cast<Arrow&>(b);
-    //    if (arrow.getDir() != Direction::Stay)
-    //    {
-    //        arrow.setMakeCoin();
-    //        arrow.setIsDead(true);
-    //    }
-
-    //}
 
     void ArrowWall(GameObject& b, GameObject& w)
     {

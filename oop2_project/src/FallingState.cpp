@@ -32,7 +32,6 @@ std::unique_ptr<PlayerState> FallingState::handleInput(Input input)
     return nullptr;
 }
 
-
 void FallingState::enter(Player& player)
 {
     player.setStateAnimation(m_direction, AnimationState::Land);

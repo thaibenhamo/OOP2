@@ -4,12 +4,12 @@
 class Enemy : public MovingObject 
 {
 public:
-    Enemy(sf::Vector2f location, Resources::Object object);
+    Enemy(const sf::Vector2f& location, const Resources::Object object);
     virtual ~Enemy() = default;
 
     void handleEnemyDeath();
+    void setWasShot(const bool status);
     const bool getWasShot() const;
-    void setWasShot(bool status);
 
 protected:
     bool m_wasShot = false;

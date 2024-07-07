@@ -7,7 +7,6 @@ public:
 	using StaticObject::StaticObject;
 
 private:
-
 };
 
 

@@ -15,5 +15,4 @@ public:
     void enter(Player& player) override;
    
 private:
-
 };

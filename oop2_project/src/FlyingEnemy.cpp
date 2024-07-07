@@ -9,33 +9,34 @@ static auto registerIt = Factory<MovingObject>::instance().registerType(
     }
 );
 
-FlyingEnemy::FlyingEnemy(sf::Vector2f location, Resources::Object object)
+FlyingEnemy::FlyingEnemy(const sf::Vector2f& location, const Resources::Object object)
     : Enemy(location, object), m_animation(Resources::instance().animationData(object),
                                AnimationState::Move, m_sprite, Direction::Left)
 {
     m_sprite.setOrigin(m_sprite.getGlobalBounds().width / 2.f,
                        m_sprite.getGlobalBounds().height / 2.f);
-    Clock::instance().getSmartEnemyClock().restart();
+    m_flyingEnemyClock.restart();
 }
 
 void FlyingEnemy::update(sf::Time delta)
 {
+    m_animation.direction(m_dir);
+    move(delta);
+    m_animation.update(delta);
+
     //change direction if reaches current screens border
     if (isOutOfScreenBounds())
     {
         m_dir = opposite(m_dir);
-        setCurrPos(m_prevLocation);
+        setPos(m_prevLocation);
     }
-    m_animation.direction(m_dir);
-    move(delta);
-    m_animation.update(delta);
 }
 
 void FlyingEnemy::move(sf::Time delta)
 {
-    if (Clock::instance().getSmartEnemyClock().getElapsedTime().asSeconds() >= 2)
+    if (m_flyingEnemyClock.getElapsedTime().asSeconds() >= 2)
     {
-        Clock::instance().getSmartEnemyClock().restart();
+        m_flyingEnemyClock.restart();
 
         if (distance(m_sprite.getPosition(), m_playerPosition) < CHASE_RADIUS) 
         {

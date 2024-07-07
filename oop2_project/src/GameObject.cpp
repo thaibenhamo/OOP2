@@ -1,8 +1,8 @@
 #pragma once
 #include "GameObject.h"
-#include "Animation.h"
 
-GameObject::GameObject(sf::Vector2f location, Resources::Object object) 	
+
+GameObject::GameObject(const sf::Vector2f& location, const Resources::Object object) 	
 {
 	m_sprite.setPosition(location);
 }
@@ -12,10 +12,10 @@ void GameObject::draw(sf::RenderWindow& window) const
 	window.draw(m_sprite);
 }
 
-void GameObject::setCurrPos(sf::Vector2f loc) 
+/*void GameObject::setPos(const sf::Vector2f& loc)
 {
 	m_sprite.setPosition(loc);
-}
+}*/
 
 sf::Sprite GameObject::getSprite() const 
 {
@@ -27,7 +27,7 @@ const bool GameObject::getIsDead() const
 	return m_isDead;
 }
 
-void GameObject::setIsDead(bool status)
+void GameObject::setIsDead(const bool status)
 {
 	m_isDead = status;
 }

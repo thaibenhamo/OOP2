@@ -4,8 +4,9 @@
 class FlyingEnemy : public Enemy 
 {
 public:
-	FlyingEnemy(sf::Vector2f location, Resources::Object object);
+	FlyingEnemy(const sf::Vector2f& location, const Resources::Object object);
 	virtual ~FlyingEnemy() = default;
+
 	void update(sf::Time delta);
 	void changeDir();
 	bool isOutOfScreenBounds() const;
@@ -16,5 +17,6 @@ private:
 	float distance(const sf::Vector2f& a, const sf::Vector2f& b) const;
 
 	Animation m_animation;
+	sf::Clock m_flyingEnemyClock;
 };
 

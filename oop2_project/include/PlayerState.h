@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
-#include <vector>
-#include <algorithm>
-#include <memory>
+//#include <vector>
+//#include <algorithm>
+//#include <memory>
 #include <SFML/Window/Keyboard.hpp>
 #include "Direction.h"
 
@@ -25,6 +25,7 @@ public:
 	virtual std::unique_ptr<PlayerState> handleInput(Input input) = 0;
 	virtual void enter(Player& player) = 0;
 	virtual const Direction getDirection() { return m_direction; }
+
 protected:
 	Direction m_direction;
 };

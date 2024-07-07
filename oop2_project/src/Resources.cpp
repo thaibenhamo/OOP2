@@ -1,6 +1,7 @@
 #include "Resources.h"
 #include <fstream>
 #include "FileError.h"
+
 namespace
 {
 	int num_of_pics;
@@ -73,18 +74,22 @@ Resources::Resources() : m_data(Max), m_music(NUM_OF_MUSIC_TYPES), m_buffers(NUM
 		auto line = std::string();			// to reads lines from the file
 
 		// read textures names from file
-		for (int i = 0; i < NUM_OF_TEXTURES; i++) {
-
+		for (int i = 0; i < NUM_OF_TEXTURES; i++) 
+		{
 			if (!std::getline(file, line))
+			{
 				throw std::runtime_error("Can't read from file");
-
+			}		
 			m_textures[i].loadFromFile(line);
 		}
 
 		// read font names from file
-		for (int i = 0; i < NUM_OF_FONTS; i++) {
+		for (int i = 0; i < NUM_OF_FONTS; i++) 
+		{
 			if (!std::getline(file, line))
+			{
 				throw std::runtime_error("Can't read from file");
+			}		
 			m_font.loadFromFile(line);
 		}
 
@@ -107,10 +112,12 @@ Resources::Resources() : m_data(Max), m_music(NUM_OF_MUSIC_TYPES), m_buffers(NUM
 			}		
 			m_buffers[i].loadFromFile(line);
 		}
-
 	}
 	else
-		throw std::runtime_error("Can't load file1");
+	{
+		throw std::runtime_error("Can't load file");
+	}
+		
 	// set volume
 	m_music[MenuMusic].setVolume(MENU_SONG_VOLUME);
 	m_music[GameMusic].setVolume(GAME_SONG_VOLUME);

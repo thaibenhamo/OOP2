@@ -11,6 +11,7 @@ public:
 private:
 	void update(const std::vector<int>& gameData);
 	void setData();
+
 	std::vector<sf::Sprite> m_sprites;
 	sf::Text m_score;
 };

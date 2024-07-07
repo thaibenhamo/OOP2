@@ -1,7 +1,7 @@
 #pragma once
 #include "Enemy.h"
 
-Enemy::Enemy(sf::Vector2f location, Resources::Object object)
+Enemy::Enemy(const sf::Vector2f& location, const Resources::Object object)
 	: MovingObject(location, object)
 {
 	m_dir = Direction::Left;
@@ -17,7 +17,7 @@ const bool Enemy::getWasShot() const
     return m_wasShot;
 }
 
-void Enemy::setWasShot(bool status)
+void Enemy::setWasShot(const bool status)
 {
     m_wasShot = status;
 }

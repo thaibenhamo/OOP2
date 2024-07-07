@@ -3,7 +3,6 @@
 #include "MenuCommand.h"
 #include "Button.h"
 
-
 typedef std::pair<Button, std::unique_ptr<MenuCommand>> option;
 
 class Menu {
@@ -21,5 +20,4 @@ private:
 	void show(sf::RenderWindow& window);
 	void handleMove(const sf::Vector2f& location);
 	bool handleClick(const sf::Vector2f& location, sf::RenderWindow& window, int& numOfLevel);
-
 };

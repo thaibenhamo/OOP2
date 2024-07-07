@@ -16,23 +16,22 @@ public:
 	void drawObjects(sf::RenderWindow& window);
 	void updateObjects(sf::Time dt);
 	void handleInput(const Input input);
-	const std::vector<int>& getInfoBarData() const;
+	void setLoseLevel(const bool status) { m_loseLevel = status; }
+	void updateWinOrLose();
 	bool getWinLevel() const { return m_winLevel; }
 	bool getLoseLevel() const { return m_loseLevel; }
-	void setLoseLevel(bool status) { m_loseLevel = status; }
-	void updateWinOrLose();
+	const std::vector<int>& getInfoBarData() const;
 
 private:
 	void updateAnimation(sf::Time dt);
-	const sf::Vector2f findLocation(const int row, const int col) const;
 	void initObjects();
 	void readLevelFile(std::ifstream& file);
 	void collisions();
-	bool collide(MovingObject& a, GameObject& b) const;
 	void eraseIfDead();
 	void updateArrow();
 	void updateStaticObjects();
-
+	bool collide(MovingObject& a, GameObject& b) const;
+	const sf::Vector2f findLocation(const int row, const int col) const;
 
 	Player m_player;
 	std::vector<std::unique_ptr<StaticObject>> m_staticObjects; //store static objects
@@ -43,5 +42,4 @@ private:
 	bool m_winLevel = false;		//if win level
 	bool m_loseLevel = false;		//if lose level
 	int m_numOfEnemies = 0;
-
 };

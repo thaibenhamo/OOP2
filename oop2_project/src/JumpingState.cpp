@@ -41,7 +41,7 @@ void JumpingState::enter(Player& player)
         //restartClock - need to make it only when is new state
         if (jumpingTimerEnded()) 
         {
-            m_jumpingTime = std::chrono::steady_clock::now();
+            Clock::instance().getJumpingClock().restart();
             m_newJump = false;
             player.setJumping(true);
         }
@@ -50,10 +50,6 @@ void JumpingState::enter(Player& player)
 
 bool JumpingState::jumpingTimerEnded() const
 {
-    // Check if the jumping duration has elapsed
-    auto currentTime = std::chrono::steady_clock::now();
-    auto elapsedTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - m_jumpingTime);
-
-    return elapsedTime >= JUMPING_DURATION;
+    return Clock::instance().getJumpingClock().getElapsedTime().asSeconds() >= JUMPING_DURATION;
 }
 

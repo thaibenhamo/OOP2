@@ -3,7 +3,7 @@
 #include "JumpingState.h"
 #include "FallingState.h"
 
-Player::Player(sf::Vector2f location, Resources::Object object)
+Player::Player(const sf::Vector2f& location, const Resources::Object object)
 	: MovingObject(location, object), m_state(std::make_unique<StandingState>()),
 	  m_animation(Resources::instance().animationData(object),
 	  AnimationState::Stay, m_sprite, Direction::Stay), m_gameData({ START_LIVES, 0 })
@@ -20,7 +20,7 @@ Player::Player(sf::Vector2f location, Resources::Object object)
 	m_bubble.setPosition(getPos());	
 }
 
-void Player::setPlayer(sf::Vector2f location)
+void Player::setPlayer(const sf::Vector2f& location)
 {
 	m_sprite.setPosition(location);
 	m_startPos = location;
@@ -37,6 +37,7 @@ void Player::update(sf::Time delta)
 		m_sprite.setColor(sf::Color::White);
 		m_state->enter(*this);
 	}
+
 	checkIfShotArrow();
 	m_animation.update(delta);
 	updatePlayerGiftPowers();
@@ -47,11 +48,13 @@ void Player::update(sf::Time delta)
 
 void Player::updatePlayerGiftPowers()
 {
-	if (m_superSpeed && Clock::instance().getSpeedGiftClock().getElapsedTime().asSeconds() >= GIFT_DURATION)
+	if (m_superSpeed && 
+		Clock::instance().getSpeedGiftClock().getElapsedTime().asSeconds() >= GIFT_DURATION)
 	{
 		m_superSpeed = false;
 	}
-	if (m_invincible && Clock::instance().getBubbleGiftClock().getElapsedTime().asSeconds() >= GIFT_DURATION)
+	if (m_invincible && 
+		Clock::instance().getBubbleGiftClock().getElapsedTime().asSeconds() >= GIFT_DURATION)
 	{
 		m_invincible = false;
 	}
@@ -77,7 +80,6 @@ void Player::checkIfShotArrow()
 	else
 	{
 		m_spacePressed = false;
-		//m_state->enter(*this);
 	}
 }
 
@@ -146,14 +148,14 @@ void Player::handleInput(Input input)
 	}
 }
 
-void Player::setStateAnimation(Direction dir, AnimationState state)
+void Player::setStateAnimation(const Direction dir, const AnimationState state)
 {
 	m_dir = dir;
 	m_animation.state(state);
 	m_animation.direction(dir);
 }
 
-void Player::setGameData(GameData gameData, int num)
+void Player::setGameData(GameData gameData, const int num)
 {
 	m_gameData[gameData] += num;
 }

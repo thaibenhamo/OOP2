@@ -1,6 +1,6 @@
 #pragma once
 #include "LevelsMenuCommand.h"
-
+#include <iostream>
 LevelsMenuCommand::LevelsMenuCommand()
 {
 	for (int i = 0; i < NUM_OF_LEVELS; i++)
@@ -12,7 +12,7 @@ LevelsMenuCommand::LevelsMenuCommand()
 	m_levelsButtons[0]->setTexture(Resources::instance().get(Level1Button));
 	m_unLock[0] = true;
 
-	m_backButton->setPosition(sf::Vector2f(633, 550)); // Note the use of the arrow operator '->'
+	m_backButton->setPosition(sf::Vector2f(633, 550)); 
 
 }
 

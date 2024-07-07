@@ -5,6 +5,7 @@ class LevelsMenuCommand : public MenuCommand
 {
 public:
 	LevelsMenuCommand();
+
 	virtual bool execute(sf::RenderWindow& window, int& numOfLevel) override;
 	virtual void show(sf::RenderWindow& window) const override;
 	virtual void handleMove(const sf::Vector2f& location) override;

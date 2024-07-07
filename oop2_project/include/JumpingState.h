@@ -19,7 +19,5 @@ public:
 
 private:
     static std::chrono::steady_clock::time_point m_jumpingTime;
-    //Direction jumpingDirection = Direction::Up;
     bool m_newJump = true;
-
 };

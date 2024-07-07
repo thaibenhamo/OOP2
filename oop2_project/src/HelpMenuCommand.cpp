@@ -3,7 +3,7 @@
 
 HelpMenuCommand::HelpMenuCommand()
 {
-	m_backButton->setPosition(sf::Vector2f(1120, 770)); // Note the use of the arrow operator '->'
+	m_backButton->setPosition(sf::Vector2f(1120, 770)); 
 }
 
 bool HelpMenuCommand::execute(sf::RenderWindow& window, int& numOfLevel)

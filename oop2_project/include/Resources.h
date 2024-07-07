@@ -1,5 +1,4 @@
 #pragma once
-
 #include "FileError.h"
 #include <vector>
 #include "Macros.h"
@@ -44,13 +43,14 @@ public:
 
 	const sf::Texture& get(const Object object) const;
 	const sf::Texture& get(const BackgroundType type) const;
+	const sf::Texture& texture() const { return m_textures[16]; }
 	sf::Texture& get(const ButtonType buttonType);
 	const sf::Font& getFont() const;
-	const sf::Texture& texture() const { return m_textures[16]; } 
 	Resources::Object getResourceType(ObjectType type);	// Mapping from ObjectType to Resources::Object
 	AnimationData& animationData(Object object) { return m_data[object]; } 
 	void playMusic(const MusicType type);
 	void playSound(const SoundType type);
+
 private:
 	Resources();
 	std::vector<sf::Texture> m_textures;	//to store all game textures

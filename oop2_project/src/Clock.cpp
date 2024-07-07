@@ -6,7 +6,7 @@ Clock& Clock::instance()
 	return inst;
 }
 
-sf::Clock& Clock::getBubbleGiftClock()
+sf::Clock& Clock::getBubbleGiftClock() 
 {
 	return m_bubbleGiftClock;
 }
@@ -26,12 +26,7 @@ sf::Clock& Clock::getSpeedGiftClock()
 	return m_speedGiftClock;
 }
 
-sf::Clock& Clock::getSmartEnemyClock()
+sf::Clock& Clock::getJumpingClock()
 {
-	return m_smartEnemyClock;
-}
-
-sf::Clock& Clock::getRandomEnemyClock()
-{
-	return m_randomEnemyClock;
+	return m_jumpingClock;
 }

@@ -1,18 +1,15 @@
 #pragma once
 #include "Resources.h"
 #include "Factory.h"
-#include "Direction.h"
-#include "Animation.h"
 
 class GameObject
 {
 public:
-	GameObject(sf::Vector2f location, Resources::Object object);
+	GameObject(const sf::Vector2f& location, const Resources::Object object);
 	virtual ~GameObject() = default;
 
 	void draw(sf::RenderWindow& window) const;
-	void setCurrPos(sf::Vector2f loc);
-	void setIsDead(bool status);
+	void setIsDead(const bool status);
 	const bool getIsDead() const;
 	sf::Sprite getSprite() const;
 

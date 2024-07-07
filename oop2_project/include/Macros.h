@@ -116,6 +116,6 @@ const sf::Color PINK = { 221, 79, 154, 255 };
 
 
 const auto AnimationTime = sf::seconds(0.2f);
-constexpr auto JUMPING_DURATION = std::chrono::milliseconds(700);
+const float JUMPING_DURATION = 0.7f;
 
 
