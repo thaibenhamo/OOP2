@@ -12,7 +12,7 @@ public:
 	void setPos(sf::Vector2f pos);
 	void updateWithPlayerPosition(const sf::Vector2f& playerPosition) { m_playerPosition = playerPosition; }
 	virtual void update(sf::Time delta) = 0;
-	void setDir(Direction dir) { m_dir = dir; }
+	virtual void setDir(Direction dir) { m_dir = dir; }
 	Direction getDir() const { return m_dir; }
 	bool getMakeCoin() const { return m_makeCoin; }
 	void setMakeCoin() { m_makeCoin = true; }

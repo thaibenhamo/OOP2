@@ -111,6 +111,6 @@ void Controller::printWinOrLoseBackground()
 			break;
 		}
 		// Add a short sleep to avoid consuming too much CPU
-		sf::sleep(sf::milliseconds(100));
+		//sf::sleep(sf::milliseconds(100));
 	}
 }

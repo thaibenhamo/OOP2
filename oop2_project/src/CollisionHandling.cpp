@@ -38,7 +38,11 @@ namespace
             if (player.getDir() == Direction::DownLeft || player.getDir() == Direction::DownRight)
             {
                 player.setDir(Direction::Down);
-            }        
+            }
+            if (player.getDir() == Direction::UpLeft || player.getDir() == Direction::UpRight)
+            {
+                player.setDir(Direction::Up);
+            }
             player.setPos(player.getPrevLoc());
         }
     }
@@ -129,8 +133,7 @@ namespace
         sf::FloatRect wallBounds = wall.getSprite().getGlobalBounds();
         sf::FloatRect enemyBounds = randomEnemy.getSprite().getGlobalBounds();
 
-        randomEnemy.setChangeDir(true);
-        
+        randomEnemy.setChangeDir(true);    
     }
 
     void randomEnemyArrow(GameObject& r, GameObject& a)
@@ -203,28 +206,11 @@ namespace
         if (arrow.getSprite().getScale().x == 1)
         {
             if (arrow.getPos().x + arrow.getSprite().getGlobalBounds().width / 2 - 10.f <
-                wall.getSprite().getPosition().x - 10.f)
+                wall.getSprite().getPosition().x - 20.f)
             {
                 arrow.setDir(Direction::Stay);
 
-                if (!arrow.getSoundPlayed()) 
-                {
-                    Resources::instance().playSound(SoundType::ArrowHitWall);
-                    arrow.setSoundPlayed(true);
-                }
-            }
-            else 
-            {
-                arrow.setIsDead(true);
-            }
-        }
-        else 
-        {
-            if (arrow.getPos().x - arrow.getSprite().getGlobalBounds().width >
-                wall.getSprite().getPosition().x + wall.getSprite().getGlobalBounds().width / 2 + 5.f)
-            {
-                arrow.setDir(Direction::Stay);
-                if (!arrow.getSoundPlayed()) 
+                if (!arrow.getSoundPlayed())
                 {
                     Resources::instance().playSound(SoundType::ArrowHitWall);
                     arrow.setSoundPlayed(true);
@@ -234,7 +220,24 @@ namespace
             {
                 arrow.setIsDead(true);
             }
-        }    
+        }
+        else
+        {
+            if (arrow.getPos().x - arrow.getSprite().getGlobalBounds().width >
+                wall.getSprite().getPosition().x + wall.getSprite().getGlobalBounds().width / 2 + 5.f)
+            {
+                arrow.setDir(Direction::Stay);
+                if (!arrow.getSoundPlayed())
+                {
+                    Resources::instance().playSound(SoundType::ArrowHitWall);
+                    arrow.setSoundPlayed(true);
+                }
+            }
+            else
+            {
+                arrow.setIsDead(true);
+            }
+        }
     }
 
     using HitFunctionPtr = void (*)(GameObject&, GameObject&);

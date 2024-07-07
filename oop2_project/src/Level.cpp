@@ -124,21 +124,20 @@ void Level::updateArrow()
 {
 	if (m_player.getShotArrow())
 	{
-		float param = m_player.getSprite().getScale().x;		//shows if player is looking to left or to the right
-		sf::Vector2f pos = { m_player.getPos().x + (param * OFFSET_X_FOR_ARROW), 
-							 m_player.getPos().y + OFFSET_Y_FOR_ARROW };
-		m_movingObjects.emplace_back(std::make_unique<Arrow>(pos, Resources::Arrow, param));
-		m_player.setShotArrow(false);
+		auto arrowPtr = Factory<MovingObject>::instance().create(
+			ObjectType::ArrowChar, m_player.getPos(), Resources::instance().getResourceType(ObjectType::ArrowChar));
 
-		/*
-		//???
-		ObjectType objectType = static_cast<ObjectType>('>');
-		Resources::Object resourceType = Resources::instance().getResourceType(objectType);
-		sf::Vector2f pos = { m_player.getPos().x + OFFSET_X_FOR_BULLET, m_player.getPos().y + OFFSET_Y_FOR_BULLET };
-		auto movingPtr = Factory<MovingObject>::instance().create(objectType, pos, resourceType);
-		if (movingPtr) {
-			m_movingObjects.push_back(std::move(movingPtr));
-		}*/
+		if (m_player.getSprite().getScale().x == 1)
+		{
+			arrowPtr->setDir(Direction::Right);
+		}
+		else
+		{
+			arrowPtr->setDir(Direction::Left);
+		}
+
+		m_movingObjects.push_back(std::move(arrowPtr));
+		m_player.setShotArrow(false);
 	}
 }
 
