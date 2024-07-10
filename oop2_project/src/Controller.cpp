@@ -95,23 +95,36 @@ void Controller::draw()
 
 void Controller::printWinOrLoseBackground()
 {
-	m_window.clear();
-	if (m_levelNum > NUM_OF_LEVELS)
+	while (m_window.isOpen())
 	{
-		sf::Sprite winSprite(Resources::instance().get(BackgroundType::WinBackground));
-		m_window.draw(winSprite);
-	}
+		for (auto event = sf::Event{}; m_window.pollEvent(event);)
+		{
+			switch (event.type)
+			{
+			case sf::Event::Closed:
+			{
+				m_window.close();
+				exit(EXIT_SUCCESS);
+			}
+			default:
+				break;
+			}
+		}
+		m_window.clear();
 
-	if (m_level.getLoseLevel())
-	{
-		sf::Sprite winSprite(Resources::instance().get(BackgroundType::LoseBackground));
-		m_window.draw(winSprite);
-	}
+		if (m_levelNum > NUM_OF_LEVELS)
+		{
+			sf::Sprite winSprite(Resources::instance().get(BackgroundType::WinBackground));
+			m_window.draw(winSprite);
+		}
+
+		if (m_level.getLoseLevel())
+		{
+			sf::Sprite winSprite(Resources::instance().get(BackgroundType::LoseBackground));
+			m_window.draw(winSprite);
+		}
+		m_window.display();
 	
-	m_window.display();
-	
-	while (true) //makes that the user need to press enter to continue
-	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 		{
 			break;

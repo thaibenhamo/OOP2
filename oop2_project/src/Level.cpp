@@ -165,7 +165,8 @@ void Level::updateStaticObjects()
 		if (movingObject->getMakeCoin() && movingObject->getIsDead())
 		{
 			m_staticObjects.emplace_back(Factory<StaticObject>::instance().create(
-				ObjectType::CoinChar, movingObject->getPos(), Resources::instance().getResourceType(ObjectType::CoinChar)));
+				ObjectType::CoinChar, movingObject->getPos(), 
+				Resources::instance().getResourceType(ObjectType::CoinChar)));
 			m_numOfEnemies--;
 			
 		}

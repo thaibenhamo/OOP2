@@ -98,7 +98,7 @@ void ScoresMenuCommand::updateValues(int numOfPoints)
         // Update positions for all scores
         for (size_t j = 0; j < m_scores.size(); ++j)
         {
-            m_scores[j].second.setPosition(sf::Vector2f(830, 270 + 50 * j));
+            m_scores[j].second.setPosition(sf::Vector2f(830.f, float(270 + 50 * j)));
             m_scores[j].second.setString(std::to_string(m_scores[j].first));
         }
     }
@@ -116,10 +116,10 @@ sf::Text ScoresMenuCommand::setText(int i)
 {
     sf::Text text;
     text.setFont(Resources::instance().getFont());
-    text.setCharacterSize(20.f);
+    text.setCharacterSize(20);
     text.setFillColor(PINK);
     text.setOutlineThickness(0.5);
-    text.setPosition(sf::Vector2f(830, 270 + 50 * i));
+    text.setPosition(sf::Vector2f(830.f, float(270 + 50 * i)));
 
     return text;
 }

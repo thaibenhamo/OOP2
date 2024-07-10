@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.26)
 
 project (oop2_project)
-set (MY_AUTHORS "")
+set (MY_AUTHORS "Thai_Ben_Hamo-Idit_Halevi")
 
 include (cmake/CompilerSettings.cmake)
 
