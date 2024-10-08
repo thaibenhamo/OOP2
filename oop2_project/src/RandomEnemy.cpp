@@ -24,7 +24,7 @@ void RandomEnemy::update(sf::Time delta)
     if (m_changeDir || m_randomEnemyClock.getElapsedTime().asSeconds() >= 2)
     { 
         m_sprite.setPosition(m_prevLocation);
-        m_dir = opposite(m_dir);
+        m_dir = static_cast<Direction>(rand() % static_cast<int>(Direction::Up));
         m_animation.direction(m_dir);
         m_changeDir = false;
         m_randomEnemyClock.restart();
