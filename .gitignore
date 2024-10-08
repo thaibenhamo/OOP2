@@ -3,12 +3,12 @@ oop2_ex01/.vs
 oop2_ex01/out
 
 # Ignore ex_2 directories
-oop2_ex02-basefiles/.vs
-oop2_ex02-basefiles/out
+oop2_ex02/.vs
+oop2_ex02/out
 
 # Ignore ex_3 directories
-oop2_ex03_basefiles/.vs
-oop2_ex03_basefiles/out
+oop2_ex03/.vs
+oop2_ex03/out
 
 # Ignore project directories
 oop2_project/.vs
